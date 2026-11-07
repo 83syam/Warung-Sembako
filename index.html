@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WARUNG SEMBAKO</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*{box-sizing:border-box} body{font-family:system-ui,sans-serif;background:#f1f5f9;margin:0;padding:10px}
+.wrap{max-width:520px;margin:auto} @media(min-width:800px){.wrap{max-width:900px}}
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+h2{text-align:center;margin:0} .sub{text-align:center;color:#64748b;font-size:13px}
+.tabs{display:flex;gap:6px;margin:12px 0} .tabs button{flex:1;padding:12px;border:0;border-radius:10px;background:#e2e8f0;font-weight:700;cursor:pointer}
+.tabs button.on{background:#16a34a;color:#fff}
+label{font-size:13px;font-weight:700;color:#334155} input,select{width:100%;padding:12px;border:1.5px solid #cbd5e1;border-radius:10px;margin:5px 0 12px;font-size:16px}
+.btn{width:100%;padding:14px;border:0;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer}
+.btn-green{background:#16a34a;color:#fff} .btn-dark{background:#0f172a;color:#fff;margin-top:8px} .btn-blue{background:#2563eb;color:#fff}
+.row{display:flex;gap:8px} .row>div{flex:1}
+.totalBox{background:#dcfce7;border:2px solid #16a34a;border-radius:10px;padding:12px;text-align:center;font-weight:800;font-size:17px;margin-bottom:12px}
+.item{border-bottom:1px solid #e2e8f0;padding:10px 0} .item b{font-size:15px} .item small{color:#64748b}
+.badge{padding:3px 8px;border-radius:20px;font-size:11px;font-weight:700} .hutang{background:#fee2e2;color:#dc2626} .lunas{background:#dcfce7;color:#15803d}
+.hidden{display:none}
+#struk{background:#fff;border:1px dashed #94a3b8;padding:16px;border-radius:8px;font-family:monospace;font-size:14px;line-height:1.6}
+#struk h3{text-align:center;margin:0} #struk hr{border-top:1px dashed #94a3b8}
+.smallBtn{padding:8px 12px;border:0;border-radius:8px;color:#fff;font-weight:700;margin-top:6px;margin-right:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card"><h2>WARUNG SEMBAKO</h2><div class="sub">Sayur & Sembako • Tersimpan Otomatis di HP</div></div>
+<div class="tabs">
+<button id="btn-kasir" class="on" onclick="showTab('kasir')">KASIR</button>
+<button id="btn-barang" onclick="showTab('barang')">BARANG</button>
+<button id="btn-pelanggan" onclick="showTab('pelanggan')">PELANGGAN</button>
+<button id="btn-laporan" onclick="showTab('laporan')">LAPORAN</button>
+</div>
+<div id="tab-kasir" class="card">
+<label>1. Nama Barang</label><select id="pilihBarang" onchange="onBarang()"></select>
+<div class="row"><div><label>2. Harga Beli</label><input id="hargaBeli" readonly></div><div><label>3. Harga Jual</label><input id="hargaJual" readonly></div></div>
+<div class="row"><div><label>6. Stok Tersedia</label><input id="stokInfo" readonly></div><div><label>4. Banyak Barang / Qty</label><input id="qty" type="number" value="1" min="1" oninput="hitung()"></div></div>
+<label>7. Nama Pelanggan</label><input id="namaPelanggan" placeholder="Nama pelanggan" list="listPelanggan"><datalist id="listPelanggan"></datalist>
+<div class="row"><div><label>Tipe Pelanggan</label><select id="tipePelanggan"><option>Umum</option><option>Tetap</option></select></div><div><label>No WA Pelanggan</label><input id="noWA" placeholder="08..."></div></div>
+<label>Uang Bayar (Rp)</label><input id="bayar" type="number" value="0" oninput="hitung()">
+<div class="totalBox" id="totalBox">Total: Rp 0 | Untung: Rp 0 | Kembalian: Rp 0</div>
+<button class="btn btn-green" onclick="simpanTransaksi()">+ TAMBAH TRANSAKSI & SIMPAN</button>
+<div id="strukWrap" class="hidden" style="margin-top:14px"><div id="struk"></div>
+<button class="btn btn-dark" onclick="downloadStrukIMG()">📷 DOWNLOAD STRUK JADI GAMBAR (IMG)</button>
+<button class="btn btn-blue" onclick="kirimWA()" style="margin-top:8px">💬 KIRIM STRUK KE WA (Teks)</button>
+<p style="font-size:12px;color:#64748b;text-align:center">Cara kirim IMG ke WA: Download gambar dulu, lalu di WA pilih Lampirkan > Galeri > pilih gambar struk.</p></div>
+</div>
+<div id="tab-barang" class="card hidden">
+<h3>Tambah Barang Baru</h3><label>Nama Barang</label><input id="bNama" placeholder="Contoh: Beras 5kg">
+<div class="row"><div><label>Harga Beli</label><input id="bBeli" type="number"></div><div><label>Harga Jual</label><input id="bJual" type="number"></div></div>
+<div class="row"><div><label>Stok Awal</label><input id="bStok" type="number" value="0"></div><div><label>Satuan</label><select id="bSatuan"><option>pcs</option><option>kg</option><option>liter</option><option>ikat</option><option>bungkus</option><option>karung</option></select></div></div>
+<button class="btn btn-green" onclick="simpanBarang()">SIMPAN BARANG</button>
+<h3 style="margin-top:18px">Daftar Barang & Stok</h3><div id="listBarang"></div></div>
+<div id="tab-pelanggan" class="card hidden">
+<h3>Tambah Pelanggan (Manual)</h3><label>Nama Pelanggan</label><input id="pNama" placeholder="Contoh: Ibu Ida">
+<label>No WA</label><input id="pWA" placeholder="0812..."><label>Tipe</label><select id="pTipe"><option>Umum</option><option>Tetap</option></select>
+<button class="btn btn-green" onclick="simpanPelanggan()">SIMPAN PELANGGAN</button>
+<h3 style="margin-top:18px">Daftar Pelanggan</h3><div id="listPelangganDiv"></div></div>
+<div id="tab-laporan" class="card hidden">
+<div class="totalBox" id="ringkasan">Memuat...</div>
+<h3>Daftar Hutang - Belum Lunas</h3><div id="listHutang"></div>
+<h3 style="margin-top:18px">Semua Transaksi</h3><div id="listTransaksi"></div>
+<button class="btn btn-dark" onclick="hapusSemuaData()" style="margin-top:16px">🗑️ HAPUS SEMUA DATA (Reset)</button></div>
+</div>
+<script>
+let BARANG = JSON.parse(localStorage.getItem('ws_barang')||'[]');
+let PELANGGAN = JSON.parse(localStorage.getItem('ws_pelanggan')||'[]');
+let TRANSAKSI = JSON.parse(localStorage.getItem('ws_transaksi')||'[]');
+let HUTANG = JSON.parse(localStorage.getItem('ws_hutang')||'[]');
+let strukTerakhir = null;
+function saveAll(){
+  localStorage.setItem('ws_barang', JSON.stringify(BARANG));
+  localStorage.setItem('ws_pelanggan', JSON.stringify(PELANGGAN));
+  localStorage.setItem('ws_transaksi', JSON.stringify(TRANSAKSI));
+  localStorage.setItem('ws_hutang', JSON.stringify(HUTANG));
+}
+const rupiah = n => 'Rp ' + Number(n||0).toLocaleString('id-ID');
+const fmt = n => Number(n||0).toLocaleString('id-ID');
+function showTab(t){
+  ['kasir','barang','pelanggan','laporan'].forEach(x=>{
+    document.getElementById('tab-'+x).classList.toggle('hidden', x!==t);
+    document.getElementById('btn-'+x).classList.toggle('on', x===t);
+  });
+  if(t==='laporan') renderLaporan(); if(t==='barang') renderBarang(); if(t==='pelanggan') renderPelanggan();
+}
+function refreshKasir(){
+  const sel = document.getElementById('pilihBarang');
+  if(BARANG.length===0) sel.innerHTML = '<option value="">-- Belum ada barang, tambah di tab BARANG dulu --</option>';
+  else sel.innerHTML = BARANG.map(b=>`<option value="${b.id}">${b.nama} - ${rupiah(b.jual)} | Stok: ${b.stok} ${b.satuan}</option>`).join('');
+  document.getElementById('listPelanggan').innerHTML = PELANGGAN.map(p=>`<option value="${p.nama}">`).join('');
+  onBarang();
+}
+function onBarang(){
+  const id = document.getElementById('pilihBarang').value;
+  const b = BARANG.find(x=>x.id===id);
+  if(!b){ document.getElementById('hargaBeli').value=''; document.getElementById('hargaJual').value=''; document.getElementById('stokInfo').value=''; hitung(); return; }
+  document.getElementById('hargaBeli').value = b.beli;
+  document.getElementById('hargaJual').value = b.jual;
+  document.getElementById('stokInfo').value = b.stok + ' ' + b.satuan;
+  hitung();
+}
+function hitung(){
+  const jual = Number(document.getElementById('hargaJual').value||0);
+  const beli = Number(document.getElementById('hargaBeli').value||0);
+  const qty = Number(document.getElementById('qty').value||0);
+  const bayar = Number(document.getElementById('bayar').value||0);
+  const total = jual * qty;
+  const untung = (jual - beli) * qty;
+  const kembali = Math.max(0, bayar - total);
+  document.getElementById('totalBox').innerText = `Total: ${rupiah(total)} | Untung: ${rupiah(untung)} | Kembalian: ${rupiah(kembali)}`;
+  return {total, untung, kembali};
+}
+function simpanTransaksi(){
+  const barangId = document.getElementById('pilihBarang').value;
+  const qty = Number(document.getElementById('qty').value);
+  const pelanggan = document.getElementById('namaPelanggan').value.trim() || 'Pelanggan Umum';
+  const tipe = document.getElementById('tipePelanggan').value;
+  const noWA = document.getElementById('noWA').value.trim();
+  const bayar = Number(document.getElementById('bayar').value||0);
+  if(!barangId) return alert('Pilih barang dulu. Kalau belum ada, tambah di tab BARANG.');
+  if(qty<=0) return alert('Qty harus lebih dari 0');
+  const b = BARANG.find(x=>x.id===barangId);
+  if(!b) return alert('Barang tidak ditemukan');
+  if(qty > b.stok) return alert('Stok kurang! Sisa stok: ' + b.stok + ' ' + b.satuan + '. Transaksi DITOLAK, tidak tercatat.');
+  const total = b.jual * qty;
+  const totalBeli = b.beli * qty;
+  const untung = total - totalBeli;
+  const sisa = Math.max(0, total - bayar);
+  const status = sisa > 0 ? 'HUTANG' : 'LUNAS';
+  const idTrx = 'TRX-' + Date.now();
+  const tgl = new Date().toLocaleString('id-ID');
+  b.stok = b.stok - qty;
+  TRANSAKSI.unshift({tgl, idTrx, barang: b.nama, qty, hargaJual: b.jual, total, totalBeli, untung, pelanggan, tipe, bayar, sisa, status});
+  if(sisa > 0){
+    HUTANG.unshift({tgl, idTrx, pelanggan, noWA, total, sudahBayar: bayar, sisa, status: 'BELUM LUNAS'});
+    const p = PELANGGAN.find(x=>x.nama===pelanggan);
+    if(p) p.totalHutang = Number(p.totalHutang||0) + sisa;
+    else PELANGGAN.push({id:'PLG-'+Date.now(), nama: pelanggan, wa: noWA, tipe: tipe, totalHutang: sisa});
+  }
+  saveAll();
+  strukTerakhir = {tgl, idTrx, barang: b.nama, qty, hargaJual: b.jual, total, bayar, sisa, status, pelanggan, untung};
+  const s = strukTerakhir;
+  const hutangTxt = s.sisa>0 ? `<br><b>*** HUTANG / BON ***</b><br>SISA HUTANG: ${rupiah(s.sisa)}` : `<br><b>LUNAS</b>`;
+  document.getElementById('struk').innerHTML = `<h3>WARUNG SEMBAKO</h3><div style="text-align:center;font-size:12px">${s.tgl}<br>${s.idTrx}</div><hr>Pelanggan: ${s.pelanggan}<br>${s.barang} ${s.qty}x ${rupiah(s.hargaJual)} = ${rupiah(s.total)}<hr>Total: ${rupiah(s.total)}<br>Bayar: ${rupiah(s.bayar)}<br>Kembalian: ${rupiah(Math.max(0,s.bayar-s.total))}${hutangTxt}<hr><div style="text-align:center">Terima Kasih 🙏</div>`;
+  document.getElementById('strukWrap').classList.remove('hidden');
+  document.getElementById('bayar').value = 0; document.getElementById('qty').value = 1;
+  refreshKasir(); renderBarang(); renderLaporan();
+  alert('BERHASIL! ' + b.nama + ' - ' + rupiah(total) + (sisa>0 ? ' | SISA HUTANG: ' + rupiah(sisa) : ' | LUNAS'));
+}
+function simpanBarang(){
+  const nama = document.getElementById('bNama').value.trim();
+  const beli = Number(document.getElementById('bBeli').value||0);
+  const jual = Number(document.getElementById('bJual').value||0);
+  const stok = Number(document.getElementById('bStok').value||0);
+  const satuan = document.getElementById('bSatuan').value;
+  if(!nama || !jual) return alert('Isi nama dan harga jual');
+  BARANG.push({id:'BRG-'+Date.now(), nama, beli, jual, stok, satuan});
+  saveAll();
+  document.getElementById('bNama').value=''; document.getElementById('bBeli').value=''; document.getElementById('bJual').value=''; document.getElementById('bStok').value=0;
+  refreshKasir(); renderBarang(); alert('Barang disimpan: ' + nama);
+}
+function simpanPelanggan(){
+  const nama = document.getElementById('pNama').value.trim();
+  const wa = document.getElementById('pWA').value.trim();
+  const tipe = document.getElementById('pTipe').value;
+  if(!nama) return alert('Isi nama pelanggan');
+  if(PELANGGAN.find(x=>x.nama===nama)) return alert('Pelanggan sudah ada: ' + nama);
+  PELANGGAN.push({id:'PLG-'+Date.now(), nama, wa, tipe, totalHutang:0});
+  saveAll();
+  document.getElementById('pNama').value=''; document.getElementById('pWA').value='';
+  refreshKasir(); renderPelanggan(); alert('Pelanggan disimpan: ' + nama);
+}
+function renderBarang(){
+  document.getElementById('listBarang').innerHTML = BARANG.map(b=>{
+    const untungSatuan = b.jual - b.beli;
+    return `<div class="item"><b>${b.nama}</b> <span class="badge ${b.stok<=5?'hutang':'lunas'}">Stok: ${b.stok} ${b.satuan}</span><br><small>Beli: ${rupiah(b.beli)} | Jual: ${rupiah(b.jual)} | Untung/satuan: ${rupiah(untungSatuan)}</small><br><button class="smallBtn" style="background:#2563eb" onclick="tambahStokPrompt('${b.id}')">+ Tambah Stok</button><button class="smallBtn" style="background:#dc2626" onclick="hapusBarang('${b.id}')">Hapus</button></div>`;
+  }).join('') || 'Belum ada barang. Tambah di atas dulu.';
+}
+function tambahStokPrompt(id){
+  const b = BARANG.find(x=>x.id===id);
+  const j = prompt('Tambah stok untuk '+b.nama+' berapa?','10');
+  if(j===null) return;
+  b.stok = b.stok + Number(j||0); saveAll(); refreshKasir(); renderBarang(); alert('Stok '+b.nama+' sekarang: '+b.stok);
+}
+function hapusBarang(id){ if(!confirm('Hapus barang ini?')) return; BARANG = BARANG.filter(x=>x.id!==id); saveAll(); refreshKasir(); renderBarang(); }
+function renderPelanggan(){
+  document.getElementById('listPelangganDiv').innerHTML = PELANGGAN.map(p=>`<div class="item"><b>${p.nama}</b> (${p.tipe})<br><small>WA: ${p.wa||'-'} | Total Hutang: ${rupiah(p.totalHutang||0)}</small></div>`).join('') || 'Belum ada pelanggan';
+}
+function renderLaporan(){
+  let omset=0, untungTotal=0, hutangTotal=0;
+  TRANSAKSI.forEach(t=>{omset+=Number(t.total||0); untungTotal+=Number(t.untung||0);});
+  HUTANG.forEach(h=>{ if(h.status!=='LUNAS') hutangTotal+=Number(h.sisa||0); });
+  document.getElementById('ringkasan').innerHTML = `Omset: ${rupiah(omset)}<br>Keuntungan Total: ${rupiah(untungTotal)}<br>Total Hutang Belum Lunas: ${rupiah(hutangTotal)}`;
+  document.getElementById('listHutang').innerHTML = HUTANG.filter(h=>h.status!=='LUNAS').map(h=>`<div class="item"><b>${h.pelanggan}</b> - ${h.idTrx}<br><small>Sisa: ${rupiah(h.sisa)} | WA: ${h.noWA||'-'} | ${h.tgl}</small><br><button class="smallBtn" style="background:#16a34a" onclick="lunasiPrompt('${h.idTrx}')">LUNASI</button></div>`).join('') || 'Tidak ada hutang. Semua lunas.';
+  document.getElementById('listTransaksi').innerHTML = TRANSAKSI.slice(0,50).map(t=>`<div class="item"><b>${t.barang} ${t.qty}x</b> - ${rupiah(t.total)} <span class="badge ${t.status==='HUTANG'?'hutang':'lunas'}">${t.status}</span><br><small>${t.tgl} | ${t.pelanggan} (${t.tipe}) | Untung: ${rupiah(t.untung)} | Bayar: ${rupiah(t.bayar)} | Sisa: ${rupiah(t.sisa)}</small></div>`).join('') || 'Belum ada transaksi';
+}
+function lunasiPrompt(idTrx){
+  const h = HUTANG.find(x=>x.idTrx===idTrx);
+  const b = prompt('Bayar hutang '+h.pelanggan+' berapa? Sisa '+h.sisa, h.sisa);
+  if(b===null) return;
+  const bayar = Number(b||0);
+  h.sudahBayar = Number(h.sudahBayar||0) + bayar;
+  h.sisa = Math.max(0, Number(h.sisa||0) - bayar);
+  if(h.sisa===0) h.status='LUNAS';
+  const p = PELANGGAN.find(x=>x.nama===h.pelanggan);
+  if(p) p.totalHutang = Math.max(0, Number(p.totalHutang||0) - bayar);
+  const t = TRANSAKSI.find(x=>x.idTrx===idTrx);
+  if(t){ t.sisa = h.sisa; if(h.sisa===0) t.status='LUNAS'; }
+  saveAll(); renderLaporan(); alert('Hutang dilunasi. Sisa sekarang: ' + rupiah(h.sisa));
+}
+function hapusSemuaData(){ if(!confirm('Hapus SEMUA data? Barang, pelanggan, transaksi, hutang semua hilang. Yakin?')) return; localStorage.clear(); BARANG=[]; PELANGGAN=[]; TRANSAKSI=[]; HUTANG=[]; refreshKasir(); renderBarang(); renderPelanggan(); renderLaporan(); alert('Semua data dihapus'); }
+function downloadStrukIMG(){
+  if(!strukTerakhir) return alert('Belum ada struk');
+  html2canvas(document.getElementById('struk'), {scale:2, backgroundColor:'#ffffff'}).then(canvas=>{
+    const a = document.createElement('a'); a.download = 'Struk-'+strukTerakhir.idTrx+'.png'; a.href = canvas.toDataURL('image/png'); a.click();
+  });
+}
+function kirimWA(){
+  if(!strukTerakhir) return alert('Belum ada struk');
+  const s = strukTerakhir;
+  const teks = `*WARUNG SEMBAKO*%0A${encodeURIComponent(s.tgl)}%0A${s.idTrx}%0A----------------%0APelanggan: ${encodeURIComponent(s.pelanggan)}%0A${encodeURIComponent(s.barang)} ${s.qty}x ${fmt(s.hargaJual)} = ${fmt(s.total)}%0A----------------%0ATotal: ${fmt(s.total)}%0ABayar: ${fmt(s.bayar)}%0AKembalian: ${fmt(Math.max(0,s.bayar-s.total))}%0A${s.sisa>0 ? `*HUTANG*%0ASISA HUTANG: ${fmt(s.sisa)}` : `*LUNAS*`}%0A----------------%0ATerima Kasih 🙏`;
+  window.open('https://wa.me/?text='+teks, '_blank');
+}
+document.getElementById('namaPelanggan').addEventListener('input', onBarang);
+refreshKasir(); renderBarang(); renderPelanggan(); renderLaporan();
+</script>
+</body>
+</html>
