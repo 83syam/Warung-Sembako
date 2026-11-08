@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REKAPAN - Warung Sembako Syamsudin Budiansyah</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#fff;padding:16px;padding-bottom:50px}
+.cover{background:linear-gradient(90deg,#16A34A,#F97316);color:#fff;padding:22px;border-radius:16px;text-align:center}
+.cover h1{font-size:22px}.cover p{font-size:13px;margin-top:8px}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;font-weight:bold;margin-top:10px;cursor:pointer;font-size:15px}
+.btn-green{background:#16A34A;color:#fff}.btn-blue{background:#2563EB;color:#fff}.btn-orange{background:#EA580C;color:#fff}
+h2{background:#111;color:#fff;padding:10px;border-radius:10px;font-size:16px;margin-top:22px}
+h3{color:#EA580C;margin-top:12px}
+.card{border:1px solid #ddd;padding:14px;border-radius:12px;margin-top:10px}
+p,li{font-size:14px;line-height:1.7;margin-top:6px}
+ul{padding-left:18px}
+code{background:#eee;padding:2px 6px;border-radius:6px;font-size:12px;word-break:break-all}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+td,th{border:1px solid #ddd;padding:8px;text-align:left}
+th{background:#DCFCE7}
+.kartu{background:#FFFBEB;border:2px dashed #F59E0B;padding:12px;border-radius:12px;margin-top:8px}
+@media print{ .no-print{display:none} }
+</style>
+</head>
+<body>
+<div class="cover"><h1>📒 REKAPAN PEMBAHASAN LENGKAP</h1><p><b>Aplikasi Warung Sembako</b><br>Dari Awal Sampai Akhir<br><br>Pembuat: <b>Syamsudin Budiansyah</b><br>ID Pembuat: SYAM-ID-MASTER<br>No. Seri Pembuat: SYAM-SERI-MASTER-83<br>Baleendah, Bandung<br><br>Tanggal: 8 November 2026</p></div>
+<div class="no-print">
+<button class="btn btn-green" onclick="window.print()">🖨️ SIMPAN JADI PDF - TAP DI SINI</button>
+<button class="btn btn-blue" onclick="location.href='warung-baru.html?v=8'">🏪 Buka Aplikasi Warung</button>
+<p style="text-align:center;font-size:12px">Cara simpan PDF: Tap tombol hijau di atas > Pilih Simpan sebagai PDF > Simpan ke Download / Memori HP.</p>
+</div>
+
+<h2>BAB 1 - AWAL: APLIKASI WARUNG SEMBAKO</h2>
+<div class="card"><p><b>Bapak minta:</b> Aplikasi warung sembako untuk jualan sehari-hari. Ada stok, kasir, hutang, pelanggan, laporan, struk.</p><p><b>Dibuatkan:</b> File <b>warung-baru.html</b>. Fitur: Dashboard, Stok, Jual, Hutang, Pelanggan, Laporan, Pengaturan. Barang awal 11 macam: Beras Premium, Beras Pandan 5 Kg, Minyak Goreng 1 L, Gula Pasir, Telur Ayam, Mie Instan, Ayam Potong, Sayur Segar, Chiki, Kopi Bubuk, Susu Kental Manis. Ada tombol - / + untuk ubah stok Kg / Karung. Ada kasir, diskon, bayar, kembali otomatis. Ada hutang / bon, struk LUNAS hijau dan BON merah.</p><p>Link: <code>https://83syam.github.io/Warung-Sembako/warung-baru.html</code></p></div>
+
+<h2>BAB 2 - NAMA WARUNG BISA DIRUBAH, BISA DIBAGIKAN</h2>
+<div class="card"><p><b>Bapak minta:</b> "Nama warung bisa dirubah agar aplikasi bisa dibagikan dan dipakai semua orang. Ada perizinan dari si pembuat untuk si pemakai baru"</p><p><b>Dibuatkan V4:</b> Orang baru buka aplikasi, muncul izin: "Aplikasi ini dibuat oleh Syamsudin Budiansyah, silahkan pakai dengan izin beliau". Terus orang itu isi Nama Warung sendiri, Nama Pemilik sendiri, No HP, Alamat. Langsung jadi warung dia. Nama Bapak tetap ada sebagai pembuat. Ada menu Pengaturan untuk ganti nama warung kapan saja. Ada tombol Bagikan Via WhatsApp.</p><p><b>Cara ganti nama warung:</b> Tap ⚙️ Pengaturan > Ganti Nama Warung > Tap Simpan Nama Warung Baru.</p></div>
+
+<h2>BAB 3 - APLIKASI BELUM BISA DI KLIK</h2>
+<div class="card"><p><b>Bapak bilang:</b> "Aplikasi Belum bisa di klik"</p><p><b>Penyebab:</b> Popup Selamat Datang nutupin layar terus, jadi tombol di bawahnya tidak bisa di klik. <b>Perbaikan:</b> Popup tidak lagi muncul otomatis, hanya muncul kalau tap Ganti Pemakai Baru. Ditambah tombol Lewati Dulu dan tombol Perbaiki Kalau Tidak Bisa Di Klik. Tab diubah pakai addEventListener biar pasti bisa di tap.</p></div>
+
+<h2>BAB 4 - SEMUA FITUR BELUM BISA DI TAP</h2>
+<div class="card"><p><b>Bapak bilang:</b> "Semua fitur belum bisa di tap" + kirim foto Dashboard.</p><p><b>Penyebab dari foto:</b> Yang kebuka masih versi LAMA yang ada tombol Salin Link, bukan versi baru. Artinya HP masih buka versi lama (cache). <b>Solusi:</b> Buka link + ?v=5 / ?v=6 / ?v=7 / ?v=8 di belakang, biar buka yang baru. Dibuatkan tombol TES: "TAP SAYA UNTUK TES" - kalau bisa di tap dan muncul ALHAMDULILLAH, berarti sudah benar.</p></div>
+
+<h2>BAB 5 - HARUS MINTA IZIN DENGAN ID ATAU NO SERI</h2>
+<div class="card"><p><b>Bapak minta:</b> "Harus minta izin dengan id atau no seri"</p><p><b>Dibuatkan V5:</b> Sekarang tidak cuma centang setuju saja, harus pakai ID / No Seri dari Bapak. Kalau kodenya BENAR, langsung bisa pakai. Kalau SALAH / NGARANG, aplikasi TERKUNCI, tidak bisa di tap. Bapak pegang Kode Master, Bapak yang bagi-bagi kode ke teman, 1 orang 1 kode. Kalau habis, Bapak bisa bikin kode baru di Pengaturan.</p></div>
+
+<h2>BAB 6 - KEMBALI KE warung-baru.html</h2>
+<div class="card"><p><b>Bapak minta:</b> "Kembali ke warung-baru.html"</p><p><b>Diputuskan:</b> Kembali ke file <b>warung-baru.html</b> saja, tidak ada file baru lagi. Semua fitur terbaru dipindahkan ke warung-baru.html.</p></div>
+
+<h2>BAB 7 - TAMBAHKAN IZIN BERUPA ID ATAU NO SERI (DIPERJELAS)</h2>
+<div class="card"><p><b>Bapak minta:</b> "Tambahkan izin dari pembuat berupa id atau No. Seri"</p><p><b>Diperjelas jadi 2 kolom terpisah:</b> <b>ID IZIN</b> dan <b>NO. SERI</b>. Keduanya harus pasangan! Kalau ID benar tapi No Seri salah pasangan, tetap TERKUNCI. ID + No Seri muncul di 3 tempat: 1) Di atas aplikasi, 2) Di Dashboard di Kartu Izin, 3) Di Struk / Nota. Nama pembuat tidak bisa dihapus.</p></div>
+
+<h2>BAB 8 & 9 - JADIKAN SEMUA PEMBAHASAN MENJADI FILE PDF</h2>
+<div class="card"><p><b>Bapak minta:</b> "Biarkanlah semua pembahasan menjadi sebuah file agar bisa di simpan di memori hp. File bisa berupa pdf atau yang lain nya" dan "Maksud saya.. jadikan pembahasan kita dari awal sampai akhir menjadi file"</p><p><b>Dibuatkan:</b> File ini <b>rekapan-warung.html</b> - Rekapan dari awal sampai akhir. Cara jadi PDF: Buka file ini > Tap tombol hijau SIMPAN JADI PDF di atas > Pilih Simpan sebagai PDF > Simpan ke Download / Memori HP.</p></div>
+
+<h2>DAFTAR LENGKAP ID IZIN + NO SERI</h2>
+<div class="card">
+<div class="kartu"><p>Pembuat: <b>Syamsudin Budiansyah</b></p><p>ID Pembuat: <b>SYAM-ID-MASTER</b></p><p>No. Seri Pembuat: <b>SYAM-SERI-MASTER-83</b></p></div>
+<table><tr><th>Untuk Siapa</th><th>ID IZIN</th><th>NO. SERI</th></tr>
+<tr><td><b>Bapak - Master</b></td><td>SYAM-ID-MASTER</td><td>SYAM-SERI-MASTER-83</td></tr>
+<tr><td>Teman 1 - Ibu Ani</td><td>SYAM-ID-001</td><td>SYAM-SERI-2026-001</td></tr>
+<tr><td>Teman 2</td><td>SYAM-ID-002</td><td>SYAM-SERI-2026-002</td></tr>
+<tr><td>Teman 3</td><td>SYAM-ID-003</td><td>SYAM-SERI-2026-003</td></tr>
+<tr><td>Teman 4</td><td>SYAM-ID-004</td><td>SYAM-SERI-2026-004</td></tr>
+<tr><td>Teman 5</td><td>SYAM-ID-005</td><td>SYAM-SERI-2026-005</td></tr>
+<tr><td>Teman 6</td><td>SYAM-ID-006</td><td>SYAM-SERI-2026-006</td></tr>
+<tr><td>Teman 7</td><td>SYAM-ID-007</td><td>SYAM-SERI-2026-007</td></tr>
+<tr><td>Teman 8</td><td>SYAM-ID-008</td><td>SYAM-SERI-2026-008</td></tr>
+<tr><td>Teman 9</td><td>SYAM-ID-009</td><td>SYAM-SERI-2026-009</td></tr>
+<tr><td>Teman 10</td><td>SYAM-ID-010</td><td>SYAM-SERI-2026-010</td></tr></table>
+<p style="font-size:12px">Kode Master Bapak jangan dibagikan. Bagikan hanya 001 sampai 010 ke teman, 1 orang 1 pasangan.</p></div>
+
+<h2>DAFTAR FILE BAPAK</h2>
+<div class="card"><table><tr><th>Nama File</th><th>Isi</th></tr>
+<tr><td><b>warung-baru.html</b></td><td>Aplikasi Warung Lengkap - dipakai jualan</td></tr>
+<tr><td><b>panduan-warung.html</b></td><td>Panduan cara pakai</td></tr>
+<tr><td><b>rekapan-warung.html</b></td><td>File ini - Rekapan semua pembahasan, bisa jadi PDF</td></tr></table></div>
+
+<h2>FITUR LENGKAP APLIKASI</h2>
+<div class="card">
+<h3>📊 Dashboard</h3><p>Omzet hari ini, omzet bulan ini, total hutang, total barang, stok menipis, total transaksi, transaksi terakhir, terlaris, Kartu Izin.</p>
+<h3>📦 Stok</h3><p>11 barang awal. Tap - / + untuk ubah stok Kg / Karung / Botol / Bungkus / Pcs / Ikat / Kaleng. Bisa tambah barang baru.</p>
+<h3>🛒 Jual / Kasir</h3><p>Cari barang, tap + Tambah, keranjang, nama pembeli, Tunai Lunas / Hutang Bon, diskon, bayar, kembali otomatis, Selesaikan, Print Struk.</p>
+<h3>📒 Hutang</h3><p>Hutang otomatis dari Bon, hutang manual, bayar sebagian / lunas, hapus hutang.</p>
+<h3>👥 Pelanggan</h3><p>Daftar pelanggan otomatis dari yang pernah beli, bisa tambah manual.</p>
+<h3>📈 Laporan</h3><p>Semua transaksi, Print / Simpan PDF, Hapus Semua Data.</p>
+<h3>⚙️ Pengaturan</h3><p>Ganti nama warung, buat ID + No Seri baru, kunci aplikasi / ganti pemakai baru.</p>
+<h3>🖨️ Struk</h3><p>Nama warung, pemilik, alamat, ID Izin + No Seri, LUNAS hijau / BON merah, total, bayar, kembali, nama pembuat.</p></div>
+
+<h2>CARA PAKAI - TERAKHIR UNTUK BAPAK</h2>
+<div class="card"><p><b>1. Buka pertama kali:</b> Buka warung-baru.html?v=8 > Isi Nama Warung: Warung Sembako Syamsudin Budiansyah, Nama: Syamsudin Budiansyah, ID: SYAM-ID-MASTER, No Seri: SYAM-SERI-MASTER-83, Centang setuju, Tap Buka Kunci.</p><p><b>2. Jualan:</b> Tap Jual > Cari barang > Tap + Tambah > Isi nama pembeli > Pilih Tunai / Bon > Isi Bayar > Tap Selesaikan > Tap Print Struk.</p><p><b>3. Ganti nama warung:</b> Tap Pengaturan > Ganti Nama Warung > Tap Simpan.</p><p><b>4. Bagikan ke teman:</b> Tap Bagikan Via WhatsApp > Kirim link + ID + No Seri (1 orang 1 pasangan).</p><p><b>5. Simpan file ini jadi PDF:</b> Tap tombol hijau di atas > Simpan sebagai PDF > Simpan ke Memori HP.</p></div>
+
+<div class="card" style="text-align:center"><b>© 2026 Syamsudin Budiansyah</b><br><small>ID: SYAM-ID-MASTER • No. Seri: SYAM-SERI-MASTER-83<br>Semoga berkah, laris, bermanfaat untuk semua orang 🙏<br><br>--- AKHIR REKAPAN ---</small></div>
+<div class="no-print"><button class="btn btn-green" onclick="window.print()">🖨️ SIMPAN JADI PDF - TAP DI SINI LAGI</button></div>
+</body>
+  </html>
