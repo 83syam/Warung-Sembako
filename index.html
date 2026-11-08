@@ -1,6 +1,38 @@
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Warung Sembako V2</title>
-<style>*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial;background:#f1f5f9}header{background:#16a34a;color:#fff;padding:14px}header h1{margin:0;font-size:19px}nav{display:flex;gap:6px;padding:10px;overflow-x:auto;background:#fff;position:sticky;top:0}nav button{white-space:nowrap;border:1px solid #cbd5e1;background:#fff;padding:8px 12px;border-radius:999px;font-weight:700;cursor:pointer}nav button.on{background:#16a34a;color:#fff}.wrap{padding:12px;padding-bottom:80px;max-width:900px;margin:auto}.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.kpi{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:10px}.kpi b{font-size:18px;display:block}.kpi span{font-size:12px;color:#475569}label{font-size:12px;font-weight:700;display:block;margin:8px 0 4px}input,select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:10px}.btn{border:0;padding:11px 14px;border-radius:10px;font-weight:800;cursor:pointer}.btn-g{background:#16a34a;color:#fff}.btn-b{background:#2563eb;color:#fff}.btn-o{background:#f59e0b;color:#fff}.btn-r{background:#ef4444;color:#fff}.btn-ghost{background:#e2e8f0}.row{display:flex;gap:8px}.row>*{flex:1}table{width:100%;font-size:13px}th,td{padding:8px 6px;border-bottom:1px solid #e2e8f0;text-align:left}.badge{padding:3px 8px;border-radius:999px;font-size:11px;font-weight:800}.ok{background:#dcfce7}.warn{background:#fef9c3}.danger{background:#fee2e2}.small{font-size:12px;color:#64748b}.hidden{display:none!important}.flex{display:flex;justify-content:space-between;gap:8px;align-items:center}</style></head>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial;background:#FFF8E1}
+header{background:linear-gradient(135deg,#FFC300,#FF9500,#FF5E00);color:#fff;padding:18px 14px 22px;border-radius:0 0 26px 26px;box-shadow:0 8px 20px rgba(255,149,0,.4)}
+header h1{margin:0;font-size:21px}
+nav{display:flex;gap:8px;padding:12px;overflow-x:auto;background:#FFF8E1}
+nav button{white-space:nowrap;border:2px solid #FFE082;background:#fff;padding:10px 16px;border-radius:999px;font-weight:800;cursor:pointer;color:#5D4037}
+nav button.on{background:#FF9500;color:#fff;border-color:#FF9500}
+.wrap{padding:12px;padding-bottom:80px;max-width:900px;margin:auto}
+.card{background:#fff;border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 6px 18px rgba(0,0,0,.07);border:1px solid #FFE082}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.kpi{border-radius:16px;padding:12px;color:#fff}
+.kpi:nth-child(1){background:linear-gradient(135deg,#00B14F,#00D166)}
+.kpi:nth-child(2){background:linear-gradient(135deg,#FF9500,#FFC300)}
+.kpi:nth-child(3){background:linear-gradient(135deg,#FF3B30,#FF6B60)}
+.kpi:nth-child(4){background:linear-gradient(135deg,#007AFF,#00C6FF)}
+.kpi b{font-size:19px;display:block;color:#fff}
+.kpi span{font-size:12px;color:#fff;opacity:.9}
+label{font-size:12px;font-weight:800;display:block;margin:8px 0 4px;color:#5D4037}
+input,select{width:100%;padding:12px;border:2px solid #FFE082;border-radius:12px;background:#FFFDE7}
+.btn{border:0;padding:12px 14px;border-radius:12px;font-weight:800;cursor:pointer}
+.btn-g{background:#00B14F;color:#fff}
+.btn-b{background:#007AFF;color:#fff}
+.btn-o{background:#FF9500;color:#fff}
+.btn-r{background:#FF3B30;color:#fff}
+.btn-ghost{background:#FFE082;color:#5D4037}
+.row{display:flex;gap:8px}.row>*{flex:1}
+table{width:100%;font-size:13px}th,td{padding:9px 6px;border-bottom:1px solid #FFECB3;text-align:left}
+.badge{padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800}
+.ok{background:#DCFCE7}.warn{background:#FEF9C3}.danger{background:#FEE2E2}
+.small{font-size:12px;color:#8D6E63}.hidden{display:none!important}
+.flex{display:flex;justify-content:space-between;gap:8px;align-items:center}
+</style></head>
 <body><header><h1>🏪 Warung Sembako V2 - Lengkap</h1><p>Stok Karung • Jual • Hutang • Pelanggan • Laporan • Backup</p></header>
 <nav><button class="on" onclick="show('dash',this)">📊 Dashboard</button><button onclick="show('stok',this)">📦 Stok</button><button onclick="show('jual',this)">🛒 Jual</button><button onclick="show('hutang',this)">📒 Hutang</button><button onclick="show('pelanggan',this)">👥 Pelanggan</button><button onclick="show('laporan',this)">📈 Laporan</button><button onclick="show('atur',this)">⚙️ Pengaturan</button></nav>
 <div class="wrap">
