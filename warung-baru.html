@@ -6,49 +6,49 @@
 <title>Warung Sembako - Syamsudin Budiansyah</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#FFF7ED;padding:12px;padding-bottom:90px}
+body{background:#FFF7ED;padding:12px;padding-bottom:130px}
 .top{display:flex;justify-content:space-between;align-items:center}
-.top h2{font-size:18px}
-.top h2 span{color:#EA580C}
-.top span{font-size:22px;cursor:pointer}
-.search{margin:12px 0}
-.search input{width:100%;padding:12px;border-radius:12px;border:1px solid #ddd;outline:none;font-size:15px}
-.kpis{display:flex;gap:10px}
-.kpi{flex:1;background:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);cursor:pointer;text-align:center}
-.kpi b{font-size:16px;color:#EA580C}
-.kpi small{color:#777}
+.top h2{font-size:20px}.top h2 span{color:#EA580C}.top span{font-size:26px}
+.search{margin:12px 0}.search input{width:100%;padding:12px;border-radius:14px;border:1px solid #ddd;outline:none;font-size:15px}
+.namaBox{background:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:10px}
+.namaBox b{font-size:14px}.namaBox input{width:100%;padding:11px;border-radius:10px;border:1px solid #ddd;margin-top:8px;outline:none;font-size:15px}
+.kpis{display:flex;gap:10px}.kpi{flex:1;background:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);text-align:center;cursor:pointer}
+.kpi b{font-size:15px;color:#EA580C}.kpi small{color:#777}
 .cat{display:flex;gap:8px;overflow-x:auto;margin:14px 0;padding-bottom:4px}
 .cat button{white-space:nowrap;padding:8px 14px;border-radius:20px;border:1px solid #FDBA74;background:#fff;cursor:pointer}
 .cat button.active{background:#EA580C;color:#fff}
-.head{display:flex;justify-content:space-between;align-items:center;margin:10px 0}
-.head b{font-size:16px}
+.head{display:flex;justify-content:space-between;align-items:center;margin:10px 0}.head b{font-size:17px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.07);cursor:pointer}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.07)}
 .card img{width:100%;height:130px;object-fit:cover}
-.card .in{padding:10px}
-.card .in b{font-size:13px;display:block;min-height:32px}
-.card .in small{color:#888}
-.card .harga{color:#EA580C;font-weight:bold;margin:6px 0}
-.card .stok{font-size:11px;color:green}
-.card button{width:100%;padding:9px;background:#EA580C;color:#fff;border:none;border-radius:10px;margin-top:6px;font-weight:bold;cursor:pointer}
-.footer{text-align:center;margin-top:20px;color:#888;font-size:12px}
-.cart{position:fixed;bottom:0;left:0;right:0;background:#111;color:#fff;padding:14px;display:flex;justify-content:space-between;align-items:center;font-weight:bold}
-.cart button{background:#EA580C;color:#fff;border:none;padding:10px 18px;border-radius:10px;font-weight:bold;cursor:pointer}
+.card .in{padding:10px}.card .in b{font-size:13px;display:block;min-height:32px}.card .in small{color:#888}
+.harga{color:#EA580C;font-weight:bold;margin:6px 0;font-size:16px}
+.stokbox{display:flex;justify-content:space-between;align-items:center;background:#F0FDF4;padding:5px 6px;border-radius:10px;font-size:12px}
+.stokbox button{width:28px;height:28px;border-radius:50%;border:none;background:#16A34A;color:#fff;font-weight:bold;font-size:17px;cursor:pointer}
+.card button.tambah{width:100%;padding:10px;background:#EA580C;color:#fff;border:none;border-radius:10px;margin-top:8px;font-weight:bold;cursor:pointer}
+.rekap{margin-top:16px;background:#fff;padding:12px;border-radius:14px}
+.rekap-item{border-bottom:1px dashed #ddd;padding:8px 0;font-size:13px}
+.cart{position:fixed;bottom:0;left:0;right:0;background:#111;color:#fff;padding:12px}
+.cart .row{display:flex;justify-content:space-between;align-items:center}
+.cart button{background:#EA580C;color:#fff;border:none;padding:11px 18px;border-radius:10px;font-weight:bold;cursor:pointer}
+.struk{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);display:none;justify-content:center;align-items:center;padding:16px;z-index:99}
+.struk .paper{background:#fff;width:100%;max-width:380px;padding:18px;border-radius:12px;max-height:90vh;overflow:auto}
+.struk .paper p{font-size:13px;margin:4px 0}.struk button{width:100%;padding:11px;border-radius:10px;border:none;font-weight:bold;margin-top:8px;cursor:pointer}
+.btn-orange{background:#EA580C;color:#fff}.btn-grey{background:#eee}
 </style>
 </head>
 <body>
 
-<div class="top">
-<h2>Warung <span>Sembako</span><br><small style="font-size:11px;color:#777;font-weight:normal">Syamsudin Budiansyah ⭐ Premium</small></h2>
-<span onclick="klik('Notifikasi')">🔔</span>
-</div>
+<div class="top"><h2>Warung <span>Sembako</span><br><small style="font-size:12px;color:#777;font-weight:normal">Syamsudin Budiansyah ⭐ Premium</small></h2><span>🔔</span></div>
 
 <div class="search"><input id="cari" oninput="filterCari()" placeholder="🔍 Cari beras, ayam, sayur, ciki..."></div>
 
+<div class="namaBox"><b>👤 Nama Pembeli - Isi Dulu Sebelum Jualan</b><input id="namaPembeli" placeholder="Contoh: Bu Ani, Pak RT..."></div>
+
 <div class="kpis">
-<div class="kpi" onclick="klik('Penjualan Hari Ini')"><small>Penjualan</small><br><b>Rp 1,2 Jt</b></div>
-<div class="kpi" onclick="klik('Stok Barang')"><small>Stok</small><br><b>14 Item</b></div>
-<div class="kpi" onclick="klik('Pembeli')"><small>Pembeli</small><br><b>48 Orang</b></div>
+<div class="kpi" onclick="lihatRekap()"><small>Penjualan</small><br><b id="totalJual">Rp 0</b></div>
+<div class="kpi" onclick="lihatRekap()"><small>Stok</small><br><b>14 Item</b></div>
+<div class="kpi" onclick="lihatRekap()"><small>Transaksi</small><br><b id="jmlTransaksi">0 Transaksi</b></div>
 </div>
 
 <div class="cat">
@@ -60,56 +60,95 @@ body{background:#FFF7ED;padding:12px;padding-bottom:90px}
 <button onclick="filterKat('minuman',this)">☕ Minuman</button>
 </div>
 
-<div class="head"><b>Daftar Produk</b><span style="color:#EA580C;font-size:13px;cursor:pointer" onclick="klik('Lihat Semua')">Lihat Semua ></span></div>
+<div class="head"><b>Daftar Produk</b><span style="color:#EA580C;font-size:13px" onclick="lihatRekap()">Lihat Rekapan ></span></div>
 
-<div class="grid" id="grid">
+<div class="grid" id="grid"></div>
 
-<!-- SEMBAKO -->
-<div class="card" data-kat="sembako" data-nama="beras pandan"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80"><div class="in"><b>🍚 Beras Pandan 5 Kg</b><small>Sembako</small><div class="harga">Rp 68.000</div><div class="stok">● Stok: 24 karung</div><button onclick="tambah('Beras Pandan 5 Kg',68000)">+ Keranjang</button></div></div>
-
-<div class="card" data-kat="sembako" data-nama="minyak goreng"><img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&q=80"><div class="in"><b>🫒 Minyak Goreng 1 L</b><small>Sembako</small><div class="harga">Rp 18.500</div><div class="stok">● Stok: 36 botol</div><button onclick="tambah('Minyak Goreng 1 L',18500)">+ Keranjang</button></div></div>
-
-<div class="card" data-kat="sembako" data-nama="gula pasir"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&q=80"><div class="in"><b>🧂 Gula Pasir 1 Kg</b><small>Sembako</small><div class="harga">Rp 16.000</div><div class="stok">● Stok: 40 bungkus</div><button onclick="tambah('Gula Pasir 1 Kg',16000)">+ Keranjang</button></div></div>
-
-<div class="card" data-kat="sembako" data-nama="telur ayam"><img src="https://images.unsplash.com/photo-1518569656558-1f25e69d93d7?w=400&q=80"><div class="in"><b>🥚 Telur Ayam 1 Kg</b><small>Sembako</small><div class="harga">Rp 29.000</div><div class="stok">● Stok: 15 Kg</div><button onclick="tambah('Telur Ayam 1 Kg',29000)">+ Keranjang</button></div></div>
-
-<div class="card" data-kat="sembako" data-nama="tepung terigu"><img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&q=80"><div class="in"><b>🌾 Tepung Terigu 1 Kg</b><small>Sembako</small><div class="harga">Rp 13.000</div><div class="stok">● Stok: 28 bungkus</div><button onclick="tambah('Tepung Terigu 1 Kg',13000)">+ Keranjang</button></div></div>
-
-<div class="card" data-kat="sembako" data-nama="mie instan"><img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&q=80"><div class="in"><b>🍜 Mie Instan Goreng</b><small>Sembako</small><div class="harga">Rp 3.500</div><div class="stok">● Stok: 120 pcs</div><button onclick="tambah('Mie Instan Goreng',3500)">+ Keranjang</button></div></div>
-
-<!-- AYAM POTONG -->
-<div class="card" data-kat="ayam" data-nama="ayam potong"><img src="https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400&q=80"><div class="in"><b>🍗 Ayam Potong 1 Kg</b><small>Ayam Potong - Segar</small><div class="harga">Rp 38.000</div><div class="stok">● Stok: 12 Kg - Segar Hari Ini</div><button onclick="tambah('Ayam Potong 1 Kg',38000)">+ Keranjang</button></div></div>
-
-<div class="card" data-kat="ayam" data-nama="ceker ayam"><img src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&q=80"><div class="in"><b>🍗 Ceker Ayam 1 Kg</b><small>Ayam Potong</small><div class="harga">Rp 22.000</div><div class="stok">● Stok: 8 Kg</div><button onclick="tambah('Ceker Ayam 1 Kg',22000)">+ Keranjang</button></div></div>
-
-<!-- SAYUR -->
-<div class="card" data-kat="sayur" data-nama="sayur bayam kangkung wortel"><img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=80"><div class="in"><b>🥬 Sayur Segar Campur</b><small>Sayur - Bayam, Kangkung</small><div class="harga">Rp 8.000</div><div class="stok">● Stok: Segar Pagi Ini</div><button onclick="tambah('Sayur Segar Campur',8000)">+ Keranjang</button></div></div>
-
-<div class="card" data-kat="sayur" data-nama="wortel kentang kol"><img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80"><div class="in"><b>🥕 Wortel & Kentang 1 Kg</b><small>Sayur</small><div class="harga">Rp 14.000</div><div class="stok">● Stok: 20 Kg</div><button onclick="tambah('Wortel & Kentang 1 Kg',14000)">+ Keranjang</button></div></div>
-
-<!-- SNACK / CIKI -->
-<div class="card" data-kat="snack" data-nama="ciki chiki snack"><img src="https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&q=80"><div class="in"><b>🍟 Chiki / Ciki Kentang</b><small>Snack / Ciki</small><div class="harga">Rp 10.000</div><div class="stok">● Stok: 45 bungkus</div><button onclick="tambah('Chiki Kentang',10000)">+ Keranjang</button></div></div>
-
-<div class="card" data-kat="snack" data-nama="taro qtela keripik"><img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80"><div class="in"><b>🥔 Taro & Keripik Singkong</b><small>Snack / Ciki</small><div class="harga">Rp 8.500</div><div class="stok">● Stok: 60 bungkus</div><button onclick="tambah('Taro Keripik',8500)">+ Keranjang</button></div></div>
-
-<!-- MINUMAN -->
-<div class="card" data-kat="minuman" data-nama="kopi bubuk"><img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&q=80"><div class="in"><b>☕ Kopi Bubuk 250 gr</b><small>Minuman</small><div class="harga">Rp 24.000</div><div class="stok">● Stok: 30 bungkus</div><button onclick="tambah('Kopi Bubuk 250 gr',24000)">+ Keranjang</button></div></div>
-
-<div class="card" data-kat="minuman" data-nama="susu kental manis"><img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=80"><div class="in"><b>🥛 Susu Kental Manis</b><small>Minuman</small><div class="harga">Rp 13.500</div><div class="stok">● Stok: 25 kaleng</div><button onclick="tambah('Susu Kental Manis',13500)">+ Keranjang</button></div></div>
-
+<div class="rekap" id="rekapBox">
+<b>📋 REKAPAN TRANSAKSI HARI INI</b>
+<div id="listRekap" style="margin-top:8px;font-size:13px;color:#666">Belum ada transaksi hari ini.</div>
+<button onclick="hapusRekap()" style="width:100%;padding:10px;background:#FEE2E2;color:#DC2626;border:none;border-radius:10px;margin-top:10px;font-weight:bold;cursor:pointer">🗑️ Hapus Semua Rekapan</button>
 </div>
 
-<div class="footer">Dibuat oleh Syamsudin Budiansyah ⭐ Premium<br>Warung Sembako - Bandung</div>
+<div style="text-align:center;color:#888;font-size:12px;margin-top:16px">Dibuat oleh Syamsudin Budiansyah ⭐ Premium<br>Warung Sembako - Bandung</div>
 
-<div class="cart"><span id="cartText">🛒 Keranjang: 0 item - Rp 0</span><button onclick="checkout()">Checkout</button></div>
+<div class="cart">
+<div class="row"><span id="cartText">🛒 Keranjang: 0 item - Rp 0</span><button onclick="checkout()">Checkout & Struk</button></div>
+<div id="cartDetail" style="font-size:12px;margin-top:6px;color:#FDBA74"></div>
+</div>
+
+<div class="struk" id="strukBox"><div class="paper" id="strukIsi"></div></div>
 
 <script>
-let total=0, jumlah=0;
-function tambah(nama,harga){ total+=harga; jumlah++; document.getElementById('cartText').innerText='🛒 Keranjang: '+jumlah+' item - Rp '+total.toLocaleString('id-ID'); alert(nama+' masuk keranjang!\nTotal: Rp '+total.toLocaleString('id-ID')); }
-function checkout(){ if(jumlah==0){ alert('Keranjang masih kosong Pak, pilih barang dulu!'); } else { alert('Pesanan Berhasil!\nTotal '+jumlah+' item = Rp '+total.toLocaleString('id-ID')+'\n\nTerima kasih sudah belanja di Warung Syamsudin Budiansyah!'); total=0; jumlah=0; document.getElementById('cartText').innerText='🛒 Keranjang: 0 item - Rp 0'; } }
-function klik(fitur){ alert('Fitur '+fitur+' aktif!\n\nWarung Syamsudin Budiansyah'); }
+let barang=[
+{id:1,nama:"🍚 Beras Pandan 5 Kg",kat:"sembako",key:"beras pandan",harga:68000,stok:24,satuan:"karung",img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80"},
+{id:2,nama:"🫒 Minyak Goreng 1 L",kat:"sembako",key:"minyak goreng",harga:18500,stok:36,satuan:"botol",img:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&q=80"},
+{id:3,nama:"🧂 Gula Pasir 1 Kg",kat:"sembako",key:"gula pasir",harga:16000,stok:40,satuan:"bungkus",img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&q=80"},
+{id:4,nama:"🥚 Telur Ayam 1 Kg",kat:"sembako",key:"telur ayam",harga:29000,stok:15,satuan:"Kg",img:"https://images.unsplash.com/photo-1518569656558-1f25e69d93d7?w=400&q=80"},
+{id:5,nama:"🌾 Tepung Terigu 1 Kg",kat:"sembako",key:"tepung terigu",harga:13000,stok:28,satuan:"bungkus",img:"https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&q=80"},
+{id:6,nama:"🍜 Mie Instan Goreng",kat:"sembako",key:"mie instan",harga:3500,stok:120,satuan:"pcs",img:"https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&q=80"},
+{id:7,nama:"🍗 Ayam Potong 1 Kg",kat:"ayam",key:"ayam potong",harga:38000,stok:12,satuan:"Kg",img:"https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400&q=80"},
+{id:8,nama:"🍗 Ceker Ayam 1 Kg",kat:"ayam",key:"ceker ayam",harga:22000,stok:8,satuan:"Kg",img:"https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&q=80"},
+{id:9,nama:"🥬 Sayur Segar Campur",kat:"sayur",key:"sayur bayam kangkung",harga:8000,stok:20,satuan:"ikat",img:"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=80"},
+{id:10,nama:"🥕 Wortel & Kentang 1 Kg",kat:"sayur",key:"wortel kentang kol",harga:14000,stok:20,satuan:"Kg",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80"},
+{id:11,nama:"🍟 Chiki / Ciki Kentang",kat:"snack",key:"ciki chiki snack",harga:10000,stok:45,satuan:"bungkus",img:"https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&q=80"},
+{id:12,nama:"🥔 Taro & Keripik Singkong",kat:"snack",key:"taro keripik",harga:8500,stok:60,satuan:"bungkus",img:"https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80"},
+{id:13,nama:"☕ Kopi Bubuk 250 gr",kat:"minuman",key:"kopi bubuk",harga:24000,stok:30,satuan:"bungkus",img:"https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&q=80"},
+{id:14,nama:"🥛 Susu Kental Manis",kat:"minuman",key:"susu",harga:13500,stok:25,satuan:"kaleng",img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=80"},
+];
+let cart=[];
+let riwayat = JSON.parse(localStorage.getItem('riwayatWarung')||'[]');
+function tampil(){
+let g=document.getElementById('grid'); g.innerHTML='';
+barang.forEach(b=>{
+g.innerHTML+=`<div class="card" data-kat="${b.kat}" data-nama="${b.key}"><img src="${b.img}"><div class="in"><b>${b.nama}</b><small>Sembako</small><div class="harga">Rp ${b.harga.toLocaleString('id-ID')}</div><div class="stokbox"><button onclick="ubahStok(${b.id},-1)">-</button><span>Stok: <b id="stok-${b.id}">${b.stok} ${b.satuan}</b></span><button onclick="ubahStok(${b.id},1)">+</button></div><button class="tambah" onclick="tambah(${b.id})">+ Keranjang</button></div></div>`;
+});
+updateRekap();
+}
+function ubahStok(id,d){
+let b=barang.find(x=>x.id==id); b.stok+=d; if(b.stok<0) b.stok=0;
+document.getElementById('stok-'+id).innerText=b.stok+' '+b.satuan;
+}
+function tambah(id){
+let b=barang.find(x=>x.id==id);
+if(b.stok<=0){ alert('Stok '+b.nama+' habis Pak! Tap tombol + dulu untuk tambah stok'); return; }
+b.stok--; document.getElementById('stok-'+id).innerText=b.stok+' '+b.satuan;
+let c=cart.find(x=>x.id==id); if(c) c.qty++; else cart.push({id:id,nama:b.nama,harga:b.harga,qty:1});
+updateCart();
+}
+function updateCart(){
+let total=0,jumlah=0,detail=''; cart.forEach(c=>{ total+=c.harga*c.qty; jumlah+=c.qty; detail+=c.nama+' x'+c.qty+' = Rp '+(c.harga*c.qty).toLocaleString('id-ID')+'<br>'; });
+document.getElementById('cartText').innerText='🛒 Keranjang: '+jumlah+' item - Rp '+total.toLocaleString('id-ID');
+document.getElementById('cartDetail').innerHTML=detail;
+}
+function checkout(){
+let nama=document.getElementById('namaPembeli').value;
+if(!nama){ alert('Isi dulu Nama Pembeli Pak! Contoh: Bu Ani'); document.getElementById('namaPembeli').focus(); return; }
+if(cart.length==0){ alert('Keranjang masih kosong Pak!'); return; }
+let total=0; cart.forEach(c=>total+=c.harga*c.qty);
+let now=new Date(); let tgl=now.toLocaleDateString('id-ID')+' '+now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+let no='TRX-'+Date.now().toString().slice(-5);
+let itemsHtml=''; cart.forEach(c=>{ itemsHtml+=`<p>${c.nama} x ${c.qty} <span style="float:right">Rp ${(c.harga*c.qty).toLocaleString('id-ID')}</span></p>`; });
+riwayat.unshift({no:no,nama:nama,tgl:tgl,total:total,items:cart.map(c=>c.nama+' x'+c.qty).join(', ')});
+localStorage.setItem('riwayatWarung',JSON.stringify(riwayat));
+document.getElementById('strukBox').style.display='flex';
+document.getElementById('strukIsi').innerHTML=`<h3 style="text-align:center">WARUNG SEMBAKO</h3><p style="text-align:center">Syamsudin Budiansyah ⭐ Premium<br>Bandung</p><hr><p>No: ${no}<br>Tanggal: ${tgl}<br>Pembeli: <b>${nama}</b></p><hr>${itemsHtml}<hr><p><b>TOTAL <span style="float:right">Rp ${total.toLocaleString('id-ID')}</span></b></p><p style="text-align:center">Terima kasih sudah belanja!<br>Semoga berkah 🙏</p><button class="btn-orange" onclick="tutupStruk()">✅ Selesai & Simpan</button><button class="btn-grey" onclick="window.print()">🖨️ Cetak / Screenshot Struk</button>`;
+cart=[]; updateCart(); document.getElementById('namaPembeli').value=''; updateRekap();
+}
+function tutupStruk(){ document.getElementById('strukBox').style.display='none'; alert('Struk sudah tersimpan di Rekapan!'); }
+function updateRekap(){
+let total=riwayat.reduce((a,b)=>a+b.total,0);
+document.getElementById('totalJual').innerText='Rp '+total.toLocaleString('id-ID');
+document.getElementById('jmlTransaksi').innerText=riwayat.length+' Transaksi';
+let list=document.getElementById('listRekap');
+if(riwayat.length==0) list.innerHTML='Belum ada transaksi hari ini.';
+else list.innerHTML=riwayat.map(r=>`<div class="rekap-item"><b>${r.no}</b> - ${r.tgl}<br>Pembeli: <b>${r.nama}</b><br>${r.items}<br>Total: <b>Rp ${r.total.toLocaleString('id-ID')}</b></div>`).join('');
+}
+function lihatRekap(){ document.getElementById('rekapBox').scrollIntoView({behavior:'smooth'}); }
+function hapusRekap(){ if(confirm('Hapus semua rekapan?')){ riwayat=[]; localStorage.removeItem('riwayatWarung'); updateRekap(); } }
 function filterKat(kat,btn){ document.querySelectorAll('.cat button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.card').forEach(c=>{ c.style.display=(kat=='semua'||c.dataset.kat==kat)?'block':'none'; }); }
 function filterCari(){ let q=document.getElementById('cari').value.toLowerCase(); document.querySelectorAll('.card').forEach(c=>{ c.style.display=c.dataset.nama.includes(q)?'block':'none'; }); }
+tampil();
 </script>
 </body>
   </html>
