@@ -96,4 +96,13 @@ function backup(){let d={barang:barang,tx:tx,hutang:hutang,pelanggan:pelanggan,s
 function restore(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=function(){try{let d=JSON.parse(r.result);barang=d.barang||[];tx=d.tx||[];hutang=d.hutang||[];pelanggan=d.pelanggan||[];setting=d.setting||setting;save();render();alert('Restore berhasil ✅')}catch(err){alert('File tidak valid')}};r.readAsText(f)}
 function resetAll(){if(!confirm('Yakin hapus SEMUA? Backup dulu!'))return;if(!confirm('Benar-benar hapus?'))return;localStorage.clear();location.reload()}
 document.getElementById('sNama').value=setting.nama||'Warung Sembako';document.getElementById('sAlamat').value=setting.alamat||'';document.getElementById('sHp').value=setting.hp||'';render();
-</script></body></html>
+</script><style>
+body .grid, body .grid3{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
+body .kpi{padding:10px 11px!important;min-height:62px!important}
+body .kpi b{font-size:15px!important;white-space:nowrap!important}
+body .flex{display:flex!important;flex-wrap:nowrap!important;gap:8px!important;align-items:flex-start!important}
+body .flex div:last-child{flex:none!important;min-width:72px!important;text-align:right!important;white-space:nowrap!important}
+body .flex b{white-space:nowrap!important}
+body nav button{padding:7px 11px!important;font-size:12.5px!important}
+body nav button.on{background:#FFF3D6!important;color:#7A4A00!important;border:1.5px solid #FF9500!important;box-shadow:none!important}
+</style></body></html>
