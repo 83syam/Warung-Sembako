@@ -59,7 +59,7 @@ button.ganti{background:#fff;border:1px solid #FFC93C;padding:6px 10px;border-ra
 
 <div class="row"><h3>Daftar Produk</h3><a href="#">Lihat Semua ></a></div>
 <div class="card"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200"><div class="t"><b>Beras Pandan 5kg</b><p>Rp 62.000</p></div><span class="badge">Stok: 24</span></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200"><div class="t"><b>Minyak Goreng 1L</b><p>Rp 18.500</p></div><span class="badge warn">⚠️ Stok: 4</span></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=200&q=80"><div class="t"><b>Minyak Goreng 1L</b><p>Rp 18.500</p></div><span class="badge warn">⚠️ Stok: 4</span></div>
 
 <div class="row"><h3>Aktivitas Terbaru</h3></div>
 <div class="act"><div class="ico">🕒</div><div style="flex:1"><b style="font-size:14px">Penjualan baru #INV-1024</b><p style="font-size:12px;color:#666">Hari ini, 09:12 - Rp 150.000</p></div></div>
@@ -84,5 +84,14 @@ let b=prompt('Nama Warung Baru untuk dibagikan ke warung lain:', document.getEle
 if(b && b.trim()){localStorage.setItem('namaWarung',b.trim());document.getElementById('namaWarungFooter').textContent=b.trim();document.getElementById('namaWarungTop').textContent='• '+b.trim();}
 }
 </script>
+  <script>
+function klik(fitur){
+alert("Fitur "+fitur+" akan segera aktif!\n\nIni versi Demo, dibuat oleh Syamsudin Budiansyah");
+}
+document.querySelectorAll('.kpi, .card, .top span').forEach(function(el){
+el.style.cursor='pointer';
+el.onclick=function(){klik(el.innerText.slice(0,20))};
+});
+  </script>
 </body>
 </html>
