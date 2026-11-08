@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Warung Sembako V3 Komplit - Syamsudin Budiansyah</title>
+<title>Warung Sembako - Syamsudin Budiansyah</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#F0FDF4;padding:0;padding-bottom:20px}
@@ -24,17 +24,24 @@ input,select{width:100%;padding:11px;border-radius:10px;border:1px solid #ddd;ma
 .stokbox{display:flex;justify-content:space-between;align-items:center;background:#F0FDF4;padding:4px 6px;border-radius:8px;font-size:12px;margin:6px 0}
 .stokbox button{width:26px;height:26px;border-radius:50%;border:none;background:#16A34A;color:#fff;font-weight:bold;cursor:pointer}
 .btn{width:100%;padding:11px;border-radius:10px;border:none;font-weight:bold;margin-top:8px;cursor:pointer}
-.btn-orange{background:#EA580C;color:#fff}.btn-green{background:#16A34A;color:#fff}.btn-red{background:#DC2626;color:#fff}.btn-grey{background:#eee}
+.btn-orange{background:#EA580C;color:#fff}.btn-green{background:#16A34A;color:#fff}.btn-red{background:#DC2626;color:#fff}.btn-grey{background:#eee}.btn-blue{background:#2563EB;color:#fff}
 .row{display:flex;gap:8px}.row>*{flex:1}
 .hutang-item{background:#FFFBEB;border:1px solid #FDE68A;padding:10px;border-radius:12px;margin-top:10px}
 label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 .struk{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);display:none;justify-content:center;align-items:center;padding:16px;z-index:99}
 .struk .paper{background:#fff;width:100%;max-width:380px;padding:18px;border-radius:12px;max-height:90vh;overflow:auto}
 .struk .paper p{font-size:13px;margin:4px 0}
+.setup{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:none;justify-content:center;align-items:center;padding:16px;z-index:200}
+.setup .paper{background:#fff;width:100%;max-width:420px;padding:20px;border-radius:16px;max-height:92vh;overflow:auto}
 </style>
 </head>
 <body>
-<div class="header"><h2>🏪 Warung Sembako V3 - Komplit</h2><small>Stok Karung • Jual • Hutang • Pelanggan • Laporan • Backup</small><br><small>Syamsudin Budiansyah ⭐ Premium - Bandung</small></div>
+
+<div class="header">
+<h2 id="judulWarung">🏪 Warung Sembako</h2>
+<small id="subWarung">Syamsudin Budiansyah ⭐ Premium - Bandung</small><br>
+<small style="background:rgba(255,255,255,.25);padding:3px 8px;border-radius:10px">Dibuat oleh Syamsudin Budiansyah • Dipakai oleh <b id="pemilikTxt">Anda</b></small>
+</div>
 
 <div class="tabs">
 <button class="active" onclick="showTab('dashboard',this)">📊 Dashboard</button>
@@ -47,25 +54,23 @@ label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 </div>
 
 <div class="wrap">
-
-<!-- DASHBOARD - SAMA PERSIS SEPERTI INDEX.HTML -->
 <div id="tab-dashboard">
 <div class="kpis">
 <div class="kpi"><small>Omzet Hari Ini</small><b id="omzetHari">Rp 0</b></div>
 <div class="kpi"><small>Omzet Bulan Ini</small><b id="omzetBulan">Rp 0</b></div>
 <div class="kpi"><small>Total Hutang</small><b id="totalHutang">Rp 0</b></div>
-<div class="kpi"><small>Total Barang</small><b id="totalBarang">14</b></div>
+<div class="kpi"><small>Total Barang</small><b id="totalBarang">15</b></div>
 <div class="kpi"><small>Stok Menipis</small><b id="stokMenipis">0</b></div>
 <div class="kpi"><small>Total Transaksi</small><b id="totalTrx">0</b></div>
 </div>
 <div class="card"><b>⚠️ Stok Perlu Diisi</b><p id="stokWarning" style="font-size:13px;margin-top:6px">Semua stok aman ✅</p></div>
 <div class="card"><b>🧾 Transaksi Terakhir</b><div id="trxTerakhir" style="font-size:13px;margin-top:6px">Belum ada transaksi.</div></div>
 <div class="card"><b>🏆 Terlaris Hari Ini</b><div id="terlaris" style="font-size:13px;margin-top:6px">Belum ada.</div></div>
+<div class="card"><b>📤 Bagikan Aplikasi Ini Ke Teman</b><p style="font-size:13px">Teman Bapak bisa pakai juga, tinggal ganti nama warungnya saja!</p><button class="btn btn-blue" onclick="bagikan()">📤 Bagikan Via WhatsApp</button><button class="btn btn-grey" onclick="salinLink()">🔗 Salin Link Aplikasi</button></div>
 </div>
 
-<!-- STOK - SAMA SEPERTI INDEX.HTML + FOTO -->
 <div id="tab-stok" style="display:none">
-<div class="card"><b>📦 Daftar Stok - Tap - / + Untuk Ubah Stok Karung / Kg</b><p style="font-size:12px;color:#666">Stok berubah otomatis kalau laku di Jual</p><div class="grid" id="gridStok"></div></div>
+<div class="card"><b>📦 Daftar Stok - Tap - / + Untuk Ubah Stok Karung / Kg</b><div class="grid" id="gridStok"></div></div>
 <div class="card"><b>➕ Tambah Barang Baru</b>
 <label>Nama Barang</label><input id="newNama" placeholder="Contoh: Beras Premium">
 <label>Harga (Rp)</label><input id="newHarga" type="number" placeholder="14000">
@@ -74,13 +79,11 @@ label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 <button class="btn btn-green" onclick="tambahBarang()">+ Tambah Barang</button></div>
 </div>
 
-<!-- JUAL / KASIR - SAMA SEPERTI INDEX.HTML -->
 <div id="tab-jual" style="display:none">
-<div class="card"><b>🛒 Kasir</b><input id="cari" oninput="filterCari()" placeholder="🔍 Cari barang... Beras, Ayam, Sayur, Ciki">
-<div class="grid" id="gridJual"></div></div>
+<div class="card"><b>🛒 Kasir</b><input id="cari" oninput="filterCari()" placeholder="🔍 Cari beras, ayam, sayur, ciki..."><div class="grid" id="gridJual"></div></div>
 <div class="card"><b>🛒 Keranjang</b><div id="cartList" style="font-size:13px;margin-top:6px">Keranjang kosong.</div>
 <label>👤 Nama Pembeli / Nama Pelanggan</label><input id="namaPembeli" list="listNama" placeholder="Contoh: Ibu. Resi"><datalist id="listNama"></datalist>
-<label>Cara Bayar / Jenis</label><select id="jenisBayar"><option value="Tunai">💵 Tunai - Lunas</option><option value="Hutang / Bon">📒 Hutang / Bon</option></select>
+<label>Cara Bayar</label><select id="jenisBayar"><option value="Tunai">💵 Tunai - Lunas</option><option value="Hutang / Bon">📒 Hutang / Bon</option></select>
 <div class="row"><div><label>Diskon (Rp)</label><input id="diskon" type="number" value="0" oninput="updateCart()"></div><div><label>Bayar (Rp)</label><input id="bayar" type="number" value="0" oninput="updateCart()"></div></div>
 <p style="margin-top:10px"><b>Total: <span id="totalBayar">Rp 0</span></b> <span style="float:right">Kembali: <b id="kembalian">Rp 0</b></span></p>
 <div class="row"><button class="btn btn-green" onclick="selesaikan()">✅ Selesaikan</button><button class="btn btn-grey" onclick="kosongkan()">🧹 Kosongkan</button></div>
@@ -88,63 +91,95 @@ label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 </div>
 </div>
 
-<!-- HUTANG -->
 <div id="tab-hutang" style="display:none">
 <div class="card"><b>📒 Hutang Belum Lunas</b><div id="listHutang">Tidak ada hutang. ✅</div></div>
-<div class="card"><b>➕ Hutang Manual</b>
-<label>Nama</label><input id="hutNama" placeholder="Nama yang ngutang">
-<label>Nominal</label><input id="hutNominal" type="number" placeholder="14000">
-<label>Jatuh Tempo</label><input id="hutTempo" type="date">
-<button class="btn btn-orange" onclick="tambahHutangManual()">+ Simpan Hutang</button></div>
+<div class="card"><b>➕ Hutang Manual</b><label>Nama</label><input id="hutNama" placeholder="Nama yang ngutang"><label>Nominal</label><input id="hutNominal" type="number" placeholder="14000"><label>Jatuh Tempo</label><input id="hutTempo" type="date"><button class="btn btn-orange" onclick="tambahHutangManual()">+ Simpan Hutang</button></div>
 </div>
 
-<!-- PELANGGAN -->
 <div id="tab-pelanggan" style="display:none">
-<div class="card"><b>👥 Daftar Pelanggan</b><div id="listPelanggan" style="font-size:13px;margin-top:6px">Belum ada pelanggan.</div>
-<label>Tambah Pelanggan Baru</label><input id="pelNama" placeholder="Nama Pelanggan"><button class="btn btn-green" onclick="tambahPelanggan()">+ Tambah Pelanggan</button></div>
+<div class="card"><b>👥 Daftar Pelanggan</b><div id="listPelanggan" style="font-size:13px;margin-top:6px">Belum ada pelanggan.</div><label>Tambah Pelanggan Baru</label><input id="pelNama" placeholder="Nama Pelanggan"><button class="btn btn-green" onclick="tambahPelanggan()">+ Tambah Pelanggan</button></div>
 </div>
 
-<!-- LAPORAN -->
 <div id="tab-laporan" style="display:none">
-<div class="card"><b>📈 Laporan & Rekapan Transaksi</b><div id="listLaporan" style="font-size:13px;margin-top:8px">Belum ada laporan.</div>
-<button class="btn btn-orange" onclick="window.print()">🖨️ Print Nota / Simpan Sebagai PDF</button>
-<button class="btn btn-red" onclick="hapusSemua()">🗑️ Hapus Semua Data</button></div>
+<div class="card"><b>📈 Laporan & Rekapan</b><div id="listLaporan" style="font-size:13px;margin-top:8px">Belum ada laporan.</div><button class="btn btn-orange" onclick="window.print()">🖨️ Print Nota / Simpan Sebagai PDF</button><button class="btn btn-red" onclick="hapusSemua()">🗑️ Hapus Semua Data</button></div>
 </div>
 
-<!-- PENGATURAN -->
 <div id="tab-pengaturan" style="display:none">
-<div class="card"><b>⚙️ Pengaturan & Backup</b>
-<label>Nama Warung</label><input id="setNama" value="Warung Sembako Syamsudin Budiansyah">
-<label>Nama Pemilik</label><input value="Syamsudin Budiansyah ⭐ Premium">
+<div class="card"><b>⚙️ Pengaturan Warung - Bisa Dirubah Siapapun Yang Memakai</b>
+<p style="font-size:12px;color:#666">Ganti nama warung Bapak / teman Bapak di sini. Nama pembuat tetap Syamsudin Budiansyah.</p>
+<label>🏪 Nama Warung (Bisa Dirubah)</label><input id="setNamaWarung" placeholder="Contoh: Warung Berkah Ibu Ani">
+<label>👤 Nama Pemilik / Pemakai</label><input id="setPemilik" placeholder="Contoh: Ibu Ani">
+<label>📱 No HP / WhatsApp</label><input id="setHP" placeholder="Contoh: 0812-xxxx-xxxx">
+<label>📍 Alamat Warung</label><input id="setAlamat" placeholder="Contoh: Baleendah, Bandung">
+<label>💬 Kata Pembuka Struk</label><input id="setUcapan" placeholder="Terima kasih sudah belanja!">
+<button class="btn btn-green" onclick="simpanPengaturan()">✅ Simpan Nama Warung Baru</button>
+<button class="btn btn-orange" onclick="bukaSetup()">🔄 Ganti Pemakai Baru / Reset Warung</button>
+</div>
+<div class="card"><b>💾 Backup & Bagikan</b>
 <button class="btn btn-green" onclick="backupData()">💾 Backup Data (Download)</button>
-<button class="btn btn-orange" onclick="alert('Pengaturan tersimpan!')">✅ Simpan Pengaturan</button>
-<p style="font-size:12px;color:#666;margin-top:8px">Data tersimpan otomatis di HP, tidak hilang walau ditutup / dimatikan.</p></div>
+<button class="btn btn-blue" onclick="bagikan()">📤 Bagikan Aplikasi Ini</button>
+<p style="font-size:12px;color:#666;margin-top:8px">© Aplikasi ini dibuat oleh <b>Syamsudin Budiansyah</b>. Boleh dipakai & dibagikan dengan izin beliau. Dilarang menghapus nama pembuat.</p>
+</div>
+</div>
 </div>
 
-</div>
+<!-- POPUP IZIN PEMBUAT UNTUK PEMAKAI BARU -->
+<div class="setup" id="setupBox"><div class="paper">
+<h3 style="text-align:center">🏪 Selamat Datang di<br>Warung Sembako</h3>
+<p style="text-align:center;font-size:13px;margin:10px 0;background:#FFFBEB;border:1px solid #FDE68A;padding:10px;border-radius:10px">Aplikasi ini <b>dibuat oleh Syamsudin Budiansyah</b> dari Bandung.<br><br>Dengan izin beliau, aplikasi ini <b>BOLEH dipakai & dibagikan</b> ke siapa saja secara gratis.<br><br>Silahkan isi nama warung Anda di bawah untuk mulai memakai.</p>
+<label>🏪 Nama Warung Anda</label><input id="setupNamaWarung" placeholder="Contoh: Warung Berkah">
+<label>👤 Nama Anda (Pemilik)</label><input id="setupPemilik" placeholder="Contoh: Ibu Ani">
+<label>📱 No HP (Boleh dikosongkan)</label><input id="setupHP" placeholder="0812-...">
+<label>📍 Alamat Warung</label><input id="setupAlamat" placeholder="Baleendah, Bandung">
+<label style="display:flex;gap:8px;align-items:flex-start;font-weight:normal;font-size:12px"><input type="checkbox" id="setuju" style="width:20px;margin:0"> Saya setuju memakai aplikasi ini dengan izin dari pembuat <b>Syamsudin Budiansyah</b>, dan tidak akan menghapus nama pembuat.</label>
+<button class="btn btn-green" onclick="simpanSetup()">✅ Saya Setuju & Mulai Pakai Aplikasi</button>
+<p style="font-size:11px;color:#999;text-align:center;margin-top:8px">© 2026 Syamsudin Budiansyah • Pembuat Aplikasi</p>
+</div></div>
 
 <div class="struk" id="strukBox"><div class="paper" id="strukIsi"></div></div>
 
 <script>
+let config = JSON.parse(localStorage.getItem('configWarung')||'null');
 let barang=[
 {id:1,nama:"Beras Premium",harga:14000,stok:49,satuan:"Kg",img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80"},
 {id:2,nama:"Beras Pandan 5 Kg",harga:68000,stok:24,satuan:"Karung",img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80"},
 {id:3,nama:"Minyak Goreng 1 L",harga:18500,stok:36,satuan:"Botol",img:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&q=80"},
 {id:4,nama:"Gula Pasir 1 Kg",harga:16000,stok:40,satuan:"Bungkus",img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&q=80"},
 {id:5,nama:"Telur Ayam 1 Kg",harga:29000,stok:15,satuan:"Kg",img:"https://images.unsplash.com/photo-1518569656558-1f25e69d93d7?w=400&q=80"},
-{id:6,nama:"Tepung Terigu 1 Kg",harga:13000,stok:28,satuan:"Bungkus",img:"https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&q=80"},
-{id:7,nama:"Mie Instan Goreng",harga:3500,stok:120,satuan:"Pcs",img:"https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&q=80"},
-{id:8,nama:"Ayam Potong 1 Kg",harga:38000,stok:12,satuan:"Kg",img:"https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400&q=80"},
-{id:9,nama:"Ceker Ayam 1 Kg",harga:22000,stok:8,satuan:"Kg",img:"https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&q=80"},
-{id:10,nama:"Sayur Segar Campur",harga:8000,stok:20,satuan:"Ikat",img:"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=80"},
-{id:11,nama:"Wortel & Kentang 1 Kg",harga:14000,stok:20,satuan:"Kg",img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80"},
-{id:12,nama:"Chiki / Ciki Kentang",harga:10000,stok:45,satuan:"Bungkus",img:"https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&q=80"},
-{id:13,nama:"Taro & Keripik Singkong",harga:8500,stok:60,satuan:"Bungkus",img:"https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80"},
-{id:14,nama:"Kopi Bubuk 250 gr",harga:24000,stok:30,satuan:"Bungkus",img:"https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&q=80"},
-{id:15,nama:"Susu Kental Manis",harga:13500,stok:25,satuan:"Kaleng",img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=80"},
+{id:6,nama:"Mie Instan Goreng",harga:3500,stok:120,satuan:"Pcs",img:"https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&q=80"},
+{id:7,nama:"Ayam Potong 1 Kg",harga:38000,stok:12,satuan:"Kg",img:"https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400&q=80"},
+{id:8,nama:"Sayur Segar Campur",harga:8000,stok:20,satuan:"Ikat",img:"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=80"},
+{id:9,nama:"Chiki / Ciki Kentang",harga:10000,stok:45,satuan:"Bungkus",img:"https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&q=80"},
+{id:10,nama:"Kopi Bubuk 250 gr",harga:24000,stok:30,satuan:"Bungkus",img:"https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&q=80"},
+{id:11,nama:"Susu Kental Manis",harga:13500,stok:25,satuan:"Kaleng",img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=80"},
 ];
-let cart=[]; let trx=JSON.parse(localStorage.getItem('trxV3Baru')||'[]'); let hutang=JSON.parse(localStorage.getItem('hutangV3Baru')||'[]'); let pelanggan=JSON.parse(localStorage.getItem('pelV3Baru')||'[]');
-function save(){ localStorage.setItem('trxV3Baru',JSON.stringify(trx)); localStorage.setItem('hutangV3Baru',JSON.stringify(hutang)); localStorage.setItem('pelV3Baru',JSON.stringify(pelanggan)); }
+let cart=[]; let trx=JSON.parse(localStorage.getItem('trxV4')||'[]'); let hutang=JSON.parse(localStorage.getItem('hutangV4')||'[]'); let pelanggan=JSON.parse(localStorage.getItem('pelV4')||'[]');
+function save(){ localStorage.setItem('trxV4',JSON.stringify(trx)); localStorage.setItem('hutangV4',JSON.stringify(hutang)); localStorage.setItem('pelV4',JSON.stringify(pelanggan)); if(config) localStorage.setItem('configWarung',JSON.stringify(config)); }
+function terapkanConfig(){
+if(!config){ document.getElementById('setupBox').style.display='flex'; return; }
+document.getElementById('judulWarung').innerText='🏪 '+(config.namaWarung||'Warung Sembako');
+document.getElementById('subWarung').innerText=(config.pemilik||'Pemilik')+' - '+(config.alamat||'Bandung')+' • HP: '+(config.hp||'-');
+document.getElementById('pemilikTxt').innerText=config.pemilik||'Anda';
+document.getElementById('setNamaWarung').value=config.namaWarung||''; document.getElementById('setPemilik').value=config.pemilik||''; document.getElementById('setHP').value=config.hp||''; document.getElementById('setAlamat').value=config.alamat||''; document.getElementById('setUcapan').value=config.ucapan||'Terima kasih sudah belanja!';
+}
+function simpanSetup(){
+let nw=document.getElementById('setupNamaWarung').value.trim(); let pm=document.getElementById('setupPemilik').value.trim();
+if(!nw||!pm){ alert('Isi Nama Warung & Nama Anda dulu!'); return; }
+if(!document.getElementById('setuju').checked){ alert('Centang dulu kotak Setuju di bawah! Anda memakai dengan izin pembuat Syamsudin Budiansyah.'); return; }
+config={namaWarung:nw,pemilik:pm,hp:document.getElementById('setupHP').value,alamat:document.getElementById('setupAlamat').value||'Bandung',ucapan:'Terima kasih sudah belanja!',izinDari:'Syamsudin Budiansyah',tanggalIzin:new Date().toLocaleDateString('id-ID')};
+save(); document.getElementById('setupBox').style.display='none'; terapkanConfig(); alert('Selamat datang '+pm+'! Warung '+nw+' sudah aktif!\n\nAplikasi ini dipakai dengan izin dari Syamsudin Budiansyah. Terima kasih sudah memakai 🙏');
+}
+function simpanPengaturan(){
+config={namaWarung:document.getElementById('setNamaWarung').value||'Warung Sembako',pemilik:document.getElementById('setPemilik').value||'Pemilik',hp:document.getElementById('setHP').value,alamat:document.getElementById('setAlamat').value||'Bandung',ucapan:document.getElementById('setUcapan').value||'Terima kasih sudah belanja!',izinDari:'Syamsudin Budiansyah'};
+save(); terapkanConfig(); alert('Nama warung berhasil dirubah jadi: '+config.namaWarung+'\nPemilik: '+config.pemilik);
+}
+function bukaSetup(){ if(confirm('Ganti ke pemakai baru? Data transaksi lama tetap ada, tapi nama warung akan diganti. Lanjut?')){ document.getElementById('setupBox').style.display='flex'; } }
+function bagikan(){
+let link=location.href;
+let teks='Halo! Saya pakai Aplikasi Warung Sembako buatan Syamsudin Budiansyah, gratis & bisa dipakai siapa saja. Coba buka: '+link+' - Tinggal isi nama warung kamu, langsung bisa jualan, stok, hutang, struk. Dengan izin dari pembuat ya!';
+window.open('https://wa.me/?text='+encodeURIComponent(teks),'_blank');
+}
+function salinLink(){ navigator.clipboard.writeText(location.href); alert('Link aplikasi berhasil disalin! Tinggal paste ke WhatsApp.'); }
 function showTab(id,btn){ document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); ['dashboard','stok','jual','hutang','pelanggan','laporan','pengaturan'].forEach(t=>document.getElementById('tab-'+t).style.display=(t==id?'block':'none')); }
 function renderBarang(){
 let s=document.getElementById('gridStok'); let j=document.getElementById('gridJual'); s.innerHTML=''; j.innerHTML='';
@@ -155,7 +190,7 @@ j.innerHTML+=`<div class="item" data-nama="${b.nama.toLowerCase()}"><img src="${
 updateDashboard();
 }
 function ubahStok(id,d){ let b=barang.find(x=>x.id==id); b.stok+=d; if(b.stok<0)b.stok=0; renderBarang(); }
-function tambahCart(id){ let b=barang.find(x=>x.id==id); if(b.stok<=0){alert('Stok habis! Tap + dulu di Stok');return;} b.stok--; let c=cart.find(x=>x.id==id); if(c)c.qty++; else cart.push({id:id,nama:b.nama,harga:b.harga,qty:1}); renderBarang(); updateCart(); }
+function tambahCart(id){ let b=barang.find(x=>x.id==id); if(b.stok<=0){alert('Stok habis!');return;} b.stok--; let c=cart.find(x=>x.id==id); if(c)c.qty++; else cart.push({id:id,nama:b.nama,harga:b.harga,qty:1}); renderBarang(); updateCart(); }
 function updateCart(){
 let total=0; cart.forEach(c=>total+=c.harga*c.qty);
 let diskon=parseInt(document.getElementById('diskon').value||0); let bayar=parseInt(document.getElementById('bayar').value||0);
@@ -172,48 +207,48 @@ let total=0; cart.forEach(c=>total+=c.harga*c.qty);
 let diskon=parseInt(document.getElementById('diskon').value||0); let bayar=parseInt(document.getElementById('bayar').value||0); let jenis=document.getElementById('jenisBayar').value;
 let totalAkhir=total-diskon; let kembali=bayar-totalAkhir>0?bayar-totalAkhir:0;
 let now=new Date(); let tgl=now.toISOString().slice(0,10)+' '+now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
-let no='TRX-'+Date.now().toString().slice(-5);
-let items=cart.map(c=>c.nama+' x'+c.qty).join(', ');
+let no='TRX-'+Date.now().toString().slice(-5); let items=cart.map(c=>c.nama+' x'+c.qty).join(', ');
 trx.unshift({no:no,nama:nama,tgl:tgl,total:totalAkhir,items:items,jenis:jenis,bayar:bayar,kembali:kembali});
 if(jenis=='Hutang / Bon'){ hutang.unshift({nama:nama,total:totalAkhir,totalAwal:totalAkhir,sudah:0,tgl:tgl,items:items,no:no}); }
 if(!pelanggan.includes(nama)) pelanggan.push(nama);
 save(); renderBarang(); updateDashboard(); renderHutang(); renderPelanggan(); renderLaporan();
 let status = jenis=='Hutang / Bon' ? '🔴 BON - BELUM LUNAS' : '🟢 LUNAS';
-let statusColor = jenis=='Hutang / Bon' ? '#DC2626' : '#16A34A';
-let itemsHtml=cart.map(c=>`<p>${c.nama} x ${c.qty} <span style="float:right">Rp ${(c.harga*c.qty).toLocaleString('id-ID')}</span></p>`).join('');
-document.getElementById('hasilJual').innerHTML=`<div style="background:#DCFCE7;padding:10px;border-radius:10px">✅ <b>Berhasil! ${status}</b><br>${nama} • ${tgl} • ${jenis}<br>${items}<br><b>Total Rp ${totalAkhir.toLocaleString('id-ID')} • Bayar Rp ${bayar.toLocaleString('id-ID')} • Kembali Rp ${kembali.toLocaleString('id-ID')}</b><br><button class="btn btn-orange" onclick="tampilStruk('${no}','${nama}','${tgl}','${totalAkhir}','${bayar}','${kembali}','${jenis}')">🖨️ Print Nota / Struk</button></div>`;
+document.getElementById('hasilJual').innerHTML=`<div style="background:#DCFCE7;padding:10px;border-radius:10px">✅ <b>Berhasil! ${status}</b><br>${nama} • ${tgl}<br>${items}<br><b>Total Rp ${totalAkhir.toLocaleString('id-ID')} • Kembali Rp ${kembali.toLocaleString('id-ID')}</b><br><button class="btn btn-orange" onclick="tampilStruk('${no}','${nama}','${tgl}','${totalAkhir}','${bayar}','${kembali}','${jenis}')">🖨️ Print Struk</button></div>`;
 cart=[]; updateCart(); document.getElementById('namaPembeli').value=''; document.getElementById('bayar').value=0; document.getElementById('diskon').value=0;
 }
 function tampilStruk(no,nama,tgl,total,bayar,kembali,jenis){
 let status = jenis=='Hutang / Bon' ? '🔴 BON - BELUM LUNAS' : '🟢 LUNAS';
 let color = jenis=='Hutang / Bon' ? '#DC2626' : '#16A34A';
+let w=config||{namaWarung:'Warung Sembako',pemilik:'Syamsudin Budiansyah',alamat:'Bandung',ucapan:'Terima kasih sudah belanja!'};
 document.getElementById('strukBox').style.display='flex';
-document.getElementById('strukIsi').innerHTML=`<h3 style="text-align:center">WARUNG SEMBAKO V3</h3><p style="text-align:center">Syamsudin Budiansyah ⭐ Premium<br>Bandung</p><hr><p style="text-align:center;background:${color};color:#fff;padding:8px;border-radius:8px;font-weight:bold">${status}</p><p>No: ${no}<br>Tanggal: ${tgl}<br>Pembeli: <b>${nama}</b><br>Cara Bayar: <b>${jenis}</b></p><hr><p><b>TOTAL Rp ${parseInt(total).toLocaleString('id-ID')}</b><br>Bayar: Rp ${parseInt(bayar).toLocaleString('id-ID')}<br>Kembali: Rp ${parseInt(kembali).toLocaleString('id-ID')}</p><hr><p style="text-align:center">Terima kasih! Semoga berkah 🙏</p><button class="btn btn-orange" onclick="window.print()">🖨️ Print / Simpan PDF</button><button class="btn btn-grey" onclick="document.getElementById('strukBox').style.display='none'">Tutup</button>`;
+document.getElementById('strukIsi').innerHTML=`<h3 style="text-align:center">${w.namaWarung}</h3><p style="text-align:center">${w.pemilik}<br>${w.alamat}<br><small>Dibuat oleh Syamsudin Budiansyah</small></p><hr><p style="text-align:center;background:${color};color:#fff;padding:8px;border-radius:8px;font-weight:bold">${status}</p><p>No: ${no}<br>Tanggal: ${tgl}<br>Pembeli: <b>${nama}</b><br>Cara Bayar: <b>${jenis}</b></p><hr><p><b>TOTAL Rp ${parseInt(total).toLocaleString('id-ID')}</b><br>Bayar: Rp ${parseInt(bayar).toLocaleString('id-ID')}<br>Kembali: Rp ${parseInt(kembali).toLocaleString('id-ID')}</p><hr><p style="text-align:center">${w.ucapan}<br>Semoga berkah 🙏</p><button class="btn btn-orange" onclick="window.print()">🖨️ Print / Simpan PDF</button><button class="btn btn-grey" onclick="document.getElementById('strukBox').style.display='none'">Tutup</button>`;
 }
 function renderHutang(){
 let totalH=hutang.reduce((a,b)=>a+(b.totalAwal-b.sudah),0);
 document.getElementById('totalHutang').innerText='Rp '+totalH.toLocaleString('id-ID');
-document.getElementById('listHutang').innerHTML=hutang.length==0?'Tidak ada hutang. ✅':hutang.map((h,i)=>`<div class="hutang-item"><b>${h.nama} - Rp ${(h.totalAwal-h.sudah).toLocaleString('id-ID')}</b> <span style="background:#FEF3C7;padding:3px 8px;border-radius:10px;font-size:11px">Tanpa tempo</span><br><small>Transaksi ${h.tgl} - ${h.items} • Sudah bayar Rp ${h.sudah.toLocaleString('id-ID')}</small><div class="row" style="margin-top:8px"><input id="bayarH-${i}" type="number" placeholder="Nominal bayar"><button class="btn btn-green" onclick="bayarHutang(${i})">💰 Bayar</button><button class="btn btn-red" onclick="hapusHutang(${i})">Hapus</button></div></div>`).join('');
+document.getElementById('listHutang').innerHTML=hutang.length==0?'Tidak ada hutang. ✅':hutang.map((h,i)=>`<div class="hutang-item"><b>${h.nama} - Rp ${(h.totalAwal-h.sudah).toLocaleString('id-ID')}</b><br><small>${h.tgl} - ${h.items}</small><div class="row" style="margin-top:8px"><input id="bayarH-${i}" type="number" placeholder="Nominal bayar"><button class="btn btn-green" onclick="bayarHutang(${i})">💰 Bayar</button><button class="btn btn-red" onclick="hapusHutang(${i})">Hapus</button></div></div>`).join('');
 }
-function bayarHutang(i){ let v=parseInt(document.getElementById('bayarH-'+i).value||0); if(!v){alert('Isi nominal bayar dulu!');return;} hutang[i].sudah+=v; if(hutang[i].sudah>=hutang[i].totalAwal){ alert('Hutang '+hutang[i].nama+' LUNAS! 🎉'); hutang.splice(i,1); } else { alert('Dibayar Rp '+v.toLocaleString('id-ID')+'. Sisa Rp '+(hutang[i].totalAwal-hutang[i].sudah).toLocaleString('id-ID')); } save(); renderHutang(); updateDashboard(); }
+function bayarHutang(i){ let v=parseInt(document.getElementById('bayarH-'+i).value||0); if(!v){alert('Isi nominal bayar dulu!');return;} hutang[i].sudah+=v; if(hutang[i].sudah>=hutang[i].totalAwal){ alert('Hutang '+hutang[i].nama+' LUNAS! 🎉'); hutang.splice(i,1); } save(); renderHutang(); updateDashboard(); }
 function hapusHutang(i){ if(confirm('Hapus hutang ini?')){ hutang.splice(i,1); save(); renderHutang(); updateDashboard(); } }
-function tambahHutangManual(){ let n=document.getElementById('hutNama').value; let nom=parseInt(document.getElementById('hutNominal').value||0); let tempo=document.getElementById('hutTempo').value; if(!n||!nom){alert('Isi Nama & Nominal dulu!');return;} hutang.unshift({nama:n,total:nom,totalAwal:nom,sudah:0,tgl:tempo||new Date().toISOString().slice(0,10),items:'Hutang Manual',no:'MANUAL'}); save(); renderHutang(); updateDashboard(); alert('Hutang '+n+' tersimpan!'); }
+function tambahHutangManual(){ let n=document.getElementById('hutNama').value; let nom=parseInt(document.getElementById('hutNominal').value||0); if(!n||!nom){alert('Isi Nama & Nominal!');return;} hutang.unshift({nama:n,total:nom,totalAwal:nom,sudah:0,tgl:new Date().toISOString().slice(0,10),items:'Hutang Manual',no:'MANUAL'}); save(); renderHutang(); updateDashboard(); alert('Hutang '+n+' tersimpan!'); }
 function renderPelanggan(){ document.getElementById('listPelanggan').innerHTML=pelanggan.length==0?'Belum ada pelanggan.':pelanggan.map(p=>`👤 ${p}<br>`).join(''); document.getElementById('listNama').innerHTML=pelanggan.map(p=>`<option value="${p}">`).join(''); }
 function tambahPelanggan(){ let n=document.getElementById('pelNama').value; if(!n)return; if(!pelanggan.includes(n)) pelanggan.push(n); save(); renderPelanggan(); alert('Pelanggan '+n+' ditambah!'); }
-function renderLaporan(){ document.getElementById('listLaporan').innerHTML=trx.length==0?'Belum ada laporan.':trx.map(t=>`<div style="border-bottom:1px dashed #ddd;padding:6px 0"><b>${t.no}</b> - ${t.tgl}<br>${t.nama} • ${t.items} • ${t.jenis}<br>Total: <b>Rp ${t.total.toLocaleString('id-ID')}</b> • Bayar Rp ${t.bayar.toLocaleString('id-ID')} • Kembali Rp ${t.kembali.toLocaleString('id-ID')}</div>`).join(''); }
+function renderLaporan(){ document.getElementById('listLaporan').innerHTML=trx.length==0?'Belum ada laporan.':trx.map(t=>`<div style="border-bottom:1px dashed #ddd;padding:6px 0"><b>${t.no}</b> - ${t.tgl}<br>${t.nama} • ${t.items} • ${t.jenis}<br>Total: <b>Rp ${t.total.toLocaleString('id-ID')}</b></div>`).join(''); }
 function updateDashboard(){
 let hari=new Date().toISOString().slice(0,10); let omzetH=trx.filter(t=>t.tgl.startsWith(hari)).reduce((a,b)=>a+b.total,0); let omzetB=trx.reduce((a,b)=>a+b.total,0);
 document.getElementById('omzetHari').innerText='Rp '+omzetH.toLocaleString('id-ID'); document.getElementById('omzetBulan').innerText='Rp '+omzetB.toLocaleString('id-ID'); document.getElementById('totalTrx').innerText=trx.length; document.getElementById('totalBarang').innerText=barang.length;
-let menipis=barang.filter(b=>b.stok<=5); document.getElementById('stokMenipis').innerText=menipis.length; document.getElementById('stokWarning').innerText=menipis.length==0?'Semua stok aman ✅':'Stok menipis: '+menipis.map(b=>b.nama+' ('+b.stok+' '+b.satuan+')').join(', ');
+let menipis=barang.filter(b=>b.stok<=5); document.getElementById('stokMenipis').innerText=menipis.length; document.getElementById('stokWarning').innerText=menipis.length==0?'Semua stok aman ✅':'Stok menipis: '+menipis.map(b=>b.nama+' ('+b.stok+')').join(', ');
 document.getElementById('trxTerakhir').innerHTML=trx.length==0?'Belum ada transaksi.':trx.slice(0,3).map(t=>`${t.tgl} • ${t.nama} • ${t.items} - <b>Rp ${t.total.toLocaleString('id-ID')}</b><br>`).join('');
 let allItems={}; trx.forEach(t=>{ t.items.split(', ').forEach(it=>{ allItems[it]=(allItems[it]||0)+1; }); });
 let top=Object.entries(allItems).sort((a,b)=>b[1]-a[1])[0]; document.getElementById('terlaris').innerText=top?top[0]+' - '+top[1]+'x laku':'Belum ada.';
 }
 function tambahBarang(){ let n=document.getElementById('newNama').value; let h=parseInt(document.getElementById('newHarga').value||0); let s=parseInt(document.getElementById('newStok').value||0); let sat=document.getElementById('newSatuan').value; if(!n||!h){alert('Isi Nama & Harga!');return;} barang.push({id:Date.now(),nama:n,harga:h,stok:s,satuan:sat,img:"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=80"}); renderBarang(); alert('Barang '+n+' ditambah!'); }
-function backupData(){ let data=JSON.stringify({barang,trx,hutang,pelanggan}); let a=document.createElement('a'); a.href='data:text/plain,[STRIPPED] a.download='backup-warung.json'; a.click(); alert('Backup berhasil di-download!'); }
-function hapusSemua(){ if(confirm('Hapus SEMUA data transaksi & hutang?')){ trx=[]; hutang=[]; save(); renderHutang(); renderLaporan(); updateDashboard(); } }
+function backupData(){ let data=JSON.stringify({config,barang,trx,hutang,pelanggan}); let a=document.createElement('a'); a.href='data:text/plain,[STRIPPED] a.download='backup-warung.json'; a.click(); alert('Backup berhasil!'); }
+function hapusSemua(){ if(confirm('Hapus SEMUA data?')){ trx=[]; hutang=[]; save(); renderHutang(); renderLaporan(); updateDashboard(); } }
 function filterCari(){ let q=document.getElementById('cari').value.toLowerCase(); document.querySelectorAll('#gridJual .item').forEach(c=>{ c.style.display=c.dataset.nama.includes(q)?'block':'none'; }); }
-renderBarang(); renderHutang(); renderPelanggan(); renderLaporan(); updateCart();
+// Jika belum ada config, isi default Bapak dulu biar Bapak tidak perlu isi lagi, tapi orang baru tetap bisa ganti
+if(!config){ config={namaWarung:'Warung Sembako Syamsudin Budiansyah',pemilik:'Syamsudin Budiansyah',hp:'',alamat:'Baleendah, Bandung',ucapan:'Terima kasih sudah belanja!',izinDari:'Syamsudin Budiansyah'}; save(); }
+terapkanConfig(); renderBarang(); renderHutang(); renderPelanggan(); renderLaporan(); updateCart();
 </script>
 </body>
 </html>
