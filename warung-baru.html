@@ -5,93 +5,111 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Warung Sembako - Syamsudin Budiansyah</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-body{background:#FFFBF2;color:#222}
-.wrap{max-width:480px;margin:0 auto;padding:0 14px 20px}
-.top{display:flex;justify-content:space-between;align-items:center;padding:18px 16px 12px}
-.top h1{font-size:28px;letter-spacing:-.5px}
-.top span{font-size:22px}
-.hero{background:#FFDDB5;border-radius:18px;padding:16px;margin:0 2px}
-.hero b{font-size:17px}
-.hero p{font-size:13px;color:#444;margin-top:4px}
-.scroll{display:flex;gap:12px;overflow-x:auto;padding:14px 2px;scrollbar-width:none}
-.kpi{flex:0 0 165px;background:#fff;border-radius:14px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.06);border-left:6px solid #FF7A00;min-height:118px}
-.kpi i{display:block;width:42px;height:42px;background:#FFE6C2;border-radius:50%;text-align:center;line-height:42px;font-size:20px;font-style:normal;margin-bottom:12px}
-.kpi small{font-size:12px;color:#444}
-.kpi b{font-size:16px;display:block;margin:4px 0}
-.kpi em{font-size:11px;font-style:normal;color:#0A8A4A}
-.kpi em.red{color:#E67E00}
-.row{display:flex;justify-content:space-between;align-items:center;margin:16px 2px 10px}
-.row h3{font-size:17px}
-.row a{font-size:13px;color:#E67E00;text-decoration:none;font-weight:600}
-.card{background:#fff;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center;border-left:6px solid #FF7A00;box-shadow:0 4px 12px rgba(0,0,0,.05);margin-bottom:12px}
-.card img{width:44px;height:58px;object-fit:cover;border-radius:8px;background:#eee}
-.card .t{flex:1}
-.card .t b{font-size:14px}
-.card .t p{font-size:14px}
-.badge{font-size:11px;padding:5px 8px;border-radius:20px;background:#E6F7E6;color:#2E7D32;font-weight:600;white-space:nowrap}
-.badge.warn{background:#FFE8C2;color:#B25E00}
-.act{background:#fff;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center;border-left:6px solid #FF7A00;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-.act .ico{width:40px;height:40px;background:#FFE6C2;border-radius:50%;text-align:center;line-height:40px;font-size:18px;flex:none}
-.footer{margin-top:16px;background:#FFDDB5;border-radius:20px;padding:14px 14px;display:flex;gap:12px;align-items:center}
-.footer .logo{width:44px;height:44px;background:#FF9500;border-radius:50%;text-align:center;line-height:44px;font-size:22px;flex:none}
-.footer small{font-size:11px;color:#555}
-.footer b{font-size:12.5px;display:block;line-height:1.4}
-.prem{flex:none;background:#FFC93C;font-size:11px;font-weight:700;padding:6px 10px;border-radius:20px}
-button.ganti{background:#fff;border:1px solid #FFC93C;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#FFF7ED;padding:12px;padding-bottom:90px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top h2{font-size:18px}
+.top h2 span{color:#EA580C}
+.top span{font-size:22px;cursor:pointer}
+.search{margin:12px 0}
+.search input{width:100%;padding:12px;border-radius:12px;border:1px solid #ddd;outline:none;font-size:15px}
+.kpis{display:flex;gap:10px}
+.kpi{flex:1;background:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);cursor:pointer;text-align:center}
+.kpi b{font-size:16px;color:#EA580C}
+.kpi small{color:#777}
+.cat{display:flex;gap:8px;overflow-x:auto;margin:14px 0;padding-bottom:4px}
+.cat button{white-space:nowrap;padding:8px 14px;border-radius:20px;border:1px solid #FDBA74;background:#fff;cursor:pointer}
+.cat button.active{background:#EA580C;color:#fff}
+.head{display:flex;justify-content:space-between;align-items:center;margin:10px 0}
+.head b{font-size:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.07);cursor:pointer}
+.card img{width:100%;height:130px;object-fit:cover}
+.card .in{padding:10px}
+.card .in b{font-size:13px;display:block;min-height:32px}
+.card .in small{color:#888}
+.card .harga{color:#EA580C;font-weight:bold;margin:6px 0}
+.card .stok{font-size:11px;color:green}
+.card button{width:100%;padding:9px;background:#EA580C;color:#fff;border:none;border-radius:10px;margin-top:6px;font-weight:bold;cursor:pointer}
+.footer{text-align:center;margin-top:20px;color:#888;font-size:12px}
+.cart{position:fixed;bottom:0;left:0;right:0;background:#111;color:#fff;padding:14px;display:flex;justify-content:space-between;align-items:center;font-weight:bold}
+.cart button{background:#EA580C;color:#fff;border:none;padding:10px 18px;border-radius:10px;font-weight:bold;cursor:pointer}
 </style>
 </head>
 <body>
-<div class="wrap">
-<div class="top"><h1>Dashboard</h1><span>🔔 🔍</span></div>
 
-<div class="hero">
-<b>Halo, <span id="namaPemilik">Syamsudin</span> 👋</b>
-<p>Kelola warungmu hari ini dengan mudah & cepat</p>
-<p style="margin-top:10px"><button class="ganti" onclick="gantiNama()">✏️ Ganti Nama Warung</button> <small id="namaWarungTop" style="font-weight:700;color:#7A4A00"></small></p>
+<div class="top">
+<h2>Warung <span>Sembako</span><br><small style="font-size:11px;color:#777;font-weight:normal">Syamsudin Budiansyah ⭐ Premium</small></h2>
+<span onclick="klik('Notifikasi')">🔔</span>
 </div>
 
-<div class="scroll">
-<div class="kpi"><i>📈</i><small>Penjualan Hari Ini</small><b>Rp 1.240.000</b><em>↑ 12% dari kemarin</em></div>
-<div class="kpi"><i>🧺</i><small>Stok Tersedia</small><b>126 Produk</b><em class="red">5 stok hampir habis</em></div>
-<div class="kpi"><i>👥</i><small>Pembeli Hari Ini</small><b>32 Pembeli</b><em>↑ 8 pelanggan baru</em></div>
+<div class="search"><input id="cari" oninput="filterCari()" placeholder="🔍 Cari beras, ayam, sayur, ciki..."></div>
+
+<div class="kpis">
+<div class="kpi" onclick="klik('Penjualan Hari Ini')"><small>Penjualan</small><br><b>Rp 1,2 Jt</b></div>
+<div class="kpi" onclick="klik('Stok Barang')"><small>Stok</small><br><b>14 Item</b></div>
+<div class="kpi" onclick="klik('Pembeli')"><small>Pembeli</small><br><b>48 Orang</b></div>
 </div>
 
-<div class="row"><h3>Daftar Produk</h3><a href="#">Lihat Semua ></a></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200"><div class="t"><b>Beras Pandan 5kg</b><p>Rp 62.000</p></div><span class="badge">Stok: 24</span></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=200&q=80"><div class="t"><b>Minyak Goreng 1L</b><p>Rp 18.500</p></div><span class="badge warn">⚠️ Stok: 4</span></div>
-
-<div class="row"><h3>Aktivitas Terbaru</h3></div>
-<div class="act"><div class="ico">🕒</div><div style="flex:1"><b style="font-size:14px">Penjualan baru #INV-1024</b><p style="font-size:12px;color:#666">Hari ini, 09:12 - Rp 150.000</p></div></div>
-
-<!-- FOOTER NO.2 - FINAL -->
-<div class="footer">
-<div class="logo">🏪</div>
-<div style="flex:1;min-width:0">
-<small>Dibuat oleh</small>
-<b>Syamsudin Budiansyah</b>
-<b style="font-weight:400;color:#444"><span id="namaWarungFooter">Warung Sembako</span> - Bandung 2026</b>
-</div>
-<div class="prem">⭐ Premium</div>
+<div class="cat">
+<button class="active" onclick="filterKat('semua',this)">Semua</button>
+<button onclick="filterKat('sembako',this)">🍚 Sembako</button>
+<button onclick="filterKat('ayam',this)">🍗 Ayam Potong</button>
+<button onclick="filterKat('sayur',this)">🥬 Sayur</button>
+<button onclick="filterKat('snack',this)">🍟 Snack / Ciki</button>
+<button onclick="filterKat('minuman',this)">☕ Minuman</button>
 </div>
 
+<div class="head"><b>Daftar Produk</b><span style="color:#EA580C;font-size:13px;cursor:pointer" onclick="klik('Lihat Semua')">Lihat Semua ></span></div>
+
+<div class="grid" id="grid">
+
+<!-- SEMBAKO -->
+<div class="card" data-kat="sembako" data-nama="beras pandan"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80"><div class="in"><b>🍚 Beras Pandan 5 Kg</b><small>Sembako</small><div class="harga">Rp 68.000</div><div class="stok">● Stok: 24 karung</div><button onclick="tambah('Beras Pandan 5 Kg',68000)">+ Keranjang</button></div></div>
+
+<div class="card" data-kat="sembako" data-nama="minyak goreng"><img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&q=80"><div class="in"><b>🫒 Minyak Goreng 1 L</b><small>Sembako</small><div class="harga">Rp 18.500</div><div class="stok">● Stok: 36 botol</div><button onclick="tambah('Minyak Goreng 1 L',18500)">+ Keranjang</button></div></div>
+
+<div class="card" data-kat="sembako" data-nama="gula pasir"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&q=80"><div class="in"><b>🧂 Gula Pasir 1 Kg</b><small>Sembako</small><div class="harga">Rp 16.000</div><div class="stok">● Stok: 40 bungkus</div><button onclick="tambah('Gula Pasir 1 Kg',16000)">+ Keranjang</button></div></div>
+
+<div class="card" data-kat="sembako" data-nama="telur ayam"><img src="https://images.unsplash.com/photo-1518569656558-1f25e69d93d7?w=400&q=80"><div class="in"><b>🥚 Telur Ayam 1 Kg</b><small>Sembako</small><div class="harga">Rp 29.000</div><div class="stok">● Stok: 15 Kg</div><button onclick="tambah('Telur Ayam 1 Kg',29000)">+ Keranjang</button></div></div>
+
+<div class="card" data-kat="sembako" data-nama="tepung terigu"><img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&q=80"><div class="in"><b>🌾 Tepung Terigu 1 Kg</b><small>Sembako</small><div class="harga">Rp 13.000</div><div class="stok">● Stok: 28 bungkus</div><button onclick="tambah('Tepung Terigu 1 Kg',13000)">+ Keranjang</button></div></div>
+
+<div class="card" data-kat="sembako" data-nama="mie instan"><img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&q=80"><div class="in"><b>🍜 Mie Instan Goreng</b><small>Sembako</small><div class="harga">Rp 3.500</div><div class="stok">● Stok: 120 pcs</div><button onclick="tambah('Mie Instan Goreng',3500)">+ Keranjang</button></div></div>
+
+<!-- AYAM POTONG -->
+<div class="card" data-kat="ayam" data-nama="ayam potong"><img src="https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400&q=80"><div class="in"><b>🍗 Ayam Potong 1 Kg</b><small>Ayam Potong - Segar</small><div class="harga">Rp 38.000</div><div class="stok">● Stok: 12 Kg - Segar Hari Ini</div><button onclick="tambah('Ayam Potong 1 Kg',38000)">+ Keranjang</button></div></div>
+
+<div class="card" data-kat="ayam" data-nama="ceker ayam"><img src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&q=80"><div class="in"><b>🍗 Ceker Ayam 1 Kg</b><small>Ayam Potong</small><div class="harga">Rp 22.000</div><div class="stok">● Stok: 8 Kg</div><button onclick="tambah('Ceker Ayam 1 Kg',22000)">+ Keranjang</button></div></div>
+
+<!-- SAYUR -->
+<div class="card" data-kat="sayur" data-nama="sayur bayam kangkung wortel"><img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=80"><div class="in"><b>🥬 Sayur Segar Campur</b><small>Sayur - Bayam, Kangkung</small><div class="harga">Rp 8.000</div><div class="stok">● Stok: Segar Pagi Ini</div><button onclick="tambah('Sayur Segar Campur',8000)">+ Keranjang</button></div></div>
+
+<div class="card" data-kat="sayur" data-nama="wortel kentang kol"><img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80"><div class="in"><b>🥕 Wortel & Kentang 1 Kg</b><small>Sayur</small><div class="harga">Rp 14.000</div><div class="stok">● Stok: 20 Kg</div><button onclick="tambah('Wortel & Kentang 1 Kg',14000)">+ Keranjang</button></div></div>
+
+<!-- SNACK / CIKI -->
+<div class="card" data-kat="snack" data-nama="ciki chiki snack"><img src="https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&q=80"><div class="in"><b>🍟 Chiki / Ciki Kentang</b><small>Snack / Ciki</small><div class="harga">Rp 10.000</div><div class="stok">● Stok: 45 bungkus</div><button onclick="tambah('Chiki Kentang',10000)">+ Keranjang</button></div></div>
+
+<div class="card" data-kat="snack" data-nama="taro qtela keripik"><img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80"><div class="in"><b>🥔 Taro & Keripik Singkong</b><small>Snack / Ciki</small><div class="harga">Rp 8.500</div><div class="stok">● Stok: 60 bungkus</div><button onclick="tambah('Taro Keripik',8500)">+ Keranjang</button></div></div>
+
+<!-- MINUMAN -->
+<div class="card" data-kat="minuman" data-nama="kopi bubuk"><img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&q=80"><div class="in"><b>☕ Kopi Bubuk 250 gr</b><small>Minuman</small><div class="harga">Rp 24.000</div><div class="stok">● Stok: 30 bungkus</div><button onclick="tambah('Kopi Bubuk 250 gr',24000)">+ Keranjang</button></div></div>
+
+<div class="card" data-kat="minuman" data-nama="susu kental manis"><img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=80"><div class="in"><b>🥛 Susu Kental Manis</b><small>Minuman</small><div class="harga">Rp 13.500</div><div class="stok">● Stok: 25 kaleng</div><button onclick="tambah('Susu Kental Manis',13500)">+ Keranjang</button></div></div>
+
 </div>
+
+<div class="footer">Dibuat oleh Syamsudin Budiansyah ⭐ Premium<br>Warung Sembako - Bandung</div>
+
+<div class="cart"><span id="cartText">🛒 Keranjang: 0 item - Rp 0</span><button onclick="checkout()">Checkout</button></div>
+
 <script>
-let s=localStorage.getItem('namaWarung');
-if(s){document.getElementById('namaWarungFooter').textContent=s;document.getElementById('namaWarungTop').textContent='• '+s;}
-function gantiNama(){
-let b=prompt('Nama Warung Baru untuk dibagikan ke warung lain:', document.getElementById('namaWarungFooter').textContent);
-if(b && b.trim()){localStorage.setItem('namaWarung',b.trim());document.getElementById('namaWarungFooter').textContent=b.trim();document.getElementById('namaWarungTop').textContent='• '+b.trim();}
-}
+let total=0, jumlah=0;
+function tambah(nama,harga){ total+=harga; jumlah++; document.getElementById('cartText').innerText='🛒 Keranjang: '+jumlah+' item - Rp '+total.toLocaleString('id-ID'); alert(nama+' masuk keranjang!\nTotal: Rp '+total.toLocaleString('id-ID')); }
+function checkout(){ if(jumlah==0){ alert('Keranjang masih kosong Pak, pilih barang dulu!'); } else { alert('Pesanan Berhasil!\nTotal '+jumlah+' item = Rp '+total.toLocaleString('id-ID')+'\n\nTerima kasih sudah belanja di Warung Syamsudin Budiansyah!'); total=0; jumlah=0; document.getElementById('cartText').innerText='🛒 Keranjang: 0 item - Rp 0'; } }
+function klik(fitur){ alert('Fitur '+fitur+' aktif!\n\nWarung Syamsudin Budiansyah'); }
+function filterKat(kat,btn){ document.querySelectorAll('.cat button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.card').forEach(c=>{ c.style.display=(kat=='semua'||c.dataset.kat==kat)?'block':'none'; }); }
+function filterCari(){ let q=document.getElementById('cari').value.toLowerCase(); document.querySelectorAll('.card').forEach(c=>{ c.style.display=c.dataset.nama.includes(q)?'block':'none'; }); }
 </script>
-  <script>
-function klik(fitur){
-alert("Fitur "+fitur+" akan segera aktif!\n\nIni versi Demo, dibuat oleh Syamsudin Budiansyah");
-}
-document.querySelectorAll('.kpi, .card, .top span').forEach(function(el){
-el.style.cursor='pointer';
-el.onclick=function(){klik(el.innerText.slice(0,20))};
-});
-  </script>
 </body>
-</html>
+  </html>
