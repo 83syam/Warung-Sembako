@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Warung Sembako 2 - Syamsudin Budiansyah</title>
+<title>Warung Sembako 3 - Syamsudin Budiansyah</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#F0FDF4;padding:0;padding-bottom:20px}
@@ -21,7 +21,7 @@ input,select{width:100%;padding:11px;border-radius:10px;border:1px solid #ddd;ma
 .item{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .item .logo{width:100%;height:110px;display:flex;align-items:center;justify-content:center;font-size:64px;background:#F0FDF4}
 .item .in{padding:9px}.item .in b{font-size:12px;display:block;min-height:28px}
-.harga{color:#EA580C;font-weight:bold}
+.logo-preview{width:100%;height:90px;display:flex;align-items:center;justify-content:center;font-size:56px;background:#F0FDF4;border-radius:12px;margin-top:8px;border:2px dashed #16A34A}
 .stokbox{display:flex;justify-content:space-between;align-items:center;background:#F0FDF4;padding:4px 6px;border-radius:8px;font-size:12px;margin:6px 0}
 .stokbox button{width:30px;height:30px;border-radius:50%;border:none;background:#16A34A;color:#fff;font-weight:bold;font-size:18px;cursor:pointer}
 .btn{width:100%;padding:12px;border-radius:10px;border:none;font-weight:bold;margin-top:8px;cursor:pointer;font-size:15px}
@@ -35,10 +35,11 @@ label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 .setup .paper{background:#fff;width:100%;max-width:430px;padding:20px;border-radius:16px;max-height:92vh;overflow:auto}
 .kartu{background:#FFFBEB;border:2px dashed #F59E0B;padding:12px;border-radius:12px;margin-top:10px}
 .kartu b{font-size:13px}.kartu p{font-size:13px;margin:4px 0}
+.rahasia{color:#999;letter-spacing:2px}
 </style>
 </head>
 <body>
-<div class="header"><h2 id="judulWarung">🏪 Warung Sembako</h2><small id="subWarung">Syamsudin Budiansyah - Bandung</small><br><small>Dibuat oleh Syamsudin Budiansyah<br>ID Izin: <b id="izinIdTxt">-</b> • No. Seri: <b id="izinSeriTxt">-</b><br>Dipakai oleh <b id="pemilikTxt">Anda</b></small></div>
+<div class="header"><h2 id="judulWarung">🏪 Warung Sembako</h2><small id="subWarung">Syamsudin Budiansyah - Bandung</small><br><small>Dibuat oleh Syamsudin Budiansyah<br>ID Izin: <b class="rahasia">••••••••</b> • No. Seri: <b class="rahasia">••••••••</b><br>Dipakai oleh <b id="pemilikTxt">Anda</b></small></div>
 <div class="tabs" id="tabBar">
 <button type="button" data-tab="dashboard" class="active">📊 Dashboard</button>
 <button type="button" data-tab="stok">📦 Stok</button>
@@ -58,7 +59,7 @@ label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 <div class="kpi"><small>Stok Menipis</small><b id="stokMenipis">0</b></div>
 <div class="kpi"><small>Total Transaksi</small><b id="totalTrx">0</b></div>
 </div>
-<div class="card"><b>🔐 Kartu Izin Pemakai</b><div class="kartu"><p>Pembuat Aplikasi: <b>Syamsudin Budiansyah</b></p><p>ID Pembuat: <b>SYAM-ID-MASTER</b></p><p>No. Seri Pembuat: <b>SYAM-SERI-MASTER-83</b></p><hr><p>ID Izin Anda: <b id="kartuId">-</b></p><p>No. Seri Anda: <b id="kartuSeri">-</b></p><p>Status: <b style="color:#16A34A">✅ TERDAFTAR & DIIZINKAN</b></p></div></div>
+<div class="card"><b>🔐 Kartu Izin Pemakai</b><div class="kartu"><p>Pembuat Aplikasi: <b>Syamsudin Budiansyah</b></p><p>ID Pembuat: <b class="rahasia">••••••••</b></p><p>No. Seri Pembuat: <b class="rahasia">••••••••</b></p><hr><p>ID Izin Anda: <b class="rahasia">••••••••</b></p><p>No. Seri Anda: <b class="rahasia">••••••••</b></p><p>Status: <b style="color:#16A34A">✅ TERDAFTAR & DIIZINKAN</b></p><p style="font-size:11px;color:#999">ID & No. Seri disembunyikan total demi keamanan.</p></div></div>
 <div class="card"><b>⚠️ Stok Perlu Diisi</b><p id="stokWarning">Semua stok aman ✅</p></div>
 <div class="card"><b>🧾 Transaksi Terakhir</b><div id="trxTerakhir">Belum ada transaksi.</div></div>
 <div class="card"><b>🏆 Terlaris Hari Ini</b><div id="terlaris">Belum ada.</div></div>
@@ -66,7 +67,11 @@ label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 <div class="card"><b>📤 Bagikan Aplikasi</b><p style="font-size:13px">Bagikan link saja. ID Izin + No. Seri TIDAK ikut terkirim, minta langsung ke pembuat!</p><button type="button" class="btn btn-blue" onclick="bagikan()">📤 Bagikan Via WhatsApp</button></div>
 </div>
 <div id="tab-stok" style="display:none"><div class="card"><b>📦 Daftar Stok - Tap - / +</b><div class="grid" id="gridStok"></div></div>
-<div class="card"><b>➕ Tambah Barang Baru</b><label>Nama Barang</label><input id="newNama"><label>Harga</label><input id="newHarga" type="number"><label>Stok</label><input id="newStok" type="number"><label>Satuan</label><select id="newSatuan"><option>Kg</option><option>Karung</option><option>Botol</option><option>Bungkus</option><option>Pcs</option><option>Ikat</option><option>Kaleng</option></select><button type="button" class="btn btn-green" onclick="tambahBarang()">+ Tambah Barang</button></div></div>
+<div class="card"><b>➕ Tambah Barang Baru - Logo Otomatis</b>
+<label>Nama Barang - Ketik, logo langsung muncul di bawah</label><input id="newNama" oninput="updateLogoPreview()" placeholder="Contoh: Beras, Sabun, Kopi...">
+<div class="logo-preview" id="logoPreview">📦</div>
+<p id="logoPreviewText" style="text-align:center;font-size:12px;margin-top:4px">Logo akan muncul otomatis sesuai nama barang</p>
+<label>Harga</label><input id="newHarga" type="number"><label>Stok</label><input id="newStok" type="number"><label>Satuan</label><select id="newSatuan"><option>Kg</option><option>Karung</option><option>Botol</option><option>Bungkus</option><option>Pcs</option><option>Ikat</option><option>Kaleng</option></select><button type="button" class="btn btn-green" onclick="tambahBarang()">+ Tambah Barang</button></div></div>
 <div id="tab-jual" style="display:none">
 <div class="card"><b>🛒 Kasir</b><input id="cari" oninput="filterCari()" placeholder="🔍 Cari beras, ayam, sayur, ciki..."><div class="grid" id="gridJual"></div></div>
 <div class="card"><b>🛒 Keranjang</b><div id="cartList">Keranjang kosong.</div>
@@ -89,30 +94,30 @@ label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 <button type="button" class="btn btn-green" onclick="simpanPengaturan()">✅ Simpan Nama Warung Baru</button>
 </div>
 <div class="card"><b>🔐 Izin Dari Pembuat - ID & No. Seri</b>
-<p style="font-size:12px">ID & No. Seri disamarkan demi keamanan. Yang lengkap hanya Bapak sebagai pembuat yang tahu.</p>
-<div class="kartu"><p>ID Izin Anda: <b id="pengId">-</b></p><p>No. Seri Anda: <b id="pengSeri">-</b></p><p>Diizinkan oleh: <b>Syamsudin Budiansyah</b> (ID: SYAM-ID-MASTER)</p></div>
+<p style="font-size:12px">ID & No. Seri dikosongkan / ditutupi total. Hanya status yang ditampilkan.</p>
+<div class="kartu"><p>ID Izin Anda: <b class="rahasia">••••••••</b></p><p>No. Seri Anda: <b class="rahasia">••••••••</b></p><p>Diizinkan oleh: <b>Syamsudin Budiansyah</b></p><p>Status: <b style="color:#16A34A">✅ TERDAFTAR & DIIZINKAN</b></p></div>
 <button type="button" class="btn btn-orange" onclick="buatIzinBaru()">➕ Buat ID + No. Seri Baru Untuk Teman (Acak)</button>
-<p style="font-size:12px">ID Baru: <b id="idBaruTxt">-</b><br>No. Seri Baru: <b id="seriBaruTxt">-</b></p>
+<p style="font-size:12px">ID Baru: <b class="rahasia">••••••••</b><br>No. Seri Baru: <b class="rahasia">••••••••</b><br><small>ID baru tersimpan di HP pembuat, tidak ditampilkan di layar. Pembuat yang membagikan langsung via chat pribadi.</small></p>
 <button type="button" class="btn btn-red" onclick="kunciUlang()">🔒 Kunci Aplikasi / Ganti Pemakai Baru</button>
 </div>
-<div class="card"><b>© Dibuat oleh Syamsudin Budiansyah</b><p style="font-size:12px">ID Pembuat: SYAM-ID-MASTER • No. Seri: SYAM-SERI-MASTER-83<br>Hanya bisa dipakai dengan ID Izin & No. Seri dari pembuat.</p></div>
+<div class="card"><b>© Dibuat oleh Syamsudin Budiansyah</b><p style="font-size:12px">Hanya bisa dipakai dengan ID Izin & No. Seri dari pembuat.</p></div>
 </div>
 </div>
 
 <div class="setup" id="setupBox"><div class="paper">
 <h3 style="text-align:center">🔒 Aplikasi Terkunci<br>Warung Sembako</h3>
-<div class="kartu"><p style="text-align:center">Aplikasi ini <b>dibuat oleh Syamsudin Budiansyah</b></p><p>ID Pembuat: <b>SYAM-ID-MASTER</b></p><p>No. Seri Pembuat: <b>SYAM-SERI-MASTER-83</b></p><p style="font-size:12px">Untuk memakai, Anda HARUS punya <b>ID Izin + No. Seri</b> dari beliau. Keduanya harus pasangan!</p></div>
+<div class="kartu"><p style="text-align:center">Aplikasi ini <b>dibuat oleh Syamsudin Budiansyah</b></p><p>ID Pembuat: <b class="rahasia">••••••••</b></p><p>No. Seri Pembuat: <b class="rahasia">••••••••</b></p><p style="font-size:12px">Untuk memakai, Anda HARUS punya <b>ID Izin + No. Seri</b> dari beliau. Keduanya harus pasangan!</p></div>
 <label>🏪 Nama Warung Anda</label><input id="setupNamaWarung" placeholder="Contoh: Warung Berkah">
 <label>👤 Nama Anda</label><input id="setupPemilik" placeholder="Contoh: Ibu Ani">
 <label>📱 No HP</label><input id="setupHP" placeholder="0812-...">
 <label>📍 Alamat</label><input id="setupAlamat" placeholder="Baleendah, Bandung">
-<label>🪪 ID IZIN *WAJIB*</label><input id="setupId" placeholder="Contoh: SYAM-ID-XXXX-XXXX" style="text-transform:uppercase;font-weight:bold;border:2px solid #16A34A">
-<label>🔢 NO. SERI *WAJIB*</label><input id="setupSeri" placeholder="Contoh: SYAM-SERI-XXXX-XXXX-XXXX" style="text-transform:uppercase;font-weight:bold;border:2px solid #F59E0B">
-<p style="font-size:12px">Contoh pasangan yang benar:<br>ID: <b>SYAM-ID-001</b><br>No. Seri: <b>SYAM-SERI-2026-001</b><br>Kalau salah satu salah, tetap terkunci!</p>
-<label style="display:flex;gap:8px;font-weight:normal;font-size:12px"><input type="checkbox" id="setuju" style="width:20px;margin:0"> Saya memakai aplikasi ini dengan izin dari pembuat <b>Syamsudin Budiansyah</b>, ID: SYAM-ID-MASTER.</label>
+<label>🪪 ID IZIN *WAJIB*</label><input id="setupId" placeholder="Masukkan ID Izin dari pembuat" style="text-transform:uppercase;font-weight:bold;border:2px solid #16A34A">
+<label>🔢 NO. SERI *WAJIB*</label><input id="setupSeri" placeholder="Masukkan No. Seri dari pembuat" style="text-transform:uppercase;font-weight:bold;border:2px solid #F59E0B">
+<p style="font-size:12px">ID & No. Seri harus pasangan yang benar. Kalau salah satu salah, tetap terkunci!</p>
+<label style="display:flex;gap:8px;font-weight:normal;font-size:12px"><input type="checkbox" id="setuju" style="width:20px;margin:0"> Saya memakai aplikasi ini dengan izin dari pembuat <b>Syamsudin Budiansyah</b>.</label>
 <button type="button" class="btn btn-green" onclick="simpanSetup()">✅ Buka Kunci Dengan ID + No. Seri</button>
 <p id="pesanSalah" style="color:#DC2626;font-weight:bold;text-align:center;display:none;margin-top:8px">❌ ID / NO. SERI SALAH! Bukan pasangan yang benar. Minta yang benar ke Syamsudin Budiansyah.</p>
-<p style="font-size:11px;text-align:center;margin-top:8px">© 2026 Syamsudin Budiansyah • ID: SYAM-ID-MASTER • No. Seri: SYAM-SERI-MASTER-83</p>
+<p style="font-size:11px;text-align:center;margin-top:8px">© 2026 Syamsudin Budiansyah</p>
 </div></div>
 
 <div class="struk" id="strukBox"><div class="paper" id="strukIsi"></div></div>
@@ -133,23 +138,17 @@ var IZIN_VALID=[
 ];
 try{ var ex=JSON.parse(localStorage.getItem('izinExtraBaru2')||'[]'); IZIN_VALID=IZIN_VALID.concat(ex); }catch(e){}
 function cariIzin(id,seri){ for(var i=0;i<IZIN_VALID.length;i++){ if(IZIN_VALID[i].id==id && IZIN_VALID[i].seri==seri) return IZIN_VALID[i]; } return null; }
-// --- BARU: Samarkan ID / Seri biar tidak gampang ditiru saat dibagikan / difoto ---
-function samarkan(kode){
-  if(!kode) return '-';
-  if(kode.length<=6) return '****';
-  return kode.slice(0,8)+'****-'+kode.slice(-3);
-}
-// --- BARU: Logo barang otomatis dari nama ---
+function samarkan(kode){ return '••••••••'; }
 function getLogo(nama){
   var n=(nama||'').toLowerCase();
   if(n.indexOf('beras')>-1) return '🍚';
   if(n.indexOf('minyak')>-1) return '🛢️';
   if(n.indexOf('gula')>-1) return '🍬';
   if(n.indexOf('telur')>-1) return '🥚';
-  if(n.indexOf('mie')>-1||n.indexOf('mi ') >-1) return '🍜';
+  if(n.indexOf('mie')>-1||n.indexOf('mi instan')>-1||n.indexOf('indomie')>-1) return '🍜';
   if(n.indexOf('ayam')>-1) return '🍗';
-  if(n.indexOf('sayur')>-1||n.indexOf('bayam')>-1||n.indexOf('kangkung')>-1||n.indexOf('kol')>-1) return '🥬';
-  if(n.indexOf('ciki')>-1||n.indexOf('chiki')>-1||n.indexOf('keripik')>-1||n.indexOf('snack')>-1) return '🍟';
+  if(n.indexOf('sayur')>-1||n.indexOf('bayam')>-1||n.indexOf('kangkung')>-1||n.indexOf('kol')>-1||n.indexOf('sawi')>-1||n.indexOf('wortel')>-1||n.indexOf('kentang')>-1||n.indexOf('tomat')>-1||n.indexOf('cabai')>-1||n.indexOf('cabe')>-1||n.indexOf('bawang')>-1) return '🥬';
+  if(n.indexOf('ciki')>-1||n.indexOf('chiki')>-1||n.indexOf('keripik')>-1||n.indexOf('snack')>-1||n.indexOf('camilan')>-1) return '🍟';
   if(n.indexOf('kopi')>-1) return '☕';
   if(n.indexOf('susu')>-1) return '🥛';
   if(n.indexOf('sabun')>-1) return '🧼';
@@ -166,15 +165,27 @@ function getLogo(nama){
   if(n.indexOf('deterjen')>-1||n.indexOf('rinso')>-1) return '🧺';
   if(n.indexOf('air')>-1||n.indexOf('aqua')>-1||n.indexOf('mineral')>-1) return '💧';
   if(n.indexOf('roti')>-1) return '🍞';
-  if(n.indexOf('gula')>-1) return '🍬';
   if(n.indexOf('daging')>-1||n.indexOf('sapi')>-1) return '🥩';
   if(n.indexOf('ikan')>-1) return '🐟';
-  if(n.indexOf('buah')>-1||n.indexOf('pisang')>-1||n.indexOf('jeruk')>-1||n.indexOf('apel')>-1) return '🍎';
+  if(n.indexOf('buah')>-1||n.indexOf('pisang')>-1||n.indexOf('jeruk')>-1||n.indexOf('apel')>-1||n.indexOf('mangga')>-1) return '🍎';
   if(n.indexOf('tisu')>-1) return '🧻';
   if(n.indexOf('popok')>-1||n.indexOf('pampers')>-1) return '👶';
+  if(n.indexOf('biskuit')>-1||n.indexOf('wafer')>-1||n.indexOf('oreo')>-1) return '🍪';
+  if(n.indexOf('permen')>-1) return '🍭';
+  if(n.indexOf('coklat')>-1||n.indexOf('cokelat')>-1) return '🍫';
+  if(n.indexOf('santan')>-1) return '🥥';
+  if(n.indexOf('mentega')>-1||n.indexOf('margarin')>-1) return '🧈';
+  if(n.indexOf('keju')>-1) return '🧀';
+  if(n.indexOf('baterai')>-1||n.indexOf('batre')>-1) return '🔋';
+  if(n.indexOf('lampu')>-1) return '💡';
   return '📦';
 }
-// --- BARU: Kode acak huruf+angka, tidak gampang ditiru ---
+function updateLogoPreview(){
+  var nama=document.getElementById('newNama').value||'';
+  var logo=getLogo(nama);
+  document.getElementById('logoPreview').innerText=logo;
+  document.getElementById('logoPreviewText').innerText=nama.trim()==''?'Logo akan muncul otomatis sesuai nama barang':'Logo untuk "'+nama+'" : '+logo+' - Sudah sesuai?';
+}
 function kodeAcak(panjang){
   var huruf='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   var hasil='';
@@ -211,12 +222,6 @@ if(!config) return;
 document.getElementById('judulWarung').innerText='🏪 '+config.namaWarung;
 document.getElementById('subWarung').innerText=config.pemilik+' - '+config.alamat;
 document.getElementById('pemilikTxt').innerText=config.pemilik;
-document.getElementById('izinIdTxt').innerText=samarkan(config.idIzin);
-document.getElementById('izinSeriTxt').innerText=samarkan(config.noSeri);
-document.getElementById('kartuId').innerText=samarkan(config.idIzin);
-document.getElementById('kartuSeri').innerText=samarkan(config.noSeri);
-document.getElementById('pengId').innerText=samarkan(config.idIzin);
-document.getElementById('pengSeri').innerText=samarkan(config.noSeri);
 document.getElementById('setNamaWarung').value=config.namaWarung||''; document.getElementById('setPemilik').value=config.pemilik||''; document.getElementById('setHP').value=config.hp||''; document.getElementById('setAlamat').value=config.alamat||'';
 }
 function simpanSetup(){
@@ -227,12 +232,12 @@ if(!document.getElementById('setuju').checked){ alert('Centang dulu kotak Setuju
 var cocok=cariIzin(idI,seri);
 if(!cocok){
 document.getElementById('pesanSalah').style.display='block';
-alert('❌ ID / NO. SERI SALAH!\n\nID: '+idI+'\nNo. Seri: '+seri+'\nBukan pasangan yang benar.\nMinta ID + No. Seri yang benar ke Syamsudin Budiansyah.');
+alert('❌ ID / NO. SERI SALAH!\nBukan pasangan yang benar.\nMinta ID + No. Seri yang benar ke Syamsudin Budiansyah.');
 return;
 }
-config={namaWarung:nw,pemilik:pm,hp:document.getElementById('setupHP').value,alamat:document.getElementById('setupAlamat').value||'Bandung',ucapan:'Terima kasih sudah belanja!',idIzin:idI,noSeri:seri,izinDari:'Syamsudin Budiansyah',idPembuat:'SYAM-ID-MASTER',seriPembuat:'SYAM-SERI-MASTER-83'};
+config={namaWarung:nw,pemilik:pm,hp:document.getElementById('setupHP').value,alamat:document.getElementById('setupAlamat').value||'Bandung',ucapan:'Terima kasih sudah belanja!',idIzin:idI,noSeri:seri,izinDari:'Syamsudin Budiansyah'};
 save(); document.getElementById('setupBox').style.display='none'; terapkanConfig();
-alert('✅ BERHASIL! Selamat datang '+pm+'!\nWarung '+nw+' sudah aktif!\nDiizinkan oleh Syamsudin Budiansyah 🙏\nID & No. Seri Anda disamarkan demi keamanan.');
+alert('✅ BERHASIL! Selamat datang '+pm+'!\nWarung '+nw+' sudah aktif!\nDiizinkan oleh Syamsudin Budiansyah 🙏\nID & No. Seri Anda ditutupi total demi keamanan.');
 }
 function simpanPengaturan(){
 if(!config) config={};
@@ -244,8 +249,7 @@ var idBaru='SYAM-ID-'+kodeAcak(4)+'-'+kodeAcak(4);
 var seriBaru='SYAM-SERI-'+kodeAcak(4)+'-'+kodeAcak(4)+'-'+kodeAcak(4);
 var extra=[]; try{ extra=JSON.parse(localStorage.getItem('izinExtraBaru2')||'[]'); }catch(e){}
 extra.push({id:idBaru,seri:seriBaru,nama:'Izin Baru '+idBaru}); localStorage.setItem('izinExtraBaru2',JSON.stringify(extra)); IZIN_VALID.push({id:idBaru,seri:seriBaru,nama:'Izin Baru'});
-document.getElementById('idBaruTxt').innerText=idBaru; document.getElementById('seriBaruTxt').innerText=seriBaru;
-alert('ID + No. Seri Baru Berhasil Dibuat!\n\nID Izin: '+idBaru+'\nNo. Seri: '+seriBaru+'\n\nCATAT & KIRIM LANGSUNG ke 1 teman saja via chat pribadi. Jangan disebar di grup!');
+alert('ID + No. Seri Baru Berhasil Dibuat & Tersimpan!\n\nID & No. Seri baru TIDAK ditampilkan di layar demi keamanan.\nPembuat yang membagikan langsung via chat pribadi.');
 }
 function kunciUlang(){ if(confirm('Kunci aplikasi & ganti pemakai baru? Nanti pemakai baru harus isi ID + No. Seri lagi.')){ config=null; localStorage.removeItem('configWarungBaruV9'); document.getElementById('setupBox').style.display='flex'; } }
 function bagikan(){ var teks='Halo! Saya pakai Aplikasi Warung Sembako buatan Syamsudin Budiansyah. Untuk buka harus pakai ID Izin + No. Seri dari beliau. Chat beliau dulu untuk minta ID & No. Seri, baru buka: '+location.href; window.open('https://wa.me/?text='+encodeURIComponent(teks),'_blank'); }
@@ -262,6 +266,7 @@ function renderBarang(){
 var s=document.getElementById('gridStok'); var j=document.getElementById('gridJual'); if(!s||!j) return; s.innerHTML=''; j.innerHTML='';
 barang.forEach(function(b){
 var logo=b.logo||getLogo(b.nama);
+b.logo=logo;
 s.innerHTML+='<div class="item"><div class="logo">'+logo+'</div><div class="in"><b>'+b.nama+'</b><small>Rp '+b.harga.toLocaleString('id-ID')+' • Stok '+b.stok+' '+b.satuan+'</small><div class="stokbox"><button type="button" onclick="ubahStok('+b.id+',-1)">-</button><b>'+b.stok+' '+b.satuan+'</b><button type="button" onclick="ubahStok('+b.id+',1)">+</button></div></div></div>';
 j.innerHTML+='<div class="item" data-nama="'+b.nama.toLowerCase()+'"><div class="logo">'+logo+'</div><div class="in"><b>'+b.nama+'</b><small>Rp '+b.harga.toLocaleString('id-ID')+' • Stok '+b.stok+' '+b.satuan+'</small><button type="button" class="btn btn-orange" onclick="tambahCart('+b.id+')">+ Tambah</button></div></div>';
 });
@@ -298,7 +303,7 @@ function tampilStruk(no,nama,tgl,total,bayar,kembali,jenis){
 var status = jenis=='Hutang / Bon' ? '🔴 BON - BELUM LUNAS' : '🟢 LUNAS';
 var color = jenis=='Hutang / Bon' ? '#DC2626' : '#16A34A';
 document.getElementById('strukBox').style.display='flex';
-document.getElementById('strukIsi').innerHTML='<h3 style="text-align:center">'+config.namaWarung+'</h3><p style="text-align:center">'+config.pemilik+'<br>'+config.alamat+'<br><small>Dibuat oleh Syamsudin Budiansyah<br>ID Izin: '+samarkan(config.idIzin)+' • No. Seri: '+samarkan(config.noSeri)+'</small></p><hr><p style="text-align:center;background:'+color+';color:#fff;padding:8px;border-radius:8px;font-weight:bold">'+status+'</p><p>No: '+no+'<br>Tanggal: '+tgl+'<br>Pembeli: <b>'+nama+'</b><br>Cara Bayar: <b>'+jenis+'</b></p><hr><p><b>TOTAL Rp '+parseInt(total).toLocaleString('id-ID')+'</b><br>Bayar: Rp '+parseInt(bayar).toLocaleString('id-ID')+'<br>Kembali: Rp '+parseInt(kembali).toLocaleString('id-ID')+'</p><hr><p style="text-align:center">'+config.ucapan+'</p><button type="button" class="btn btn-orange" onclick="window.print()">🖨️ Print / PDF</button><button type="button" class="btn btn-grey" onclick="document.getElementById(\'strukBox\').style.display=\'none\'">Tutup</button>';
+document.getElementById('strukIsi').innerHTML='<h3 style="text-align:center">'+config.namaWarung+'</h3><p style="text-align:center">'+config.pemilik+'<br>'+config.alamat+'<br><small>Dibuat oleh Syamsudin Budiansyah<br>ID Izin: •••••••• • No. Seri: ••••••••</small></p><hr><p style="text-align:center;background:'+color+';color:#fff;padding:8px;border-radius:8px;font-weight:bold">'+status+'</p><p>No: '+no+'<br>Tanggal: '+tgl+'<br>Pembeli: <b>'+nama+'</b><br>Cara Bayar: <b>'+jenis+'</b></p><hr><p><b>TOTAL Rp '+parseInt(total).toLocaleString('id-ID')+'</b><br>Bayar: Rp '+parseInt(bayar).toLocaleString('id-ID')+'<br>Kembali: Rp '+parseInt(kembali).toLocaleString('id-ID')+'</p><hr><p style="text-align:center">'+config.ucapan+'</p><button type="button" class="btn btn-orange" onclick="window.print()">🖨️ Print / PDF</button><button type="button" class="btn btn-grey" onclick="document.getElementById(\'strukBox\').style.display=\'none\'">Tutup</button>';
 }
 function renderHutang(){
 var totalH=hutang.reduce(function(a,b){ return a+(b.totalAwal-b.sudah); },0);
@@ -320,7 +325,7 @@ var allItems={}; trx.forEach(function(t){ t.items.split(', ').forEach(function(i
 var top=null; Object.keys(allItems).forEach(function(k){ if(!top || allItems[k]>allItems[top]) top=k; });
 document.getElementById('terlaris').innerText=top?top+' - '+allItems[top]+'x laku':'Belum ada.';
 }
-function tambahBarang(){ var n=document.getElementById('newNama').value; var h=parseInt(document.getElementById('newHarga').value||0); var s=parseInt(document.getElementById('newStok').value||0); var sat=document.getElementById('newSatuan').value; if(!n||!h){alert('Isi Nama & Harga!');return;} barang.push({id:Date.now(),nama:n,harga:h,stok:s,satuan:sat,logo:getLogo(n)}); renderBarang(); alert('Barang '+n+' ditambah! Logo: '+getLogo(n)); }
+function tambahBarang(){ var n=document.getElementById('newNama').value; var h=parseInt(document.getElementById('newHarga').value||0); var s=parseInt(document.getElementById('newStok').value||0); var sat=document.getElementById('newSatuan').value; if(!n||!h){alert('Isi Nama & Harga!');return;} var logo=getLogo(n); barang.push({id:Date.now(),nama:n,harga:h,stok:s,satuan:sat,logo:logo}); renderBarang(); document.getElementById('newNama').value=''; document.getElementById('logoPreview').innerText='📦'; document.getElementById('logoPreviewText').innerText='Logo akan muncul otomatis sesuai nama barang'; alert('Barang '+n+' ditambah! Logo: '+logo); }
 function hapusSemua(){ if(confirm('Hapus SEMUA data?')){ trx=[]; hutang=[]; save(); renderHutang(); renderLaporan(); updateDashboard(); } }
 function filterCari(){ var q=document.getElementById('cari').value.toLowerCase(); document.querySelectorAll('#gridJual .item').forEach(function(c){ c.style.display=c.dataset.nama.indexOf(q)>-1?'block':'none'; }); }
 cekKunci(); renderBarang(); renderHutang(); renderPelanggan(); renderLaporan(); updateCart();
