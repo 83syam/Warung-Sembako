@@ -70,7 +70,7 @@ label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 <div id="tab-stok" style="display:none"><div class="card"><b>📦 Daftar Stok - Tap - / +</b><div class="grid" id="gridStok"></div></div>
 <div class="card"><b>➕ Tambah Barang Baru - Gambar Otomatis</b>
 <label>Nama Barang - Ketik, gambar langsung muncul di bawah</label><input id="newNama" oninput="updateLogoPreview()" placeholder="Contoh: Beras, Sabun, Kopi...">
-<div class="logo-preview" id="logoPreview"><img id="logoPreviewImg" src="beras.png" alt="Preview"></div>
+<div class="logo-preview" id="logoPreview"><img id="logoPreviewImg" src="IMG-20261109-WA8573.jpg" alt="Preview"></div>
 <p id="logoPreviewText" style="text-align:center;font-size:12px;margin-top:4px">Gambar akan muncul otomatis sesuai nama barang</p>
 <label>Harga</label><input id="newHarga" type="number"><label>Stok</label><input id="newStok" type="number"><label>Satuan</label><select id="newSatuan"><option>Kg</option><option>Karung</option><option>Botol</option><option>Bungkus</option><option>Pcs</option><option>Ikat</option><option>Kaleng</option></select><button type="button" class="btn btn-green" onclick="tambahBarang()">+ Tambah Barang</button></div></div>
 <div id="tab-jual" style="display:none">
@@ -140,24 +140,24 @@ var IZIN_VALID=[
 try{ var ex=JSON.parse(localStorage.getItem('izinExtraBaru2')||'[]'); IZIN_VALID=IZIN_VALID.concat(ex); }catch(e){}
 function cariIzin(id,seri){ for(var i=0;i<IZIN_VALID.length;i++){ if(IZIN_VALID[i].id==id && IZIN_VALID[i].seri==seri) return IZIN_VALID[i]; } return null; }
 
-// === LOGO GAMBAR - SUDAH DIKUNCI, JANGAN DIGANTI LAGI ===
-// Beras=karung, Minyak=botol minyak, Kecap=botol kecap, Gula=bungkus gula, Ciki=bungkus ciki, Mie=bungkus mie, Kopi=bungkus kopi, Telur=tray telur, Sabun=batang sabun, Susu=kaleng susu, Teh=kotak teh
+// === LOGO GAMBAR - SUDAH DIKUNCI SESUAI FILE ASLI DI GITHUB - JANGAN DIGANTI ===
+// WA8573=beras, WA6758=minyak, WA2339=kecap, WA4128=gula, WA1285=ciki, WA6154=mie, WA0836=kopi, WA2949=telur, WA8728=sabun, WA3876=susu, WA8252=teh
 function getGambar(nama){
   var n = (nama||'').toLowerCase();
-  if(n.indexOf('beras') > -1) return 'beras.png';
-  if(n.indexOf('minyak') > -1) return 'minyak.png';
-  if(n.indexOf('kecap') > -1) return 'kecap.png';
-  if(n.indexOf('gula') > -1) return 'gula.png';
-  if(n.indexOf('ciki') > -1 || n.indexOf('chiki') > -1 || n.indexOf('keripik') > -1 || n.indexOf('snack') > -1) return 'ciki.png';
-  if(n.indexOf('mie') > -1 || n.indexOf('indomie') > -1) return 'mie.png';
-  if(n.indexOf('kopi') > -1) return 'kopi.png';
-  if(n.indexOf('telur') > -1) return 'telur.png';
-  if(n.indexOf('sabun') > -1) return 'sabun.png';
-  if(n.indexOf('susu') > -1) return 'susu.png';
-  if(n.indexOf('teh') > -1) return 'teh.png';
-  if(n.indexOf('ayam') > -1) return 'telur.png';
-  if(n.indexOf('sayur') > -1 || n.indexOf('bayam') > -1 || n.indexOf('kangkung') > -1) return 'teh.png';
-  return 'beras.png';
+  if(n.indexOf('beras') > -1) return 'IMG-20261109-WA8573.jpg';
+  if(n.indexOf('minyak') > -1) return 'IMG-20261109-WA6758.jpg';
+  if(n.indexOf('kecap') > -1) return 'IMG-20261109-WA2339.jpg';
+  if(n.indexOf('gula') > -1) return 'IMG-20261109-WA4128.jpg';
+  if(n.indexOf('ciki') > -1 || n.indexOf('chiki') > -1 || n.indexOf('keripik') > -1 || n.indexOf('snack') > -1) return 'IMG-20261109-WA1285.jpg';
+  if(n.indexOf('mie') > -1 || n.indexOf('indomie') > -1) return 'IMG-20261109-WA6154.jpg';
+  if(n.indexOf('kopi') > -1) return 'IMG-20261109-WA0836.jpg';
+  if(n.indexOf('telur') > -1) return 'IMG-20261109-WA2949.jpg';
+  if(n.indexOf('sabun') > -1) return 'IMG-20261109-WA8728.jpg';
+  if(n.indexOf('susu') > -1) return 'IMG-20261109-WA3876.jpg';
+  if(n.indexOf('teh') > -1) return 'IMG-20261109-WA8252.jpg';
+  if(n.indexOf('ayam') > -1) return 'IMG-20261109-WA2949.jpg';
+  if(n.indexOf('sayur') > -1 || n.indexOf('bayam') > -1 || n.indexOf('kangkung') > -1) return 'IMG-20261109-WA8252.jpg';
+  return 'IMG-20261109-WA8573.jpg';
 }
 function updateLogoPreview(){
   var nama = document.getElementById('newNama').value || '';
@@ -178,20 +178,20 @@ function kodeAcak(panjang){
 var config=null;
 try{ config=JSON.parse(localStorage.getItem('configWarungBaruV9')||'null'); }catch(e){ config=null; }
 var barang=[
-{id:1,nama:"Beras Premium",harga:14000,stok:49,satuan:"Kg",gambar:"beras.png"},
-{id:2,nama:"Beras Pandan 5 Kg",harga:68000,stok:24,satuan:"Karung",gambar:"beras.png"},
-{id:3,nama:"Minyak Goreng 1 L",harga:18500,stok:36,satuan:"Botol",gambar:"minyak.png"},
-{id:4,nama:"Gula Pasir 1 Kg",harga:16000,stok:40,satuan:"Bungkus",gambar:"gula.png"},
-{id:5,nama:"Telur Ayam 1 Kg",harga:29000,stok:15,satuan:"Kg",gambar:"telur.png"},
-{id:6,nama:"Mie Instan Goreng",harga:3500,stok:120,satuan:"Pcs",gambar:"mie.png"},
-{id:7,nama:"Ayam Potong 1 Kg",harga:38000,stok:12,satuan:"Kg",gambar:"telur.png"},
-{id:8,nama:"Sayur Segar Campur",harga:8000,stok:20,satuan:"Ikat",gambar:"teh.png"},
-{id:9,nama:"Chiki / Ciki Kentang",harga:10000,stok:45,satuan:"Bungkus",gambar:"ciki.png"},
-{id:10,nama:"Kopi Bubuk 250 gr",harga:24000,stok:30,satuan:"Bungkus",gambar:"kopi.png"},
-{id:11,nama:"Susu Kental Manis",harga:13500,stok:25,satuan:"Kaleng",gambar:"susu.png"},
-{id:12,nama:"Kecap Manis Botol",harga:12000,stok:30,satuan:"Botol",gambar:"kecap.png"},
-{id:13,nama:"Teh Celup",harga:8000,stok:30,satuan:"Bungkus",gambar:"teh.png"},
-{id:14,nama:"Sabun Mandi",harga:6000,stok:30,satuan:"Pcs",gambar:"sabun.png"},
+{id:1,nama:"Beras Premium",harga:14000,stok:49,satuan:"Kg",gambar:"IMG-20261109-WA8573.jpg"},
+{id:2,nama:"Beras Pandan 5 Kg",harga:68000,stok:24,satuan:"Karung",gambar:"IMG-20261109-WA8573.jpg"},
+{id:3,nama:"Minyak Goreng 1 L",harga:18500,stok:36,satuan:"Botol",gambar:"IMG-20261109-WA6758.jpg"},
+{id:4,nama:"Gula Pasir 1 Kg",harga:16000,stok:40,satuan:"Bungkus",gambar:"IMG-20261109-WA4128.jpg"},
+{id:5,nama:"Telur Ayam 1 Kg",harga:29000,stok:15,satuan:"Kg",gambar:"IMG-20261109-WA2949.jpg"},
+{id:6,nama:"Mie Instan Goreng",harga:3500,stok:120,satuan:"Pcs",gambar:"IMG-20261109-WA6154.jpg"},
+{id:7,nama:"Ayam Potong 1 Kg",harga:38000,stok:12,satuan:"Kg",gambar:"IMG-20261109-WA2949.jpg"},
+{id:8,nama:"Sayur Segar Campur",harga:8000,stok:20,satuan:"Ikat",gambar:"IMG-20261109-WA8252.jpg"},
+{id:9,nama:"Chiki / Ciki Kentang",harga:10000,stok:45,satuan:"Bungkus",gambar:"IMG-20261109-WA1285.jpg"},
+{id:10,nama:"Kopi Bubuk 250 gr",harga:24000,stok:30,satuan:"Bungkus",gambar:"IMG-20261109-WA0836.jpg"},
+{id:11,nama:"Susu Kental Manis",harga:13500,stok:25,satuan:"Kaleng",gambar:"IMG-20261109-WA3876.jpg"},
+{id:12,nama:"Kecap Manis Botol",harga:12000,stok:30,satuan:"Botol",gambar:"IMG-20261109-WA2339.jpg"},
+{id:13,nama:"Teh Celup",harga:8000,stok:30,satuan:"Bungkus",gambar:"IMG-20261109-WA8252.jpg"},
+{id:14,nama:"Sabun Mandi",harga:6000,stok:30,satuan:"Pcs",gambar:"IMG-20261109-WA8728.jpg"},
 ];
 var cart=[]; var trx=[]; var hutang=[]; var pelanggan=[];
 try{ trx=JSON.parse(localStorage.getItem('trxBaruV9')||'[]'); hutang=JSON.parse(localStorage.getItem('hutangBaruV9')||'[]'); pelanggan=JSON.parse(localStorage.getItem('pelBaruV9')||'[]'); }catch(e){}
@@ -311,7 +311,7 @@ var allItems={}; trx.forEach(function(t){ t.items.split(', ').forEach(function(i
 var top=null; Object.keys(allItems).forEach(function(k){ if(!top || allItems[k]>allItems[top]) top=k; });
 document.getElementById('terlaris').innerText=top?top+' - '+allItems[top]+'x laku':'Belum ada.';
 }
-function tambahBarang(){ var n=document.getElementById('newNama').value; var h=parseInt(document.getElementById('newHarga').value||0); var s=parseInt(document.getElementById('newStok').value||0); var sat=document.getElementById('newSatuan').value; if(!n||!h){alert('Isi Nama & Harga!');return;} var img=getGambar(n); barang.push({id:Date.now(),nama:n,harga:h,stok:s,satuan:sat,gambar:img}); renderBarang(); document.getElementById('newNama').value=''; document.getElementById('logoPreviewImg').src='beras.png'; document.getElementById('logoPreviewText').innerText='Gambar akan muncul otomatis sesuai nama barang'; alert('Barang '+n+' ditambah! Gambar: '+img); }
+function tambahBarang(){ var n=document.getElementById('newNama').value; var h=parseInt(document.getElementById('newHarga').value||0); var s=parseInt(document.getElementById('newStok').value||0); var sat=document.getElementById('newSatuan').value; if(!n||!h){alert('Isi Nama & Harga!');return;} var img=getGambar(n); barang.push({id:Date.now(),nama:n,harga:h,stok:s,satuan:sat,gambar:img}); renderBarang(); document.getElementById('newNama').value=''; document.getElementById('logoPreviewImg').src='IMG-20261109-WA8573.jpg'; document.getElementById('logoPreviewText').innerText='Gambar akan muncul otomatis sesuai nama barang'; alert('Barang '+n+' ditambah! Gambar: '+img); }
 function hapusSemua(){ if(confirm('Hapus SEMUA data?')){ trx=[]; hutang=[]; save(); renderHutang(); renderLaporan(); updateDashboard(); } }
 function filterCari(){ var q=document.getElementById('cari').value.toLowerCase(); document.querySelectorAll('#gridJual .item').forEach(function(c){ c.style.display=c.dataset.nama.indexOf(q)>-1?'block':'none'; }); }
 cekKunci(); renderBarang(); renderHutang(); renderPelanggan(); renderLaporan(); updateCart();
