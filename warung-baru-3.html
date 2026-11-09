@@ -19,9 +19,11 @@ body{background:#F0FDF4;padding:0;padding-bottom:20px}
 input,select{width:100%;padding:11px;border-radius:10px;border:1px solid #ddd;margin-top:8px;outline:none;font-size:15px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
 .item{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.item .logo{width:100%;height:110px;display:flex;align-items:center;justify-content:center;font-size:64px;background:#F0FDF4}
+.item .logo{width:100%;height:110px;display:flex;align-items:center;justify-content:center;background:#fff;overflow:hidden}
+.item .logo img{width:100%;height:100%;object-fit:contain;background:#fff}
 .item .in{padding:9px}.item .in b{font-size:12px;display:block;min-height:28px}
-.logo-preview{width:100%;height:90px;display:flex;align-items:center;justify-content:center;font-size:56px;background:#F0FDF4;border-radius:12px;margin-top:8px;border:2px dashed #16A34A}
+.logo-preview{width:100%;height:120px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;margin-top:8px;border:2px dashed #16A34A;overflow:hidden}
+.logo-preview img{width:100%;height:100%;object-fit:contain}
 .stokbox{display:flex;justify-content:space-between;align-items:center;background:#F0FDF4;padding:4px 6px;border-radius:8px;font-size:12px;margin:6px 0}
 .stokbox button{width:30px;height:30px;border-radius:50%;border:none;background:#16A34A;color:#fff;font-weight:bold;font-size:18px;cursor:pointer}
 .btn{width:100%;padding:12px;border-radius:10px;border:none;font-weight:bold;margin-top:8px;cursor:pointer;font-size:15px}
@@ -63,14 +65,13 @@ label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 <div class="card"><b>⚠️ Stok Perlu Diisi</b><p id="stokWarning">Semua stok aman ✅</p></div>
 <div class="card"><b>🧾 Transaksi Terakhir</b><div id="trxTerakhir">Belum ada transaksi.</div></div>
 <div class="card"><b>🏆 Terlaris Hari Ini</b><div id="terlaris">Belum ada.</div></div>
-<div class="card"><b>✅ TES TOMBOL</b><button type="button" class="btn btn-green" onclick="alert('ALHAMDULILLAH! Sudah bisa di tap Pak!')">👆 TAP SAYA UNTUK TES</button></div>
-<div class="card"><b>📤 Bagikan Aplikasi</b><p style="font-size:13px">Bagikan link saja. ID Izin + No. Seri TIDAK ikut terkirim, minta langsung ke pembuat!</p><button type="button" class="btn btn-blue" onclick="bagikan()">📤 Bagikan Via WhatsApp</button></div>
+<div class="card"><b>📤 Bagikan Aplikasi</b><p style="font-size:13px">Bagikan link saja. ID Izin + No. Seri TIDAK ikut terkirim.</p><button type="button" class="btn btn-blue" onclick="bagikan()">📤 Bagikan Via WhatsApp</button></div>
 </div>
 <div id="tab-stok" style="display:none"><div class="card"><b>📦 Daftar Stok - Tap - / +</b><div class="grid" id="gridStok"></div></div>
-<div class="card"><b>➕ Tambah Barang Baru - Logo Otomatis</b>
-<label>Nama Barang - Ketik, logo langsung muncul di bawah</label><input id="newNama" oninput="updateLogoPreview()" placeholder="Contoh: Beras, Sabun, Kopi...">
-<div class="logo-preview" id="logoPreview">📦</div>
-<p id="logoPreviewText" style="text-align:center;font-size:12px;margin-top:4px">Logo akan muncul otomatis sesuai nama barang</p>
+<div class="card"><b>➕ Tambah Barang Baru - Gambar Otomatis</b>
+<label>Nama Barang - Ketik, gambar langsung muncul di bawah</label><input id="newNama" oninput="updateLogoPreview()" placeholder="Contoh: Beras, Sabun, Kopi...">
+<div class="logo-preview" id="logoPreview"><img id="logoPreviewImg" src="beras.png" alt="Preview"></div>
+<p id="logoPreviewText" style="text-align:center;font-size:12px;margin-top:4px">Gambar akan muncul otomatis sesuai nama barang</p>
 <label>Harga</label><input id="newHarga" type="number"><label>Stok</label><input id="newStok" type="number"><label>Satuan</label><select id="newSatuan"><option>Kg</option><option>Karung</option><option>Botol</option><option>Bungkus</option><option>Pcs</option><option>Ikat</option><option>Kaleng</option></select><button type="button" class="btn btn-green" onclick="tambahBarang()">+ Tambah Barang</button></div></div>
 <div id="tab-jual" style="display:none">
 <div class="card"><b>🛒 Kasir</b><input id="cari" oninput="filterCari()" placeholder="🔍 Cari beras, ayam, sayur, ciki..."><div class="grid" id="gridJual"></div></div>
@@ -97,7 +98,7 @@ label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
 <p style="font-size:12px">ID & No. Seri dikosongkan / ditutupi total. Hanya status yang ditampilkan.</p>
 <div class="kartu"><p>ID Izin Anda: <b class="rahasia">••••••••</b></p><p>No. Seri Anda: <b class="rahasia">••••••••</b></p><p>Diizinkan oleh: <b>Syamsudin Budiansyah</b></p><p>Status: <b style="color:#16A34A">✅ TERDAFTAR & DIIZINKAN</b></p></div>
 <button type="button" class="btn btn-orange" onclick="buatIzinBaru()">➕ Buat ID + No. Seri Baru Untuk Teman (Acak)</button>
-<p style="font-size:12px">ID Baru: <b class="rahasia">••••••••</b><br>No. Seri Baru: <b class="rahasia">••••••••</b><br><small>ID baru tersimpan di HP pembuat, tidak ditampilkan di layar. Pembuat yang membagikan langsung via chat pribadi.</small></p>
+<p style="font-size:12px">ID Baru: <b class="rahasia">••••••••</b><br>No. Seri Baru: <b class="rahasia">••••••••</b><br><small>ID baru tersimpan di HP pembuat, tidak ditampilkan di layar.</small></p>
 <button type="button" class="btn btn-red" onclick="kunciUlang()">🔒 Kunci Aplikasi / Ganti Pemakai Baru</button>
 </div>
 <div class="card"><b>© Dibuat oleh Syamsudin Budiansyah</b><p style="font-size:12px">Hanya bisa dipakai dengan ID Izin & No. Seri dari pembuat.</p></div>
@@ -138,83 +139,36 @@ var IZIN_VALID=[
 ];
 try{ var ex=JSON.parse(localStorage.getItem('izinExtraBaru2')||'[]'); IZIN_VALID=IZIN_VALID.concat(ex); }catch(e){}
 function cariIzin(id,seri){ for(var i=0;i<IZIN_VALID.length;i++){ if(IZIN_VALID[i].id==id && IZIN_VALID[i].seri==seri) return IZIN_VALID[i]; } return null; }
-function samarkan(kode){ return '••••••••'; }
-function getLogo(nama){
-  var n = (' ' + (nama||'').toLowerCase().replace(/[^a-z0-9 ]/g,' ') + ' ');
-  n = n.replace(/\s+/g,' ');
-  // Urutan: yang PALING SPESIFIK dicek dulu, biar tidak salah tebak
-  var MAP = [
-    // MIE & MAKANAN JADI - dicek paling awal
-    ['mie ayam','🍜'],['mie goreng','🍜'],['mie kuah','🍜'],['mie instan goreng','🍜'],['mie instan kuah','🍜'],['mie instan','🍜'],['indomie','🍜'],['pop mie','🍜'],['mie ','🍜'],
-    // BERAS
-    ['beras pandan','🍚'],['beras premium','🍚'],['beras merah','🍚'],['beras ketan','🍚'],['beras ','🍚'],['beras','🍚'],['nasi ','🍚'],
-    // MINYAK & BUMBU CAIR
-    ['minyak goreng','🫙'],['minyak kelapa','🫙'],['minyak kayu putih','🧴'],['minyak ','🫙'],['minyak','🫙'],
-    ['kecap manis','🍶'],['kecap asin','🍶'],['kecap ','🍶'],['kecap','🍶'],
-    ['saos tomat','🥫'],['saus tomat','🥫'],['saos sambal','🌶️'],['saus sambal','🌶️'],['saos ','🥫'],['saus ','🥫'],
-    ['santan kara','🥥'],['santan ','🥥'],['santan','🥥'],
-    // GULA, GARAM, TEPUNG
-    ['gula merah','🟤'],['gula aren','🟤'],['gula pasir','🍬'],['gula batu','🍬'],['gula ','🍬'],['gula','🍬'],
-    ['garam ','🧂'],['garam','🧂'],
-    ['tepung terigu','🌾'],['tepung beras','🌾'],['tepung tapioka','🌾'],['tepung ','🌾'],['tepung','🌾'],
-    ['mentega ','🧈'],['margarin ','🧈'],['blue band','🧈'],['mentega','🧈'],['margarin','🧈'],
-    ['keju ','🧀'],['keju','🧀'],
-    // TELUR, SUSU, DAGING, IKAN
-    ['telur bebek','🥚'],['telur puyuh','🥚'],['telur ayam','🥚'],['telur ','🥚'],['telur','🥚'],
-    ['susu kental manis','🥛'],['susu bubuk','🍼'],['susu cair','🥛'],['susu uht','🥛'],['susu ','🥛'],['susu','🥛'],
-    ['ayam potong','🍗'],['ayam kampung','🍗'],['ayam goreng','🍗'],['ayam ','🍗'],['ayam','🍗'],
-    ['daging sapi','🥩'],['daging ayam','🍗'],['daging ','🥩'],['daging','🥩'],['kornet ','🥫'],['kornet','🥫'],['sarden ','🐟'],['sarden','🐟'],
-    ['ikan asin','🐟'],['ikan tongkol','🐟'],['ikan lele','🐟'],['ikan mas','🐟'],['ikan ','🐟'],['ikan','🐟'],
-    // SAYUR - per jenis, biar tepat
-    ['bayam ','🥬'],['kangkung ','🥬'],['sawi ','🥬'],['kol ','🥬'],['kubis ','🥬'],['wortel ','🥕'],['wortel','🥕'],['kentang ','🥔'],['kentang','🥔'],['tomat ','🍅'],['tomat','🍅'],['cabai rawit','🌶️'],['cabai merah','🌶️'],['cabai ','🌶️'],['cabe ','🌶️'],['bawang merah','🧅'],['bawang putih','🧄'],['bawang bombay','🧅'],['bawang ','🧅'],['bawang','🧅'],['timun ','🥒'],['mentimun ','🥒'],['terong ','🍆'],['terong','🍆'],['jagung ','🌽'],['jagung','🌽'],['sayur asem','🥬'],['sayur sop','🥬'],['sayur ','🥬'],['sayur','🥬'],
-    // BUAH
-    ['pisang ','🍌'],['pisang','🍌'],['jeruk ','🍊'],['jeruk','🍊'],['apel ','🍎'],['apel','🍎'],['mangga ','🥭'],['mangga','🥭'],['semangka ','🍉'],['semangka','🍉'],['melon ','🍈'],['melon','🍈'],['anggur ','🍇'],['anggur','🍇'],['pepaya ','🍈'],['buah naga','🐉'],['buah ','🍎'],['buah','🍎'],
-    // KOPI, TEH, MINUMAN
-    ['kopi bubuk','☕'],['kopi sachet','☕'],['kopi hitam','☕'],['kopi susu','☕'],['kopi ','☕'],['kopi','☕'],['kapal api','☕'],
-    ['teh celup','🍵'],['teh tubruk','🍵'],['teh kotak','🧃'],['teh ','🍵'],['teh','🍵'],
-    ['air mineral','💧'],['air galon','💧'],['aqua ','💧'],['aqua','💧'],['air ','💧'],
-    ['sirup ','🥤'],['sirup','🥤'],['jus ','🧃'],['jus','🧃'],['soda ','🥤'],['soda','🥤'],
-    // ROTI, SNACK, PERMEN, COKLAT
-    ['roti tawar','🍞'],['roti sobek','🍞'],['roti ','🍞'],['roti','🍞'],
-    ['biskuit ','🍪'],['wafer ','🍪'],['oreo ','🍪'],['biskuit','🍪'],['wafer','🍪'],
-    ['ciki ','🍟'],['chiki ','🍟'],['keripik singkong','🍟'],['keripik ','🍟'],['ciki','🍟'],['chiki','🍟'],['snack ','🍿'],['camilan ','🍿'],
-    ['permen ','🍭'],['permen','🍭'],
-    ['coklat ','🍫'],['cokelat ','🍫'],['coklat','🍫'],['cokelat','🍫'],
-    // SABUN & KEBERSIHAN - dibedakan jelas
-    ['sabun cuci piring','🍽️'],['sabun mandi','🧼'],['sabun cuci baju','🧺'],['sabun colek','🧼'],['sabun ','🧼'],['sabun','🧼'],
-    ['sampo ','🧴'],['shampo ','🧴'],['sampo','🧴'],['shampo','🧴'],['conditioner','🧴'],
-    ['pasta gigi','🪥'],['odol ','🪥'],['odol','🪥'],['sikat gigi','🪥'],
-    ['deterjen ','🧺'],['rinso ','🧺'],['deterjen','🧺'],['rinso','🧺'],['pelembut ','🧺'],['molto ','🧺'],
-    ['tisu ','🧻'],['tisu','🧻'],['popok ','👶'],['pampers ','👶'],['popok','👶'],['pembalut ','🩹'],
-    // LAINNYA WARUNG
-    ['gas elpiji','🔥'],['gas ','🔥'],['elpiji ','🔥'],['lpg ','🔥'],['tabung gas','🔥'],
-    ['rokok ','🚬'],['rokok','🚬'],['kretek ','🚬'],
-    ['baterai ','🔋'],['batre ','🔋'],['baterai','🔋'],
-    ['lampu ','💡'],['lampu','💡'],
-    ['korek api','🔥'],['korek ','🔥'],
-    ['kecap','🍶']
-  ];
-  for(var i=0;i<MAP.length;i++){
-    if(n.indexOf(' '+MAP[i][0]+' ') > -1 || n.indexOf(MAP[i][0]) > -1 && (' '+MAP[i][0]+' ').trim().length > 3){
-      // Cek kata lengkap, bukan potongan huruf
-      if(n.indexOf(MAP[i][0]) > -1) return MAP[i][1];
-    }
-  }
-  return '📦';
-}
 
+// === LOGO GAMBAR - SUDAH DIKUNCI, JANGAN DIGANTI LAGI ===
+// Beras=karung, Minyak=botol minyak, Kecap=botol kecap, Gula=bungkus gula, Ciki=bungkus ciki, Mie=bungkus mie, Kopi=bungkus kopi, Telur=tray telur, Sabun=batang sabun, Susu=kaleng susu, Teh=kotak teh
+function getGambar(nama){
+  var n = (nama||'').toLowerCase();
+  if(n.indexOf('beras') > -1) return 'beras.png';
+  if(n.indexOf('minyak') > -1) return 'minyak.png';
+  if(n.indexOf('kecap') > -1) return 'kecap.png';
+  if(n.indexOf('gula') > -1) return 'gula.png';
+  if(n.indexOf('ciki') > -1 || n.indexOf('chiki') > -1 || n.indexOf('keripik') > -1 || n.indexOf('snack') > -1) return 'ciki.png';
+  if(n.indexOf('mie') > -1 || n.indexOf('indomie') > -1) return 'mie.png';
+  if(n.indexOf('kopi') > -1) return 'kopi.png';
+  if(n.indexOf('telur') > -1) return 'telur.png';
+  if(n.indexOf('sabun') > -1) return 'sabun.png';
+  if(n.indexOf('susu') > -1) return 'susu.png';
+  if(n.indexOf('teh') > -1) return 'teh.png';
+  if(n.indexOf('ayam') > -1) return 'telur.png';
+  if(n.indexOf('sayur') > -1 || n.indexOf('bayam') > -1 || n.indexOf('kangkung') > -1) return 'teh.png';
+  return 'beras.png';
+}
 function updateLogoPreview(){
   var nama = document.getElementById('newNama').value || '';
-  var logo = getLogo(nama);
-  document.getElementById('logoPreview').innerText = logo;
+  var img = getGambar(nama);
+  document.getElementById('logoPreviewImg').src = img;
   if(nama.trim()==''){
-    document.getElementById('logoPreviewText').innerText = 'Logo akan muncul otomatis sesuai nama barang';
-  } else if(logo=='📦'){
-    document.getElementById('logoPreviewText').innerText = '⚠️ "'+nama+'" belum dikenal - logo pakai 📦 dulu. Coba tulis lebih lengkap, contoh: Beras Premium, Sabun Mandi, Kopi Bubuk';
+    document.getElementById('logoPreviewText').innerText = 'Gambar akan muncul otomatis sesuai nama barang';
   } else {
-    document.getElementById('logoPreviewText').innerText = 'Logo untuk "'+nama+'" : '+logo+' - Sudah tepat?';
+    document.getElementById('logoPreviewText').innerText = 'Gambar untuk "'+nama+'" : '+img+' - Sudah tepat?';
   }
-
+}
 function kodeAcak(panjang){
   var huruf='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   var hasil='';
@@ -224,17 +178,20 @@ function kodeAcak(panjang){
 var config=null;
 try{ config=JSON.parse(localStorage.getItem('configWarungBaruV9')||'null'); }catch(e){ config=null; }
 var barang=[
-{id:1,nama:"Beras Premium",harga:14000,stok:49,satuan:"Kg",logo:"🍚"},
-{id:2,nama:"Beras Pandan 5 Kg",harga:68000,stok:24,satuan:"Karung",logo:"🍚"},
-{id:3,nama:"Minyak Goreng 1 L",harga:18500,stok:36,satuan:"Botol",logo:"🛢️"},
-{id:4,nama:"Gula Pasir 1 Kg",harga:16000,stok:40,satuan:"Bungkus",logo:"🍬"},
-{id:5,nama:"Telur Ayam 1 Kg",harga:29000,stok:15,satuan:"Kg",logo:"🥚"},
-{id:6,nama:"Mie Instan Goreng",harga:3500,stok:120,satuan:"Pcs",logo:"🍜"},
-{id:7,nama:"Ayam Potong 1 Kg",harga:38000,stok:12,satuan:"Kg",logo:"🍗"},
-{id:8,nama:"Sayur Segar Campur",harga:8000,stok:20,satuan:"Ikat",logo:"🥬"},
-{id:9,nama:"Chiki / Ciki Kentang",harga:10000,stok:45,satuan:"Bungkus",logo:"🍟"},
-{id:10,nama:"Kopi Bubuk 250 gr",harga:24000,stok:30,satuan:"Bungkus",logo:"☕"},
-{id:11,nama:"Susu Kental Manis",harga:13500,stok:25,satuan:"Kaleng",logo:"🥛"},
+{id:1,nama:"Beras Premium",harga:14000,stok:49,satuan:"Kg",gambar:"beras.png"},
+{id:2,nama:"Beras Pandan 5 Kg",harga:68000,stok:24,satuan:"Karung",gambar:"beras.png"},
+{id:3,nama:"Minyak Goreng 1 L",harga:18500,stok:36,satuan:"Botol",gambar:"minyak.png"},
+{id:4,nama:"Gula Pasir 1 Kg",harga:16000,stok:40,satuan:"Bungkus",gambar:"gula.png"},
+{id:5,nama:"Telur Ayam 1 Kg",harga:29000,stok:15,satuan:"Kg",gambar:"telur.png"},
+{id:6,nama:"Mie Instan Goreng",harga:3500,stok:120,satuan:"Pcs",gambar:"mie.png"},
+{id:7,nama:"Ayam Potong 1 Kg",harga:38000,stok:12,satuan:"Kg",gambar:"telur.png"},
+{id:8,nama:"Sayur Segar Campur",harga:8000,stok:20,satuan:"Ikat",gambar:"teh.png"},
+{id:9,nama:"Chiki / Ciki Kentang",harga:10000,stok:45,satuan:"Bungkus",gambar:"ciki.png"},
+{id:10,nama:"Kopi Bubuk 250 gr",harga:24000,stok:30,satuan:"Bungkus",gambar:"kopi.png"},
+{id:11,nama:"Susu Kental Manis",harga:13500,stok:25,satuan:"Kaleng",gambar:"susu.png"},
+{id:12,nama:"Kecap Manis Botol",harga:12000,stok:30,satuan:"Botol",gambar:"kecap.png"},
+{id:13,nama:"Teh Celup",harga:8000,stok:30,satuan:"Bungkus",gambar:"teh.png"},
+{id:14,nama:"Sabun Mandi",harga:6000,stok:30,satuan:"Pcs",gambar:"sabun.png"},
 ];
 var cart=[]; var trx=[]; var hutang=[]; var pelanggan=[];
 try{ trx=JSON.parse(localStorage.getItem('trxBaruV9')||'[]'); hutang=JSON.parse(localStorage.getItem('hutangBaruV9')||'[]'); pelanggan=JSON.parse(localStorage.getItem('pelBaruV9')||'[]'); }catch(e){}
@@ -278,7 +235,7 @@ var idBaru='SYAM-ID-'+kodeAcak(4)+'-'+kodeAcak(4);
 var seriBaru='SYAM-SERI-'+kodeAcak(4)+'-'+kodeAcak(4)+'-'+kodeAcak(4);
 var extra=[]; try{ extra=JSON.parse(localStorage.getItem('izinExtraBaru2')||'[]'); }catch(e){}
 extra.push({id:idBaru,seri:seriBaru,nama:'Izin Baru '+idBaru}); localStorage.setItem('izinExtraBaru2',JSON.stringify(extra)); IZIN_VALID.push({id:idBaru,seri:seriBaru,nama:'Izin Baru'});
-alert('ID + No. Seri Baru Berhasil Dibuat & Tersimpan!\n\nID & No. Seri baru TIDAK ditampilkan di layar demi keamanan.\nPembuat yang membagikan langsung via chat pribadi.');
+alert('ID + No. Seri Baru Berhasil Dibuat & Tersimpan!\n\nID & No. Seri baru TIDAK ditampilkan di layar demi keamanan.');
 }
 function kunciUlang(){ if(confirm('Kunci aplikasi & ganti pemakai baru? Nanti pemakai baru harus isi ID + No. Seri lagi.')){ config=null; localStorage.removeItem('configWarungBaruV9'); document.getElementById('setupBox').style.display='flex'; } }
 function bagikan(){ var teks='Halo! Saya pakai Aplikasi Warung Sembako buatan Syamsudin Budiansyah. Untuk buka harus pakai ID Izin + No. Seri dari beliau. Chat beliau dulu untuk minta ID & No. Seri, baru buka: '+location.href; window.open('https://wa.me/?text='+encodeURIComponent(teks),'_blank'); }
@@ -294,10 +251,10 @@ var el=document.getElementById('tab-'+t); if(el) el.style.display=(t==id?'block'
 function renderBarang(){
 var s=document.getElementById('gridStok'); var j=document.getElementById('gridJual'); if(!s||!j) return; s.innerHTML=''; j.innerHTML='';
 barang.forEach(function(b){
-var logo=b.logo||getLogo(b.nama);
-b.logo=logo;
-s.innerHTML+='<div class="item"><div class="logo">'+logo+'</div><div class="in"><b>'+b.nama+'</b><small>Rp '+b.harga.toLocaleString('id-ID')+' • Stok '+b.stok+' '+b.satuan+'</small><div class="stokbox"><button type="button" onclick="ubahStok('+b.id+',-1)">-</button><b>'+b.stok+' '+b.satuan+'</b><button type="button" onclick="ubahStok('+b.id+',1)">+</button></div></div></div>';
-j.innerHTML+='<div class="item" data-nama="'+b.nama.toLowerCase()+'"><div class="logo">'+logo+'</div><div class="in"><b>'+b.nama+'</b><small>Rp '+b.harga.toLocaleString('id-ID')+' • Stok '+b.stok+' '+b.satuan+'</small><button type="button" class="btn btn-orange" onclick="tambahCart('+b.id+')">+ Tambah</button></div></div>';
+var img=b.gambar||getGambar(b.nama);
+b.gambar=img;
+s.innerHTML+='<div class="item"><div class="logo"><img src="'+img+'" alt="'+b.nama+'"></div><div class="in"><b>'+b.nama+'</b><small>Rp '+b.harga.toLocaleString('id-ID')+' • Stok '+b.stok+' '+b.satuan+'</small><div class="stokbox"><button type="button" onclick="ubahStok('+b.id+',-1)">-</button><b>'+b.stok+' '+b.satuan+'</b><button type="button" onclick="ubahStok('+b.id+',1)">+</button></div></div></div>';
+j.innerHTML+='<div class="item" data-nama="'+b.nama.toLowerCase()+'"><div class="logo"><img src="'+img+'" alt="'+b.nama+'"></div><div class="in"><b>'+b.nama+'</b><small>Rp '+b.harga.toLocaleString('id-ID')+' • Stok '+b.stok+' '+b.satuan+'</small><button type="button" class="btn btn-orange" onclick="tambahCart('+b.id+')">+ Tambah</button></div></div>';
 });
 updateDashboard();
 }
@@ -354,7 +311,7 @@ var allItems={}; trx.forEach(function(t){ t.items.split(', ').forEach(function(i
 var top=null; Object.keys(allItems).forEach(function(k){ if(!top || allItems[k]>allItems[top]) top=k; });
 document.getElementById('terlaris').innerText=top?top+' - '+allItems[top]+'x laku':'Belum ada.';
 }
-function tambahBarang(){ var n=document.getElementById('newNama').value; var h=parseInt(document.getElementById('newHarga').value||0); var s=parseInt(document.getElementById('newStok').value||0); var sat=document.getElementById('newSatuan').value; if(!n||!h){alert('Isi Nama & Harga!');return;} var logo=getLogo(n); barang.push({id:Date.now(),nama:n,harga:h,stok:s,satuan:sat,logo:logo}); renderBarang(); document.getElementById('newNama').value=''; document.getElementById('logoPreview').innerText='📦'; document.getElementById('logoPreviewText').innerText='Logo akan muncul otomatis sesuai nama barang'; alert('Barang '+n+' ditambah! Logo: '+logo); }
+function tambahBarang(){ var n=document.getElementById('newNama').value; var h=parseInt(document.getElementById('newHarga').value||0); var s=parseInt(document.getElementById('newStok').value||0); var sat=document.getElementById('newSatuan').value; if(!n||!h){alert('Isi Nama & Harga!');return;} var img=getGambar(n); barang.push({id:Date.now(),nama:n,harga:h,stok:s,satuan:sat,gambar:img}); renderBarang(); document.getElementById('newNama').value=''; document.getElementById('logoPreviewImg').src='beras.png'; document.getElementById('logoPreviewText').innerText='Gambar akan muncul otomatis sesuai nama barang'; alert('Barang '+n+' ditambah! Gambar: '+img); }
 function hapusSemua(){ if(confirm('Hapus SEMUA data?')){ trx=[]; hutang=[]; save(); renderHutang(); renderLaporan(); updateDashboard(); } }
 function filterCari(){ var q=document.getElementById('cari').value.toLowerCase(); document.querySelectorAll('#gridJual .item').forEach(function(c){ c.style.display=c.dataset.nama.indexOf(q)>-1?'block':'none'; }); }
 cekKunci(); renderBarang(); renderHutang(); renderPelanggan(); renderLaporan(); updateCart();
