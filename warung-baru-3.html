@@ -140,52 +140,81 @@ try{ var ex=JSON.parse(localStorage.getItem('izinExtraBaru2')||'[]'); IZIN_VALID
 function cariIzin(id,seri){ for(var i=0;i<IZIN_VALID.length;i++){ if(IZIN_VALID[i].id==id && IZIN_VALID[i].seri==seri) return IZIN_VALID[i]; } return null; }
 function samarkan(kode){ return '••••••••'; }
 function getLogo(nama){
-  var n=(nama||'').toLowerCase();
-  if(n.indexOf('beras')>-1) return '🍚';
-  if(n.indexOf('minyak')>-1) return '🛢️';
-  if(n.indexOf('gula')>-1) return '🍬';
-  if(n.indexOf('telur')>-1) return '🥚';
-  if(n.indexOf('mie')>-1||n.indexOf('mi instan')>-1||n.indexOf('indomie')>-1) return '🍜';
-  if(n.indexOf('ayam')>-1) return '🍗';
-  if(n.indexOf('sayur')>-1||n.indexOf('bayam')>-1||n.indexOf('kangkung')>-1||n.indexOf('kol')>-1||n.indexOf('sawi')>-1||n.indexOf('wortel')>-1||n.indexOf('kentang')>-1||n.indexOf('tomat')>-1||n.indexOf('cabai')>-1||n.indexOf('cabe')>-1||n.indexOf('bawang')>-1) return '🥬';
-  if(n.indexOf('ciki')>-1||n.indexOf('chiki')>-1||n.indexOf('keripik')>-1||n.indexOf('snack')>-1||n.indexOf('camilan')>-1) return '🍟';
-  if(n.indexOf('kopi')>-1) return '☕';
-  if(n.indexOf('susu')>-1) return '🥛';
-  if(n.indexOf('sabun')>-1) return '🧼';
-  if(n.indexOf('sampo')>-1||n.indexOf('shampo')>-1) return '🧴';
-  if(n.indexOf('pasta')>-1||n.indexOf('odol')>-1) return '🪥';
-  if(n.indexOf('teh')>-1) return '🍵';
-  if(n.indexOf('garam')>-1) return '🧂';
-  if(n.indexOf('tepung')>-1||n.indexOf('terigu')>-1) return '🌾';
-  if(n.indexOf('kecap')>-1) return '🍶';
-  if(n.indexOf('saos')>-1||n.indexOf('saus')>-1) return '🥫';
-  if(n.indexOf('sarden')>-1||n.indexOf('kornet')>-1) return '🥫';
-  if(n.indexOf('gas')>-1||n.indexOf('elpiji')>-1||n.indexOf('lpg')>-1) return '🔥';
-  if(n.indexOf('rokok')>-1) return '🚬';
-  if(n.indexOf('deterjen')>-1||n.indexOf('rinso')>-1) return '🧺';
-  if(n.indexOf('air')>-1||n.indexOf('aqua')>-1||n.indexOf('mineral')>-1) return '💧';
-  if(n.indexOf('roti')>-1) return '🍞';
-  if(n.indexOf('daging')>-1||n.indexOf('sapi')>-1) return '🥩';
-  if(n.indexOf('ikan')>-1) return '🐟';
-  if(n.indexOf('buah')>-1||n.indexOf('pisang')>-1||n.indexOf('jeruk')>-1||n.indexOf('apel')>-1||n.indexOf('mangga')>-1) return '🍎';
-  if(n.indexOf('tisu')>-1) return '🧻';
-  if(n.indexOf('popok')>-1||n.indexOf('pampers')>-1) return '👶';
-  if(n.indexOf('biskuit')>-1||n.indexOf('wafer')>-1||n.indexOf('oreo')>-1) return '🍪';
-  if(n.indexOf('permen')>-1) return '🍭';
-  if(n.indexOf('coklat')>-1||n.indexOf('cokelat')>-1) return '🍫';
-  if(n.indexOf('santan')>-1) return '🥥';
-  if(n.indexOf('mentega')>-1||n.indexOf('margarin')>-1) return '🧈';
-  if(n.indexOf('keju')>-1) return '🧀';
-  if(n.indexOf('baterai')>-1||n.indexOf('batre')>-1) return '🔋';
-  if(n.indexOf('lampu')>-1) return '💡';
+  var n = (' ' + (nama||'').toLowerCase().replace(/[^a-z0-9 ]/g,' ') + ' ');
+  n = n.replace(/\s+/g,' ');
+  // Urutan: yang PALING SPESIFIK dicek dulu, biar tidak salah tebak
+  var MAP = [
+    // MIE & MAKANAN JADI - dicek paling awal
+    ['mie ayam','🍜'],['mie goreng','🍜'],['mie kuah','🍜'],['mie instan goreng','🍜'],['mie instan kuah','🍜'],['mie instan','🍜'],['indomie','🍜'],['pop mie','🍜'],['mie ','🍜'],
+    // BERAS
+    ['beras pandan','🍚'],['beras premium','🍚'],['beras merah','🍚'],['beras ketan','🍚'],['beras ','🍚'],['beras','🍚'],['nasi ','🍚'],
+    // MINYAK & BUMBU CAIR
+    ['minyak goreng','🫙'],['minyak kelapa','🫙'],['minyak kayu putih','🧴'],['minyak ','🫙'],['minyak','🫙'],
+    ['kecap manis','🍶'],['kecap asin','🍶'],['kecap ','🍶'],['kecap','🍶'],
+    ['saos tomat','🥫'],['saus tomat','🥫'],['saos sambal','🌶️'],['saus sambal','🌶️'],['saos ','🥫'],['saus ','🥫'],
+    ['santan kara','🥥'],['santan ','🥥'],['santan','🥥'],
+    // GULA, GARAM, TEPUNG
+    ['gula merah','🟤'],['gula aren','🟤'],['gula pasir','🍬'],['gula batu','🍬'],['gula ','🍬'],['gula','🍬'],
+    ['garam ','🧂'],['garam','🧂'],
+    ['tepung terigu','🌾'],['tepung beras','🌾'],['tepung tapioka','🌾'],['tepung ','🌾'],['tepung','🌾'],
+    ['mentega ','🧈'],['margarin ','🧈'],['blue band','🧈'],['mentega','🧈'],['margarin','🧈'],
+    ['keju ','🧀'],['keju','🧀'],
+    // TELUR, SUSU, DAGING, IKAN
+    ['telur bebek','🥚'],['telur puyuh','🥚'],['telur ayam','🥚'],['telur ','🥚'],['telur','🥚'],
+    ['susu kental manis','🥛'],['susu bubuk','🍼'],['susu cair','🥛'],['susu uht','🥛'],['susu ','🥛'],['susu','🥛'],
+    ['ayam potong','🍗'],['ayam kampung','🍗'],['ayam goreng','🍗'],['ayam ','🍗'],['ayam','🍗'],
+    ['daging sapi','🥩'],['daging ayam','🍗'],['daging ','🥩'],['daging','🥩'],['kornet ','🥫'],['kornet','🥫'],['sarden ','🐟'],['sarden','🐟'],
+    ['ikan asin','🐟'],['ikan tongkol','🐟'],['ikan lele','🐟'],['ikan mas','🐟'],['ikan ','🐟'],['ikan','🐟'],
+    // SAYUR - per jenis, biar tepat
+    ['bayam ','🥬'],['kangkung ','🥬'],['sawi ','🥬'],['kol ','🥬'],['kubis ','🥬'],['wortel ','🥕'],['wortel','🥕'],['kentang ','🥔'],['kentang','🥔'],['tomat ','🍅'],['tomat','🍅'],['cabai rawit','🌶️'],['cabai merah','🌶️'],['cabai ','🌶️'],['cabe ','🌶️'],['bawang merah','🧅'],['bawang putih','🧄'],['bawang bombay','🧅'],['bawang ','🧅'],['bawang','🧅'],['timun ','🥒'],['mentimun ','🥒'],['terong ','🍆'],['terong','🍆'],['jagung ','🌽'],['jagung','🌽'],['sayur asem','🥬'],['sayur sop','🥬'],['sayur ','🥬'],['sayur','🥬'],
+    // BUAH
+    ['pisang ','🍌'],['pisang','🍌'],['jeruk ','🍊'],['jeruk','🍊'],['apel ','🍎'],['apel','🍎'],['mangga ','🥭'],['mangga','🥭'],['semangka ','🍉'],['semangka','🍉'],['melon ','🍈'],['melon','🍈'],['anggur ','🍇'],['anggur','🍇'],['pepaya ','🍈'],['buah naga','🐉'],['buah ','🍎'],['buah','🍎'],
+    // KOPI, TEH, MINUMAN
+    ['kopi bubuk','☕'],['kopi sachet','☕'],['kopi hitam','☕'],['kopi susu','☕'],['kopi ','☕'],['kopi','☕'],['kapal api','☕'],
+    ['teh celup','🍵'],['teh tubruk','🍵'],['teh kotak','🧃'],['teh ','🍵'],['teh','🍵'],
+    ['air mineral','💧'],['air galon','💧'],['aqua ','💧'],['aqua','💧'],['air ','💧'],
+    ['sirup ','🥤'],['sirup','🥤'],['jus ','🧃'],['jus','🧃'],['soda ','🥤'],['soda','🥤'],
+    // ROTI, SNACK, PERMEN, COKLAT
+    ['roti tawar','🍞'],['roti sobek','🍞'],['roti ','🍞'],['roti','🍞'],
+    ['biskuit ','🍪'],['wafer ','🍪'],['oreo ','🍪'],['biskuit','🍪'],['wafer','🍪'],
+    ['ciki ','🍟'],['chiki ','🍟'],['keripik singkong','🍟'],['keripik ','🍟'],['ciki','🍟'],['chiki','🍟'],['snack ','🍿'],['camilan ','🍿'],
+    ['permen ','🍭'],['permen','🍭'],
+    ['coklat ','🍫'],['cokelat ','🍫'],['coklat','🍫'],['cokelat','🍫'],
+    // SABUN & KEBERSIHAN - dibedakan jelas
+    ['sabun cuci piring','🍽️'],['sabun mandi','🧼'],['sabun cuci baju','🧺'],['sabun colek','🧼'],['sabun ','🧼'],['sabun','🧼'],
+    ['sampo ','🧴'],['shampo ','🧴'],['sampo','🧴'],['shampo','🧴'],['conditioner','🧴'],
+    ['pasta gigi','🪥'],['odol ','🪥'],['odol','🪥'],['sikat gigi','🪥'],
+    ['deterjen ','🧺'],['rinso ','🧺'],['deterjen','🧺'],['rinso','🧺'],['pelembut ','🧺'],['molto ','🧺'],
+    ['tisu ','🧻'],['tisu','🧻'],['popok ','👶'],['pampers ','👶'],['popok','👶'],['pembalut ','🩹'],
+    // LAINNYA WARUNG
+    ['gas elpiji','🔥'],['gas ','🔥'],['elpiji ','🔥'],['lpg ','🔥'],['tabung gas','🔥'],
+    ['rokok ','🚬'],['rokok','🚬'],['kretek ','🚬'],
+    ['baterai ','🔋'],['batre ','🔋'],['baterai','🔋'],
+    ['lampu ','💡'],['lampu','💡'],
+    ['korek api','🔥'],['korek ','🔥'],
+    ['kecap','🍶']
+  ];
+  for(var i=0;i<MAP.length;i++){
+    if(n.indexOf(' '+MAP[i][0]+' ') > -1 || n.indexOf(MAP[i][0]) > -1 && (' '+MAP[i][0]+' ').trim().length > 3){
+      // Cek kata lengkap, bukan potongan huruf
+      if(n.indexOf(MAP[i][0]) > -1) return MAP[i][1];
+    }
+  }
   return '📦';
 }
+
 function updateLogoPreview(){
-  var nama=document.getElementById('newNama').value||'';
-  var logo=getLogo(nama);
-  document.getElementById('logoPreview').innerText=logo;
-  document.getElementById('logoPreviewText').innerText=nama.trim()==''?'Logo akan muncul otomatis sesuai nama barang':'Logo untuk "'+nama+'" : '+logo+' - Sudah sesuai?';
-}
+  var nama = document.getElementById('newNama').value || '';
+  var logo = getLogo(nama);
+  document.getElementById('logoPreview').innerText = logo;
+  if(nama.trim()==''){
+    document.getElementById('logoPreviewText').innerText = 'Logo akan muncul otomatis sesuai nama barang';
+  } else if(logo=='📦'){
+    document.getElementById('logoPreviewText').innerText = '⚠️ "'+nama+'" belum dikenal - logo pakai 📦 dulu. Coba tulis lebih lengkap, contoh: Beras Premium, Sabun Mandi, Kopi Bubuk';
+  } else {
+    document.getElementById('logoPreviewText').innerText = 'Logo untuk "'+nama+'" : '+logo+' - Sudah tepat?';
+  }
+
 function kodeAcak(panjang){
   var huruf='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   var hasil='';
