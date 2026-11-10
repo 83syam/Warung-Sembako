@@ -20,7 +20,6 @@ button.red{background:#dc2626}
 button.blue{background:#2563eb}
 button.gray{background:#64748b}
 .row{display:flex;gap:8px}
-.row button{flex:1}
 .item{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding:10px 0}
 .item:last-child{border:0}
 .item b{font-size:15px}
@@ -35,29 +34,26 @@ button.gray{background:#64748b}
 <body>
 <header><h1>🏪 WARUNG SEMBAKO</h1><p>83syam - Versi 1 - Bandung</p></header>
 
-<!-- HALAMAN KUNCI -->
 <div id="loginPage" class="container">
   <div class="card">
     <h2>🔐 Halaman Kunci</h2>
     <p style="font-size:13px;color:#64748b">Masukkan ID Warung untuk buka aplikasi.</p>
     <label>ID Warung</label>
-    <input id="inputID" placeholder="Contoh: SYAM01">
+    <input id="inputID" placeholder="Masukkan ID">
     <label>Password</label>
-    <input id="inputPass" type="password" placeholder="Password">
+    <input id="inputPass" type="password" placeholder="Masukkan Password">
     <button onclick="login()">BUKA WARUNG</button>
     <p id="loginMsg" class="small" style="color:red"></p>
-    <p class="small">ID: SYAM01 s/d SYAM10<br>Password: 12345</p>
+    <p class="small">Gunakan ID & Password yang sudah dibagikan.<br>Jangan dibagikan ke orang lain.</p>
   </div>
 </div>
 
-<!-- HALAMAN UTAMA -->
 <div id="mainPage" class="container hidden">
   <div class="card">
     <div class="top"><div><span style="font-size:13px">Selamat Datang,</span><br><b id="userName">-</b></div><button class="gray" style="width:auto;padding:8px 12px;font-size:13px" onclick="logout()">Keluar</button></div>
     <p style="margin:14px 0 4px;font-size:13px">Total Omzet Hari Ini</p>
     <div class="total" id="totalOmzet">Rp 0</div>
   </div>
-
   <div class="card">
     <h2>➕ Tambah Barang</h2>
     <label>Nama Barang</label>
@@ -68,13 +64,11 @@ button.gray{background:#64748b}
     <input id="stokBarang" type="number" placeholder="Contoh: 10">
     <button onclick="tambahBarang()">SIMPAN BARANG</button>
   </div>
-
   <div class="card">
     <h2>📦 Stok Barang</h2>
     <div id="listBarang"></div>
     <p id="emptyMsg" class="small">Belum ada barang. Tambah di atas.</p>
   </div>
-
   <div class="card">
     <h2>🧾 Jual Barang</h2>
     <label>Pilih Barang</label>
@@ -84,7 +78,6 @@ button.gray{background:#64748b}
     <button class="blue" onclick="jualBarang()">JUAL & CATAT</button>
     <p class="small" id="infoJual"></p>
   </div>
-
   <div class="card">
     <h2>📋 Riwayat Jualan</h2>
     <div id="riwayat"></div>
@@ -93,20 +86,31 @@ button.gray{background:#64748b}
 </div>
 
 <script>
-const IDS=["SYAM01","SYAM02","SYAM03","SYAM04","SYAM05","SYAM06","SYAM07","SYAM08","SYAM09","SYAM10"];
+const USERS={
+"W8K4P2":"x9mQ2vL7",
+"Q7Z3T9":"kP4nB8wQ",
+"M5R8D1":"zT6vY3aK",
+"H2N9V6":"bQ8cR5mZ",
+"J4C6K8":"nV2pL9xD",
+"P9B2M7":"aK7hJ4sW",
+"T3V5H1":"mZ9qW6bN",
+"D6L1Q4":"wX3kP8tR",
+"R8S2F9":"jH5vN2cY",
+"K1Y7G3":"cD4fT9kL"
+};
 let barang=JSON.parse(localStorage.getItem("warung_barang")||"[]");
 let jual=JSON.parse(localStorage.getItem("warung_jual")||"[]");
 function simpan(){localStorage.setItem("warung_barang",JSON.stringify(barang));localStorage.setItem("warung_jual",JSON.stringify(jual));tampil();}
 function login(){
   let id=document.getElementById("inputID").value.trim().toUpperCase();
   let pw=document.getElementById("inputPass").value.trim();
-  if(IDS.includes(id) && pw==="12345"){
+  if(USERS[id] && USERS[id]===pw){
     localStorage.setItem("warung_login",id);
     document.getElementById("userName").innerText=id;
     document.getElementById("loginPage").classList.add("hidden");
     document.getElementById("mainPage").classList.remove("hidden");
     tampil();
-  }else{document.getElementById("loginMsg").innerText="ID / Password salah. Coba SYAM01 / 12345";}
+  }else{document.getElementById("loginMsg").innerText="ID / Password salah. Cek huruf besar-kecilnya.";}
 }
 function logout(){localStorage.removeItem("warung_login");location.reload();}
 function tambahBarang(){
@@ -145,7 +149,7 @@ function tampil(){
   jual.forEach(x=>{r.innerHTML+=`<div class="item"><div><b>${x.nama} x${x.jml}</b><br><span>${x.waktu}</span></div><b>Rp ${x.total.toLocaleString("id-ID")}</b></div>`;});
 }
 let saved=localStorage.getItem("warung_login");
-if(saved && IDS.includes(saved)){document.getElementById("userName").innerText=saved;document.getElementById("loginPage").classList.add("hidden");document.getElementById("mainPage").classList.remove("hidden");}
+if(saved && USERS[saved]){document.getElementById("userName").innerText=saved;document.getElementById("loginPage").classList.add("hidden");document.getElementById("mainPage").classList.remove("hidden");}
 tampil();
 </script>
 </body>
