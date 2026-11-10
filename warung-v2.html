@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Warung Sembako V2 - Kasir Pintar</title>
+<style>*{box-sizing:border-box;font-family:system-ui,Arial}body{margin:0;background:#f0fdf4}header{background:#15803d;color:#fff;padding:14px;text-align:center;position:sticky;top:0;z-index:10}header h1{margin:0;font-size:20px}header p{margin:2px;font-size:12px;opacity:.9}.wrap{max-width:560px;margin:0 auto;padding:12px;padding-bottom:90px}.card{background:#fff;border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.06)}h2{margin:0 0 10px;font-size:17px}label{font-size:12px;font-weight:700;display:block;margin:9px 0 4px}input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px}button{width:100%;padding:13px;border:0;border-radius:12px;background:#16a34a;color:#fff;font-weight:700;font-size:15px;cursor:pointer;margin-top:10px}button.blue{background:#2563eb}button.orange{background:#ea580c}button.red{background:#dc2626}button.gray{background:#64748b}button.small{width:auto;padding:7px 10px;font-size:12px;margin:0}.flex{display:flex;gap:8px}.flex>*{flex:1}.item{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #eee}.item:last-child{border:0}.badge{padding:4px 9px;border-radius:20px;font-size:11px;font-weight:700}.green{background:#dcfce7;color:#166534}.redb{background:#fee2e2;color:#991b1b}.yellow{background:#fef9c3;color:#854d0e}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#f8fafc;border-radius:12px;padding:12px;text-align:center}.stat b{font-size:18px;display:block}.stat span{font-size:11px;color:#64748b}.hidden{display:none}.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:1px solid #ddd;padding:8px;z-index:20}.nav button{background:#f1f5f9;color:#334155;margin:0;padding:10px;font-size:12px}.nav button.active{background:#15803d;color:#fff}.emoji{font-size:24px}.small{font-size:12px;color:#64748b;text-align:center}.master{border:2px solid #facc15;background:#fefce8}
+</style></head><body>
+<header><h1>🏪 WARUNG SEMBAKO V2</h1><p id="headUser">Kasir Pintar • Bandung • 83syam</p></header>
+
+<div id="loginPage" class="wrap"><div class="card" style="margin-top:20px"><h2>🔐 Masuk Warung</h2><p class="small">ID acak tapi mudah diingat</p><label>ID WARUNG</label><input id="inID" placeholder="Contoh: BERAS-4821 / PUSAT-83"><label>PASSWORD</label><input id="inPass" type="password" placeholder="Password"><button onclick="login()">MASUK WARUNG →</button><p id="msg" class="small" style="color:red"></p><div class="card" style="background:#f0fdf4;margin-top:12px"><b style="font-size:13px">💡 Coba Master:</b><p class="small" style="text-align:left">ID: PUSAT-83<br>Password: Pusat#8300!</p></div></div></div>
+
+<div id="app" class="wrap hidden">
+<div class="card" id="masterCard" style="display:none"><b>👑 MODE MASTER - PEMBUAT</b><p class="small" style="text-align:left">Bapak bisa lihat semua. ID karyawan tidak bisa hapus data laporan.</p></div>
+
+<div id="pageKasir">
+<div class="card"><div class="grid"><div class="stat"><span>Omzet Hari Ini</span><b id="omzetHari">Rp 0</b></div><div class="stat"><span>Total Barang</span><b id="totalBarang">0</b></div></div></div>
+<div class="card"><h2>🛒 Kasir - Pilih Barang</h2><div id="kasirList"></div><label>Uang Pembeli (Rp)</label><input id="uangBayar" type="number" placeholder="Contoh: 50000"><div style="background:#f0fdf4;padding:12px;border-radius:12px;margin-top:10px"><div style="display:flex;justify-content:space-between"><span>Total Belanja:</span><b id="totalBelanja">Rp 0</b></div><div style="display:flex;justify-content:space-between"><span>Kembalian:</span><b id="kembalian" style="color:#16a34a">Rp 0</b></div></div><div class="flex"><button class="blue" onclick="bayar('tunai')">💵 BAYAR TUNAI</button><button class="orange" onclick="bayar('hutang')">📝 CATAT HUTANG</button></div><button class="gray" onclick="batalKeranjang()">Batalkan Keranjang</button></div>
+<div class="card"><h2>⚠️ Stok Mau Habis</h2><div id="stokHabis"></div></div>
+</div>
+
+<div id="pageStok" class="hidden">
+<div class="card"><h2>➕ Tambah Barang Baru</h2><label>Nama Barang</label><input id="nm" placeholder="Beras 5kg"><label>Harga Jual</label><input id="hg" type="number" placeholder="65000"><label>Stok Awal</label><input id="st" type="number" placeholder="10"><label>Kategori</label><select id="kat"><option>Beras & Sembako</option><option>Minyak & Bumbu</option><option>Mie & Snack</option><option>Minuman</option><option>Sabun & Rumah</option><option>Lainnya</option></select><button onclick="tambah()">SIMPAN BARANG</button></div>
+<div class="card"><h2>📦 Daftar Stok</h2><div id="listStok"></div></div>
+</div>
+
+<div id="pageHutang" class="hidden">
+<div class="card"><h2>📝 Hutang Pelanggan</h2><label>Nama Orang</label><input id="namaHutang" placeholder="Nama yang ngutang"><label>Jumlah Hutang (Rp)</label><input id="jmlHutang" type="number" placeholder="20000"><label>Catatan</label><input id="catHutang" placeholder="Contoh: 2 bungkus mie"><button class="orange" onclick="tambahHutang()">CATAT HUTANG</button></div>
+<div class="card"><h2>📋 Daftar Yang Ngutang</h2><div id="listHutang"></div><div style="display:flex;justify-content:space-between;margin-top:10px"><b>Total Hutang Belum Lunas:</b><b id="totalHutang" style="color:#dc2626">Rp 0</b></div></div>
+</div>
+
+<div id="pageLaporan" class="hidden">
+<div class="card"><h2>📊 Laporan Warung</h2><div class="grid"><div class="stat"><span>Omzet Total</span><b id="omzetTotal">Rp 0</b></div><div class="stat"><span>Transaksi</span><b id="jmlTransaksi">0x</b></div></div><p style="font-size:13px"><b>Barang Paling Laris:</b> <span id="laris">-</span></p></div>
+<div class="card"><h2>🧾 Riwayat Jualan</h2><div id="riwayat"></div><button class="red" onclick="resetAll()">HAPUS SEMUA DATA (Master Saja)</button></div>
+</div>
+</div>
+
+<div class="nav hidden" id="bottomNav"><button class="active" onclick="showPage('Kasir',this)">🛒 Kasir</button><button onclick="showPage('Stok',this)">📦 Stok</button><button onclick="showPage('Hutang',this)">📝 Hutang</button><button onclick="showPage('Laporan',this)">📊 Laporan</button></div>
+
+<script>
+const USERS={"PUSAT-83":"Pusat#8300!","BERAS-4821":"Beras#4821!","GULA-9173":"Gula#9173!","MINYAK-3502":"Minyak#3502!","KOPI-7741":"Kopi#7741!","TEH-2098":"Teh#2098!","SUSU-6315":"Susu#6315!","TELUR-1482":"Telur#1482!","SABUN-9264":"Sabun#9264!","MIE-5739":"Mie#5739!","GARAM-8046":"Garam#8046!"};
+let barang=JSON.parse(localStorage.getItem("v2_barang")||'[{"nama":"Beras 5kg","harga":65000,"stok":8,"kat":"Beras & Sembako"},{"nama":"Minyak 1L","harga":18000,"stok":12,"kat":"Minyak & Bumbu"},{"nama":"Mie Instan","harga":3500,"stok":30,"kat":"Mie & Snack"},{"nama":"Gula 1kg","harga":17000,"stok":5,"kat":"Beras & Sembako"},{"nama":"Kopi Sachet","harga":2000,"stok":40,"kat":"Minuman"}]');
+let jual=JSON.parse(localStorage.getItem("v2_jual")||"[]");
+let hutang=JSON.parse(localStorage.getItem("v2_hutang")||"[]");
+let keranjang={};
+let curUser="";
+function save(){localStorage.setItem("v2_barang",JSON.stringify(barang));localStorage.setItem("v2_jual",JSON.stringify(jual));localStorage.setItem("v2_hutang",JSON.stringify(hutang));render();}
+function login(){let id=document.getElementById("inID").value.trim().toUpperCase();let pw=document.getElementById("inPass").value.trim();if(USERS[id]&&USERS[id]===pw){curUser=id;localStorage.setItem("v2_login",id);document.getElementById("loginPage").classList.add("hidden");document.getElementById("app").classList.remove("hidden");document.getElementById("bottomNav").classList.remove("hidden");document.getElementById("headUser").innerText="Login: "+id+(id==="PUSAT-83"?" • 👑 MASTER":"");if(id==="PUSAT-83")document.getElementById("masterCard").style.display="block";render();}else{document.getElementById("msg").innerText="ID / Password salah. Cek huruf besar-kecil & angka.";}}
+function showPage(p,btn){["Kasir","Stok","Hutang","Laporan"].forEach(x=>document.getElementById("page"+x).classList.add("hidden"));document.getElementById("page"+p).classList.remove("hidden");document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));if(btn)btn.classList.add("active");}
+function emojiFor(n){n=n.toLowerCase();if(n.includes("beras"))return"🍚";if(n.includes("minyak"))return"🫙";if(n.includes("mie"))return"🍜";if(n.includes("gula"))return"🍬";if(n.includes("kopi"))return"☕";if(n.includes("teh"))return"🍵";if(n.includes("susu"))return"🥛";if(n.includes("telur"))return"🥚";if(n.includes("sabun"))return"🧼";return"🛍️";}
+function tambah(){let n=document.getElementById("nm").value.trim();let h=parseInt(document.getElementById("hg").value);let s=parseInt(document.getElementById("st").value);let k=document.getElementById("kat").value;if(!n||!h||isNaN(s))return alert("Lengkapi!");barang.push({nama:n,harga:h,stok:s,kat:k});document.getElementById("nm").value="";document.getElementById("hg").value="";document.getElementById("st").value="";save();alert("Barang ditambah!");}
+function ubahStok(i,d){barang[i].stok+=d;if(barang[i].stok<0)barang[i].stok=0;save();}
+function hapusBarang(i){if(confirm("Hapus barang ini?")){barang.splice(i,1);save();}}
+function addKeranjang(i){keranjang[i]=(keranjang[i]||0)+1;renderKasir();}
+function minKeranjang(i){if(keranjang[i])keranjang[i]--;if(keranjang[i]<=0)delete keranjang[i];renderKasir();}
+function batalKeranjang(){keranjang={};renderKasir();}
+function hitungTotal(){let t=0;for(let i in keranjang)t+=barang[i].harga*keranjang[i];return t;}
+function bayar(tipe){
+let total=hitungTotal();if(total===0)return alert("Keranjang masih kosong!");
+if(tipe==="tunai"){let uang=parseInt(document.getElementById("uangBayar").value||0);if(uang<total)return alert("Uang kurang! Total Rp "+total.toLocaleString("id-ID"));for(let i in keranjang){barang[i].stok-=keranjang[i];}jual.unshift({items:Object.keys(keranjang).map(i=>barang[i].nama+" x"+keranjang[i]).join(", "),total:total,waktu:new Date().toLocaleString("id-ID"),oleh:curUser});keranjang={};document.getElementById("uangBayar").value="";save();alert("Berhasil! Kembalian Rp "+(uang-total).toLocaleString("id-ID"));}
+else{let nama=prompt("Nama yang ngutang:");if(!nama)return;hutang.unshift({nama:nama,total:total,cat:Object.keys(keranjang).map(i=>barang[i].nama+" x"+keranjang[i]).join(", "),waktu:new Date().toLocaleString("id-ID"),lunas:false});for(let i in keranjang){barang[i].stok-=keranjang[i];}jual.unshift({items:"HUTANG - "+nama+" : "+Object.keys(keranjang).map(i=>barang[i].nama+" x"+keranjang[i]).join(", "),total:total,waktu:new Date().toLocaleString("id-ID"),oleh:curUser});keranjang={};save();alert("Hutang dicatat untuk "+nama);}
+}
+function tambahHutang(){let n=document.getElementById("namaHutang").value.trim();let j=parseInt(document.getElementById("jmlHutang").value);let c=document.getElementById("catHutang").value.trim();if(!n||!j)return alert("Isi nama & jumlah!");hutang.unshift({nama:n,total:j,cat:c,waktu:new Date().toLocaleString("id-ID"),lunas:false});document.getElementById("namaHutang").value="";document.getElementById("jmlHutang").value="";document.getElementById("catHutang").value="";save();}
+function lunasHutang(i){hutang[i].lunas=true;save();}
+function hapusHutang(i){if(confirm("Hapus catatan hutang ini?")){hutang.splice(i,1);save();}}
+function resetAll(){if(curUser!=="PUSAT-83")return alert("Hanya MASTER yang boleh hapus semua!");if(confirm("Hapus semua data?")){barang=[];jual=[];hutang=[];save();}}
+function renderKasir(){
+let el=document.getElementById("kasirList");el.innerHTML="";
+barang.forEach((b,i)=>{let qty=keranjang[i]||0;el.innerHTML+=`<div class="item"><div><span class="emoji">${emojiFor(b.nama)}</span> <b>${b.nama}</b><br><span style="font-size:12px;color:#64748b">Rp ${b.harga.toLocaleString("id-ID")} • Stok ${b.stok} • ${b.kat}</span></div><div style="display:flex;gap:4px;align-items:center"><button class="small gray" onclick="minKeranjang(${i})">-</button><b>${qty}</b><button class="small" onclick="addKeranjang(${i})">+</button></div></div>`;});
+let total=hitungTotal();document.getElementById("totalBelanja").innerText="Rp "+total.toLocaleString("id-ID");
+let uang=parseInt(document.getElementById("uangBayar").value||0);document.getElementById("kembalian").innerText="Rp "+Math.max(0,uang-total).toLocaleString("id-ID");
+}
+function render(){
+let hari=new Date().toLocaleDateString("id-ID");let omzetHari=0;let omzetTotal=0;jual.forEach(j=>{omzetTotal+=j.total;if(j.waktu.includes(hari))omzetHari+=j.total;});
+document.getElementById("omzetHari").innerText="Rp "+omzetHari.toLocaleString("id-ID");document.getElementById("omzetTotal").innerText="Rp "+omzetTotal.toLocaleString("id-ID");document.getElementById("totalBarang").innerText=barang.length;document.getElementById("jmlTransaksi").innerText=jual.length+"x";
+let habis=document.getElementById("stokHabis");habis.innerHTML="";let adaHabis=false;barang.forEach(b=>{if(b.stok<=2){adaHabis=true;habis.innerHTML+=`<div class="item"><span>⚠️ <b>${b.nama}</b> - sisa ${b.stok}</span><span class="badge redb">SEGERA BELI</span></div>`;}});if(!adaHabis)habis.innerHTML='<p class="small">Semua stok aman ✅</p>';
+let ls=document.getElementById("listStok");ls.innerHTML="";barang.forEach((b,i)=>{let c=b.stok===0?"redb":b.stok<=2?"yellow":"green";let t=b.stok===0?"HABIS":b.stok<=2?"MENIPIS":"AMAN";ls.innerHTML+=`<div class="item"><div><b>${emojiFor(b.nama)} ${b.nama}</b><br><span>Rp ${b.harga.toLocaleString("id-ID")} • ${b.kat}</span></div><div style="text-align:right"><span class="badge ${c}">${t} - ${b.stok}</span><div style="display:flex;gap:4px;margin-top:6px"><button class="small gray" onclick="ubahStok(${i},-1)">-</button><button class="small" onclick="ubahStok(${i},1)">+</button><button class="small red" onclick="hapusBarang(${i})">Hapus</button></div></div></div>`;});
+let lh=document.getElementById("listHutang");lh.innerHTML="";let totH=0;hutang.forEach((h,i)=>{if(!h.lunas)totH+=h.total;lh.innerHTML+=`<div class="item"><div><b>${h.nama}</b><br><span>${h.cat||h.items||""} • ${h.waktu}</span><br><b style="color:${h.lunas?"#16a34a":"#dc2626"}">Rp ${h.total.toLocaleString("id-ID")} - ${h.lunas?"LUNAS ✅":"BELUM LUNAS"}</b></div>${!h.lunas?`<button class="small" onclick="lunasHutang(${i})">Lunas</button>`:""}<button class="small red" onclick="hapusHutang(${i})">x</button></div>`;});if(hutang.length===0)lh.innerHTML='<p class="small">Tidak ada hutang. Bagus!</p>';document.getElementById("totalHutang").innerText="Rp "+totH.toLocaleString("id-ID");
+let rw=document.getElementById("riwayat");rw.innerHTML="";if(jual.length===0)rw.innerHTML='<p class="small">Belum ada jualan.</p>';jual.slice(0,20).forEach(j=>{rw.innerHTML+=`<div class="item"><div><b>${j.items}</b><br><span>${j.waktu} • ${j.oleh||""}</span></div><b>Rp ${j.total.toLocaleString("id-ID")}</b></div>`;});
+let count={};jual.forEach(j=>{count[j.items]=(count[j.items]||0)+1;});let best="-";let mx=0;for(let k in count){if(count[k]>mx){mx=count[k];best=k;}}document.getElementById("laris").innerText=best;
+renderKasir();
+}
+document.getElementById("uangBayar").addEventListener("input",renderKasir);
+let saved=localStorage.getItem("v2_login");if(saved&&USERS[saved]){document.getElementById("inID").value=saved;document.getElementById("inPass").value=USERS[saved];login();}
+render();
+</script></body></html>
