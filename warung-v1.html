@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warung Sembako - V1</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f1f5f9;color:#111}
+header{background:#16a34a;color:#fff;padding:16px;text-align:center}
+header h1{margin:0;font-size:22px}
+header p{margin:4px 0 0;font-size:13px;opacity:.9}
+.container{max-width:520px;margin:0 auto;padding:14px}
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+h2{margin:0 0 10px;font-size:18px}
+label{font-size:13px;font-weight:bold;display:block;margin:10px 0 5px}
+input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px}
+button{width:100%;padding:13px;border:0;border-radius:10px;background:#16a34a;color:#fff;font-size:16px;font-weight:bold;cursor:pointer;margin-top:12px}
+button.red{background:#dc2626}
+button.blue{background:#2563eb}
+button.gray{background:#64748b}
+.row{display:flex;gap:8px}
+.row button{flex:1}
+.item{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding:10px 0}
+.item:last-child{border:0}
+.item b{font-size:15px}
+.item span{font-size:12px;color:#64748b}
+.badge{background:#dcfce7;color:#166534;padding:4px 8px;border-radius:20px;font-size:12px;font-weight:bold}
+.small{font-size:12px;color:#64748b;text-align:center;margin-top:8px}
+.hidden{display:none}
+.top{display:flex;justify-content:space-between;align-items:center}
+.total{font-size:28px;font-weight:bold;color:#16a34a}
+</style>
+</head>
+<body>
+<header><h1>🏪 WARUNG SEMBAKO</h1><p>83syam - Versi 1 - Bandung</p></header>
+
+<!-- HALAMAN KUNCI -->
+<div id="loginPage" class="container">
+  <div class="card">
+    <h2>🔐 Halaman Kunci</h2>
+    <p style="font-size:13px;color:#64748b">Masukkan ID Warung untuk buka aplikasi.</p>
+    <label>ID Warung</label>
+    <input id="inputID" placeholder="Contoh: SYAM01">
+    <label>Password</label>
+    <input id="inputPass" type="password" placeholder="Password">
+    <button onclick="login()">BUKA WARUNG</button>
+    <p id="loginMsg" class="small" style="color:red"></p>
+    <p class="small">ID: SYAM01 s/d SYAM10<br>Password: 12345</p>
+  </div>
+</div>
+
+<!-- HALAMAN UTAMA -->
+<div id="mainPage" class="container hidden">
+  <div class="card">
+    <div class="top"><div><span style="font-size:13px">Selamat Datang,</span><br><b id="userName">-</b></div><button class="gray" style="width:auto;padding:8px 12px;font-size:13px" onclick="logout()">Keluar</button></div>
+    <p style="margin:14px 0 4px;font-size:13px">Total Omzet Hari Ini</p>
+    <div class="total" id="totalOmzet">Rp 0</div>
+  </div>
+
+  <div class="card">
+    <h2>➕ Tambah Barang</h2>
+    <label>Nama Barang</label>
+    <input id="namaBarang" placeholder="Contoh: Beras 5kg">
+    <label>Harga Jual (Rp)</label>
+    <input id="hargaBarang" type="number" placeholder="Contoh: 65000">
+    <label>Stok</label>
+    <input id="stokBarang" type="number" placeholder="Contoh: 10">
+    <button onclick="tambahBarang()">SIMPAN BARANG</button>
+  </div>
+
+  <div class="card">
+    <h2>📦 Stok Barang</h2>
+    <div id="listBarang"></div>
+    <p id="emptyMsg" class="small">Belum ada barang. Tambah di atas.</p>
+  </div>
+
+  <div class="card">
+    <h2>🧾 Jual Barang</h2>
+    <label>Pilih Barang</label>
+    <select id="pilihBarang"></select>
+    <label>Jumlah</label>
+    <input id="jumlahJual" type="number" value="1">
+    <button class="blue" onclick="jualBarang()">JUAL & CATAT</button>
+    <p class="small" id="infoJual"></p>
+  </div>
+
+  <div class="card">
+    <h2>📋 Riwayat Jualan</h2>
+    <div id="riwayat"></div>
+    <button class="red" onclick="resetData()">HAPUS SEMUA DATA</button>
+  </div>
+</div>
+
+<script>
+const IDS=["SYAM01","SYAM02","SYAM03","SYAM04","SYAM05","SYAM06","SYAM07","SYAM08","SYAM09","SYAM10"];
+let barang=JSON.parse(localStorage.getItem("warung_barang")||"[]");
+let jual=JSON.parse(localStorage.getItem("warung_jual")||"[]");
+function simpan(){localStorage.setItem("warung_barang",JSON.stringify(barang));localStorage.setItem("warung_jual",JSON.stringify(jual));tampil();}
+function login(){
+  let id=document.getElementById("inputID").value.trim().toUpperCase();
+  let pw=document.getElementById("inputPass").value.trim();
+  if(IDS.includes(id) && pw==="12345"){
+    localStorage.setItem("warung_login",id);
+    document.getElementById("userName").innerText=id;
+    document.getElementById("loginPage").classList.add("hidden");
+    document.getElementById("mainPage").classList.remove("hidden");
+    tampil();
+  }else{document.getElementById("loginMsg").innerText="ID / Password salah. Coba SYAM01 / 12345";}
+}
+function logout(){localStorage.removeItem("warung_login");location.reload();}
+function tambahBarang(){
+  let n=document.getElementById("namaBarang").value.trim();
+  let h=parseInt(document.getElementById("hargaBarang").value);
+  let s=parseInt(document.getElementById("stokBarang").value);
+  if(!n||!h||isNaN(s)){alert("Lengkapi nama, harga, stok!");return;}
+  barang.push({nama:n,harga:h,stok:s});
+  document.getElementById("namaBarang").value="";document.getElementById("hargaBarang").value="";document.getElementById("stokBarang").value="";
+  simpan();alert("Barang ditambahkan!");
+}
+function jualBarang(){
+  let idx=document.getElementById("pilihBarang").value;
+  let jml=parseInt(document.getElementById("jumlahJual").value);
+  if(idx===""||!jml||jml<=0){alert("Pilih barang & jumlah!");return;}
+  let b=barang[idx];
+  if(b.stok<jml){alert("Stok kurang! Sisa "+b.stok);return;}
+  b.stok-=jml;
+  let total=b.harga*jml;
+  jual.unshift({nama:b.nama,jml:jml,total:total,waktu:new Date().toLocaleString("id-ID")});
+  simpan();alert("Terjual! Total Rp "+total.toLocaleString("id-ID"));
+}
+function resetData(){if(confirm("Hapus semua data?")){barang=[];jual=[];simpan();}}
+function tampil(){
+  let list=document.getElementById("listBarang");list.innerHTML="";
+  let sel=document.getElementById("pilihBarang");sel.innerHTML="";
+  let total=0;jual.forEach(x=>total+=x.total);
+  document.getElementById("totalOmzet").innerText="Rp "+total.toLocaleString("id-ID");
+  if(barang.length===0){document.getElementById("emptyMsg").style.display="block";}else{document.getElementById("emptyMsg").style.display="none";}
+  barang.forEach((b,i)=>{
+    list.innerHTML+=`<div class="item"><div><b>${b.nama}</b><br><span>Rp ${b.harga.toLocaleString("id-ID")} - Stok: ${b.stok}</span></div><span class="badge">${b.stok>0?"Ada":"Habis"}</span></div>`;
+    sel.innerHTML+=`<option value="${i}">${b.nama} - Rp ${b.harga.toLocaleString("id-ID")}</option>`;
+  });
+  let r=document.getElementById("riwayat");r.innerHTML="";
+  if(jual.length===0){r.innerHTML='<p class="small">Belum ada jualan.</p>';}
+  jual.forEach(x=>{r.innerHTML+=`<div class="item"><div><b>${x.nama} x${x.jml}</b><br><span>${x.waktu}</span></div><b>Rp ${x.total.toLocaleString("id-ID")}</b></div>`;});
+}
+let saved=localStorage.getItem("warung_login");
+if(saved && IDS.includes(saved)){document.getElementById("userName").innerText=saved;document.getElementById("loginPage").classList.add("hidden");document.getElementById("mainPage").classList.remove("hidden");}
+tampil();
+</script>
+</body>
+  </html>
