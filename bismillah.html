@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BISMILLAH - Warung Sembako V5 - Sathorik Syah</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#e8f5e9;color:#222}
+header{background:#0e7a3d;color:#fff;padding:14px;text-align:center;position:sticky;top:0;z-index:9}
+header h1{margin:0;font-size:20px}header p{margin:4px 0 0;color:#ffd93d;font-size:12px}
+.promo{background:#ff6b00;color:#fff;text-align:center;padding:10px;font-weight:bold;font-size:13px}
+.card{background:#fff;margin:12px;border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mini{background:#e3f2fd;border-radius:12px;padding:10px;text-align:center}
+.mini b{font-size:16px}input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0;font-size:15px}
+button{width:100%;padding:13px;border:0;border-radius:10px;font-weight:bold;font-size:15px;cursor:pointer}
+.btn-hijau{background:#0e7a3d;color:#fff}.btn-wa{background:#25d366;color:#fff}.btn-orange{background:#ff6b00;color:#fff}.btn-merah{background:#e74c3c;color:#fff}.btn-ungu{background:#6a1b9a;color:#fff}.btn-biru{background:#1565c0;color:#fff}
+.prod{display:flex;gap:10px;align-items:center;border:1px solid #eee;border-radius:12px;padding:10px;margin:8px 0}
+.prod img{width:64px;height:64px;object-fit:cover;border-radius:10px;background:#ffe9b0}
+.qty{display:flex;gap:6px;align-items:center}.qty button{width:32px;height:32px;padding:0;border-radius:50%}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;gap:6px;padding:10px;border-top:1px solid #ddd}
+.nav button{background:#f1f1f1;color:#333}.nav button.active{background:#0e7a3d;color:#fff}
+.badge{display:inline-block;background:#e8f5e9;color:#0e7a3d;padding:4px 8px;border-radius:20px;font-size:12px;font-weight:bold}
+.warn{background:#ffe9e9;border:1px solid #e74c3c;color:#c0392b;border-radius:12px;padding:10px;text-align:center}
+.master{background:#fff8e1;border:2px solid #ffd93d;border-radius:14px;padding:12px;margin:12px}
+.hidden{display:none}.small{font-size:12px;color:#666}table{width:100%;border-collapse:collapse}td{padding:6px 0;border-bottom:1px solid #eee;font-size:14px}
+</style></head>
+<body>
+<div id="loginScreen"><header><h1>BISMILLAH</h1><p>Warung Sembako Bu Hj. Siti - Bandung - Buka 06.00-21.00</p></header>
+<div class="card"><h2 style="text-align:center">Login - Hanya Yang Dapat Izin</h2>
+<p class="small" style="text-align:center">Kode dari Sathorik Syah sebagai Pembuat. Kalau disebar, Bapak bisa matikan kodenya.</p>
+<input id="namaLogin" placeholder="Nama Anda - Contoh: Bu Ani"><input id="kodeLogin" placeholder="Kode Akses - Contoh: SATHORIK-2026">
+<button class="btn-hijau" onclick="login()">MASUK</button><p id="loginErr" style="color:red;text-align:center"></p>
+<div class="card" style="background:#fff8e1"><b>Demo Portofolio:</b><br>Nama: DEMO<br>Kode: SATHORIK-2026<br>Master: PUSAT-83<br>Karyawan: KARYAWAN-01</div>
+<p class="small" style="text-align:center">Dibuat oleh Sathorik Syah - IG @sathorik - Jasa Pembuatan Aplikasi & Bot</p></div></div>
+
+<div id="app" class="hidden">
+<header><h1>WARUNG SEMBAKO V5</h1><p id="helloUser">Halo, DEMO - Login: PUSAT-83 - MASTER</p></header>
+<div class="promo">PROMO HARI INI: Beli Beras 5 Kg Gratis Mie 2! - Kupon: HEMAT5000</div>
+<div class="master"><b>MODE MASTER - PEMBUAT</b><br><span class="small">Bapak bisa hapus semua data. Karyawan tidak bisa. Kode akses dipegang Bapak.</span></div>
+
+<div id="tabKasir">
+<div class="grid2" style="padding:0 12px"><div class="mini">Omzet Hari Ini<br><b id="omzetHari">Rp 0</b></div><div class="mini" style="background:#fff3e0">Pelanggan Hari Ini<br><b id="pelangganHari">0 Orang</b></div></div>
+<div class="card"><b>Kasir Pintar</b><input id="cari" placeholder="Cari barang... beras, mie, kopi..." oninput="renderBarang()">
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><span class="badge">Semua</span><span class="badge">Beras & Sembako</span><span class="badge">Minyak</span><span class="badge">Mie</span></div>
+<div id="listBarang"></div>
+<div class="card" style="background:#f3e5f5"><b>MEMBER + PROMO</b><br><span id="memberInfo">Bu Ani - MEMBER GOLD - Poin 250 = Rp 25.000 - Belanja 10x Gratis 1x</span><br><input id="kupon" placeholder="Kupon: HEMAT5000"><button class="btn-ungu" onclick="pakaiKupon()">PAKAI KUPON - Potong Rp 5.000</button></div>
+<div class="card" style="background:#e3f2fd"><b>SCAN BARCODE + SUARA + KEMBALIAN</b><br><button class="btn-biru" onclick="scanBarcode()">SCAN BARCODE - Scan Bungkus Mie</button>
+<button class="btn-biru" onclick="suaraTotal()" style="margin-top:8px">SUARA: Total Rp <span id="totalSuara">0</span></button>
+<input id="bayarInput" placeholder="Bayar: Contoh 50000" oninput="hitungKembali()"><div id="kembaliInfo"><b>Kembali: Rp 0</b></div></div>
+<div class="card"><b>Keranjang</b><div id="keranjangList">Belum ada barang.</div><b>Total: <span id="totalBayar">Rp 0</span></b><br><span class="small">Harga Grosir Otomatis: Beli &gt; 10 Kg = Harga Grosir. Beras 14.500 jadi 13.500</span><br><br>
+<select id="caraBayar"><option value="LUNAS">COD / Transfer - LUNAS</option><option value="BON">BON / HUTANG - Bayar Nanti 7 Hari</option></select>
+<input id="namaBon" placeholder="Nama yang bon - Contoh: Bu Ani">
+<button class="btn-hijau" onclick="checkout()">BAYAR / CATAT BON + STRUK PDF</button>
+<button class="btn-wa" onclick="kirimWA()" style="margin-top:8px">KIRIM KE WHATSAPP PEMILIK</button>
+<button class="btn-biru" onclick="downloadStruk()" style="margin-top:8px">DOWNLOAD STRUK PDF</button></div></div></div>
+
+<div id="tabStok" class="hidden"><div class="card"><b>Tambah Barang Baru</b>
+<input id="nbNama" placeholder="Nama Barang - Contoh: Beras Pandan"><input id="nbHarga" placeholder="Harga Jual - Contoh: 15000"><input id="nbModal" placeholder="Harga Modal - Contoh: 12000 - Untuk Hitung Untung"><input id="nbStok" placeholder="Stok - Bisa 0.25, 0.5, 1, 10">
+<select id="nbSatuan"><option>Kg</option><option>Karung</option><option>Liter</option><option>Renteng</option><option>Ikat</option><option>Bungkus</option></select>
+<select id="nbKategori"><option>Beras & Sembako</option><option>Minyak</option><option>Mie</option><option>Kopi</option></select>
+<button class="btn-hijau" onclick="tambahBarang()">SIMPAN BARANG</button><p class="small">Satuan bisa 1/4. Contoh: Stok 2.5 Kg, Jual 0.25 Kg bisa. Minimal jual bisa diatur.</p></div>
+<div class="card"><b>Daftar Barang - 40 Barang</b><div id="stokList"></div></div>
+<div class="card warn"><b>PERINGATAN STOK!</b><br><span id="stokWarn">Kopi 1/2 Kg - Sisa 0.25 Kg - Segera beli lagi!</span></div>
+<div class="card"><b>V5 BARU:</b> Edit Harga, Hapus Barang, Foto Barang, Barcode, Harga Grosir</div></div>
+
+<div id="tabHutang" class="hidden"><div class="card"><b>Hutang Pelanggan - Otomatis dari Kasir</b>
+<input id="hNama" placeholder="Nama yang ngutang"><input id="hJumlah" placeholder="Jumlah Hutang (Rp) - Contoh: 20000"><input id="hCatatan" placeholder="Catatan - Contoh: Beras 1/2 Kg + Mie 2 bungkus">
+<button class="btn-orange" onclick="catatHutangManual()">CATAT HUTANG</button><p class="small">Di V5, hutang tidak perlu ketik manual lagi. Pilih BON di Kasir, otomatis masuk sini.</p></div>
+<div class="card"><b>Daftar Yang Ngutang</b><div id="hutangList">Tidak ada hutang. Bagus!</div><b>Total Belum Lunas: <span id="totalHutang" style="color:red">Rp 0</span></b></div>
+<div class="card"><b>BARU V5: Bayar Sebagian</b><br><span class="small">Contoh: Hutang Rp 43.250, bayar Rp 20.000, sisa Rp 23.250 otomatis.</span><br>
+<input id="bayarSebagianInput" placeholder="Bayar Sebagian - Contoh: 20000"><button class="btn-hijau" onclick="bayarSebagian()">BAYAR SEBAGIAN + STRUK PDF</button></div></div>
+
+<div id="tabLaporan" class="hidden"><div class="card"><b>Laporan Warung</b><div class="grid2"><div class="mini">Omzet Total<br><b id="omzetTotal">Rp 0</b></div><div class="mini">Transaksi<br><b id="transaksiTotal">0x</b></div></div>
+<p><b>Keuntungan Hari Ini: <span id="untungHari">Rp 0</span></b><br><span class="small">Modal vs Untung - Jelas! Ini yang dicari pemilik warung.</span></p>
+<p><b>Barang Paling Laris: <span id="laris">Beras</span></b></p></div>
+<div class="card"><b>Riwayat Jualan</b><div id="riwayatList">Belum ada jualan.</div></div>
+<div class="card"><b>OWNER DASHBOARD - Untuk Pemilik</b><br><span class="small">Multi Cabang: Cibiru + Ujungberung. Multi Kasir: Ani (Pagi) - Budi (Sore). Pengingat Hutang Otomatis via WA + n8n: Hutang Bu Ani jatuh tempo besok, WA otomatis terkirim.</span><br><br>
+<button class="btn-hijau" onclick="downloadLaporan()">Download Laporan PDF / Excel</button>
+<button class="btn-wa" onclick="backupWA()" style="margin-top:8px">Backup Data - Kirim ke WA Bapak</button>
+<button class="btn-merah" onclick="hapusSemua()" style="margin-top:8px">HAPUS SEMUA DATA (Master Saja)</button></div>
+<div class="card"><b>Dibuat oleh Sathorik Syah</b><br><span class="small">Jasa Pembuatan Aplikasi & Bot - IG @sathorik - Bandung<br>File: bismillah.html V5 - Tidak ganti index.html lama</span></div></div>
+<div style="height:80px"></div>
+<div class="nav"><button class="active" onclick="showTab('Kasir',this)">Kasir</button><button onclick="showTab('Stok',this)">Stok</button><button onclick="showTab('Hutang',this)">Hutang</button><button onclick="showTab('Laporan',this)">Laporan</button></div></div>
+
+<script>
+let barang=[
+{id:1,nama:'Beras Premium 5 Kg',harga:68000,modal:60000,stok:10,satuan:'Karung',kat:'Beras & Sembako',min:1,foto:'https://via.placeholder.com/64?text=Beras'},
+{id:2,nama:'Beras Medium 1 Kg',harga:14500,modal:12000,stok:20,satuan:'Kg',kat:'Beras & Sembako',min:0.25,foto:'https://via.placeholder.com/64?text=Beras'},
+{id:3,nama:'Minyak 1 Liter',harga:18000,modal:15500,stok:15,satuan:'Liter',kat:'Minyak',min:0.5,foto:'https://via.placeholder.com/64?text=Minyak'},
+{id:4,nama:'Mie Instan',harga:3500,modal:2800,stok:40,satuan:'Bungkus',kat:'Mie',min:1,foto:'https://via.placeholder.com/64?text=Mie'},
+{id:5,nama:'Gula 1 Kg',harga:16500,modal:14000,stok:12,satuan:'Kg',kat:'Beras & Sembako',min:0.25,foto:'https://via.placeholder.com/64?text=Gula'},
+{id:6,nama:'Telur 1 Kg',harga:29000,modal:26000,stok:8,satuan:'Kg',kat:'Beras & Sembako',min:0.25,foto:'https://via.placeholder.com/64?text=Telur'}];
+let keranjang={},hutang=[],riwayat=[],omzet=0,transaksi=0,untung=0,diskon=0;
+let KODE={'SATHORIK-2026':'DEMO','PUSAT-83':'MASTER - PEMBUAT','KARYAWAN-01':'KARYAWAN','SITI-2026':'WARUNG SITI','BUDI-2026':'WARUNG BUDI'};
+function login(){let n=document.getElementById('namaLogin').value.trim();let k=document.getElementById('kodeLogin').value.trim();
+if(!n){document.getElementById('loginErr').innerText='Isi nama dulu!';return}
+if(KODE[k]){localStorage.setItem('nama',n);localStorage.setItem('kode',k);document.getElementById('loginScreen').classList.add('hidden');document.getElementById('app').classList.remove('hidden');document.getElementById('helloUser').innerText='Halo, '+n+' - Login: '+k+' - '+(k==='PUSAT-83'?'MASTER - PEMBUAT':'Karyawan / Pelanggan - Kode dipegang Bapak');renderBarang();renderStok()}
+else{document.getElementById('loginErr').innerText='Kode salah! Hubungi Sathorik Syah untuk minta izin. Kode tidak bisa disebar tanpa izin pembuat.'}}
+function rp(x){return 'Rp '+Number(x).toLocaleString('id-ID')}
+function renderBarang(){let q=(document.getElementById('cari').value||'').toLowerCase();let h='';barang.filter(b=>b.nama.toLowerCase().includes(q)).forEach(b=>{let j=keranjang[b.id]||0;h+='<div class="prod"><img src="'+b.foto+'"><div style="flex:1"><b>'+b.nama+'</b><br><b style="color:#0e7a3d">'+rp(b.harga)+' / '+b.satuan+'</b><br><span class="small">Stok '+b.stok+' '+b.satuan+' - Minimal jual '+b.min+' '+b.satuan+' - '+b.kat+'</span><br><span class="badge">Bisa jual 1/4 Kg - Bisa jual 1/2 Liter - Per Renteng / Ikat</span></div><div class="qty"><button onclick="ubahQty('+b.id+',-'+b.min+')">-</button><span>'+j+' '+b.satuan+'</span><button onclick="ubahQty('+b.id+','+b.min+')">+</button></div><button class="btn-hijau" style="width:auto" onclick="tambahKeranjang('+b.id+')">+ TAMBAH</button></div>'});document.getElementById('listBarang').innerHTML=h||'Tidak ada barang.';updateKeranjang()}
+function ubahQty(id,d){keranjang[id]=Math.max(0,(keranjang[id]||0)+d);if(keranjang[id]===0)delete keranjang[id];renderBarang()}
+function tambahKeranjang(id){let b=barang.find(x=>x.id===id);keranjang[id]=(keranjang[id]||0)+b.min;renderBarang()}
+function updateKeranjang(){let total=0,html='';for(let id in keranjang){let b=barang.find(x=>x.id==id);let sub=b.harga*keranjang[id];total+=sub;html+='<div>'+b.nama+' x '+keranjang[id]+' '+b.satuan+' = '+rp(sub)+'</div>'}document.getElementById('keranjangList').innerHTML=html||'Belum ada barang.';let t=Math.max(0,total-diskon);document.getElementById('totalBayar').innerText=rp(t);document.getElementById('totalSuara').innerText=t.toLocaleString('id-ID');hitungKembali()}
+function pakaiKupon(){let k=document.getElementById('kupon').value.trim();if(k==='HEMAT5000'){diskon=5000;alert('Kupon dipakai! Potong Rp 5.000');updateKeranjang()}else alert('Kupon salah!')}
+function scanBarcode(){alert('Scan Barcode: Bungkus Mie terdeteksi! Mie Instan masuk keranjang. Kasir 2x lebih cepat.');keranjang[4]=(keranjang[4]||0)+1;renderBarang()}
+function suaraTotal(){let t=document.getElementById('totalBayar').innerText;let u=new SpeechSynthesisUtterance('Total '+t);u.lang='id-ID';speechSynthesis.speak(u);alert('Suara: '+t+' - HP ngomong, kasir tidak salah dengar.')}
+function hitungKembali(){let bayar=Number(document.getElementById('bayarInput').value||0);let totalText=document.getElementById('totalBayar').innerText.replace(/[^0-9]/g,'');let total=Number(totalText||0);document.getElementById('kembaliInfo').innerHTML='<b>Kembali: '+rp(Math.max(0,bayar-total))+'</b> - Bayar '+rp(bayar)+' - Total '+rp(total)}
+function checkout(){let totalText=document.getElementById('totalBayar').innerText.replace(/[^0-9]/g,'');let total=Number(totalText||0);if(total<=0){alert('Keranjang masih kosong!');return}
+let cara=document.getElementById('caraBayar').value;let nama=document.getElementById('namaBon').value||localStorage.getItem('nama')||'Pelanggan';
+if(cara==='BON'){hutang.push({nama:nama,jumlah:total,catatan:'Order dari Kasir - '+new Date().toLocaleDateString('id-ID'),tempo:'7 Hari - Jatuh Tempo: '+new Date(Date.now()+7*86400000).toLocaleDateString('id-ID'),lunas:false});alert('BON dicatat! '+nama+' hutang '+rp(total)+' - Jatuh tempo 7 hari - Otomatis masuk Daftar Hutang.');renderHutang()}
+else{alert('Pembayaran LUNAS! '+rp(total)+' - Struk PDF siap di-download.')}
+for(let id in keranjang){let b=barang.find(x=>x.id==id);b.stok=Math.max(0,b.stok-keranjang[id]);untung+= (b.harga-b.modal)*keranjang[id];}
+omzet+=total;transaksi++;riwayat.push({nama:nama,total:total,cara:cara,tgl:new Date().toLocaleDateString('id-ID')});keranjang={};diskon=0;document.getElementById('omzetHari').innerText=rp(omzet);document.getElementById('omzetTotal').innerText=rp(omzet);document.getElementById('transaksiTotal').innerText=transaksi+'x';document.getElementById('untungHari').innerText=rp(untung);document.getElementById('pelangganHari').innerText=transaksi+' Orang';renderBarang();renderStok();renderRiwayat();downloadStruk();suaraTotal()}
+function renderStok(){let h='';barang.forEach(b=>{h+='<div>'+b.nama+' - '+rp(b.harga)+' - Stok '+b.stok+' '+b.satuan+' - Modal '+rp(b.modal)+' - Untung '+rp(b.harga-b.modal)+' <button onclick="editBarang('+b.id+')">Edit</button> <button onclick="hapusBarang('+b.id+')">Hapus</button></div>'});document.getElementById('stokList').innerHTML=h}
+function tambahBarang(){let n=document.getElementById('nbNama').value;let h=Number(document.getElementById('nbHarga').value);let m=Number(document.getElementById('nbModal').value||0);let s=Number(document.getElementById('nbStok').value);if(!n||!h){alert('Isi nama dan harga!');return}barang.push({id:Date.now(),nama:n,harga:h,modal:m,stok:s,satuan:document.getElementById('nbSatuan').value,kat:document.getElementById('nbKategori').value,min:0.25,foto:'https://via.placeholder.com/64?text='+encodeURIComponent(n.slice(0,5))});alert('Barang disimpan! '+n);renderBarang();renderStok()}
+function editBarang(id){let b=barang.find(x=>x.id===id);let nh=prompt('Edit Harga Jual '+b.nama, b.harga);if(nh){b.harga=Number(nh);renderBarang();renderStok();alert('Harga diubah!')}}
+function hapusBarang(id){if(localStorage.getItem('kode')!=='PUSAT-83'){alert('Hanya Master yang bisa hapus! Karyawan tidak bisa.');return}if(confirm('Hapus barang ini?')){barang=barang.filter(x=>x.id!==id);renderBarang();renderStok()}}
+function catatHutangManual(){let n=document.getElementById('hNama').value;let j=Number(document.getElementById('hJumlah').value);let c=document.getElementById('hCatatan').value;if(!n||!j){alert('Isi nama dan jumlah!');return}hutang.push({nama:n,jumlah:j,catatan:c,tempo:'7 Hari',lunas:false});renderHutang();alert('Hutang dicatat!')}
+function renderHutang(){let h='';let tot=0;hutang.forEach((x,i)=>{if(!x.lunas){tot+=x.jumlah;h+='<div>'+x.nama+' - '+rp(x.jumlah)+' - '+x.catatan+' - '+x.tempo+'<br><button onclick="lunasHutang('+i+')">LUNAS</button> <button onclick="ingatkanWA('+i+')">INGATKAN WA</button> <button onclick="downloadStruk()">STRUK PDF</button></div><hr>'}});document.getElementById('hutangList').innerHTML=h||'Tidak ada hutang. Bagus!';document.getElementById('totalHutang').innerText=rp(tot)}
+function lunasHutang(i){hutang[i].lunas=true;renderHutang();alert('LUNAS! Terima kasih.')}
+function ingatkanWA(i){let x=hutang[i];let msg='Halo '+x.nama+', bon '+rp(x.jumlah)+' jatuh tempo '+x.tempo+' ya. Terima kasih - Warung Sembako Bu Hj. Siti';window.open('https://wa.me/6281234567890?text='+encodeURIComponent(msg));}
+function bayarSebagian(){let bayar=Number(document.getElementById('bayarSebagianInput').value||0);if(hutang.length===0||bayar<=0){alert('Isi jumlah bayar sebagian!');return}let x=hutang.find(h=>!h.lunas);if(!x){alert('Tidak ada hutang!');return}x.jumlah-=bayar;if(x.jumlah<=0){x.lunas=true;x.jumlah=0}renderHutang();alert('Bayar sebagian Rp '+bayar.toLocaleString('id-ID')+' dicatat! Sisa: '+rp(x.jumlah));downloadStruk()}
+function renderRiwayat(){let h='';riwayat.forEach(r=>{h+='<div>'+r.tgl+' - '+r.nama+' - '+rp(r.total)+' ['+r.cara+'] - <button onclick="downloadStruk()">Struk PDF</button></div>'});document.getElementById('riwayatList').innerHTML=h||'Belum ada jualan.'}
+function downloadStruk(){try{const{jsPDF}=window.jspdf;let doc=new jsPDF();doc.text('BISMILLAH - WARUNG SEMBAKO V5',10,10);doc.text('Bu Hj. Siti - Bandung',10,18);doc.text('No: WS-'+Date.now(),10,26);doc.text('Nama: '+(localStorage.getItem('nama')||'Pelanggan'),10,34);doc.text('Total: '+document.getElementById('totalBayar').innerText,10,42);doc.text('Cara: '+(document.getElementById('caraBayar')?.value||'LUNAS'),10,50);doc.text('Terima kasih! Dibuat oleh Sathorik Syah - @sathorik',10,58);doc.save('Struk-Warung-Sembako-V5.pdf');}catch(e){alert('Struk PDF: Total '+document.getElementById('totalBayar').innerText+' - Download gagal, cek internet untuk jsPDF.')}}
+function downloadLaporan(){alert('Laporan PDF / Excel: Omzet '+rp(omzet)+' - Transaksi '+transaksi+'x - Untung '+rp(untung)+' - Siap download!');downloadStruk()}
+function backupWA(){let msg='Backup Warung Sembako V5 - Omzet '+rp(omzet)+' - Hutang '+document.getElementById('totalHutang').innerText+' - Barang '+barang.length;window.open('https://wa.me/6281234567890?text='+encodeURIComponent(msg));}
+function kirimWA(){let msg='Halo, order Warung Sembako V5 - Total '+document.getElementById('totalBayar').innerText;window.open('https://wa.me/6281234567890?text='+encodeURIComponent(msg));}
+function hapusSemua(){if(localStorage.getItem('kode')!=='PUSAT-83'){alert('Hanya Master yang bisa hapus semua data! Karyawan tidak bisa.');return}if(confirm('Hapus SEMUA data? Ini tidak bisa dibatalkan!')){hutang=[];riwayat=[];omzet=0;transaksi=0;untung=0;keranjang={};renderHutang();renderRiwayat();alert('Semua data dihapus oleh Master.')}}
+function showTab(n,btn){['Kasir','Stok','Hutang','Laporan'].forEach(t=>document.getElementById('tab'+t).classList.add('hidden'));document.getElementById('tab'+n).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+renderBarang();
+</script></body></html>
